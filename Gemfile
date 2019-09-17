@@ -53,6 +53,6 @@ gem 'devise' # user authentication
 gem 'devise-jwt' # useing jwt with devise
 # to enable cross origin resource sharing
 gem 'rack-cors', :require => 'rack/cors'
-
+gem 'annotate', '~> 2.7', '>= 2.7.2'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

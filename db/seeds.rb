@@ -38,6 +38,27 @@ require 'csv'
 
 # end
 
+# stages
+
+# ['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
+#     if Stage.find_by_name("#{stage}").present?
+#         puts "STAGE EXISTS #{stage}----------Skipping"        
+#     else
+#         Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
+#         puts "Stage #{stage}----------SAVED" 
+#     end
+# end
+
+# Position
+['Billing', 'Technician' ].each do |stage|
+    if Position.find_by_name("#{stage}").present?
+        puts "STAGE EXISTS #{stage}----------Skipping"        
+    else
+        Position.find_or_create_by({name: stage, description: "This is a stage desc"})
+        puts "Stage #{stage}----------SAVED" 
+    end
+end
+
 
 # csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts.csv'))
 # # display the wall of text
@@ -86,3 +107,4 @@ require 'csv'
 #         end
 #     end
 #   end
+

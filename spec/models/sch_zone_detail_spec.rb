@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: sch_zone_details
+#
+#  id         :uuid             not null, primary key
+#  scheme_id  :uuid
+#  zone_id    :uuid
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe SchZoneDetail, type: :model do
