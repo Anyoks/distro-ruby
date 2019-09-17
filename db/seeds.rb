@@ -7,6 +7,17 @@ require 'csv'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+#   ROles seeds
+['admin','moderator', 'employee'].each do |role|
+	if Role.find_by(name: role).present?
+		puts "ROLE EXISTS #{role}----------Skipping"
+	else
+         Role.find_or_create_by({name: role})
+         puts "ROLE CREATED #{role}----------SAVED"
+ 	end
+end
+
 #   Scheme seeds
 # ['Ruiru', 'Jacaranda', 'Juja'].each do |schm|
 # 	if Scheme.find_by_name("#{schm}").present?
@@ -49,15 +60,15 @@ require 'csv'
 #     end
 # end
 
-# Position
-['Billing', 'Technician' ].each do |stage|
-    if Position.find_by_name("#{stage}").present?
-        puts "STAGE EXISTS #{stage}----------Skipping"        
-    else
-        Position.find_or_create_by({name: stage, description: "This is a stage desc"})
-        puts "Stage #{stage}----------SAVED" 
-    end
-end
+# # Position
+# ['Billing', 'Technician' ].each do |stage|
+#     if Position.find_by_name("#{stage}").present?
+#         puts "STAGE EXISTS #{stage}----------Skipping"        
+#     else
+#         Position.find_or_create_by({name: stage, description: "This is a stage desc"})
+#         puts "Stage #{stage}----------SAVED" 
+#     end
+# end
 
 
 # csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts.csv'))
