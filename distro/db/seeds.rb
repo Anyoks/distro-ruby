@@ -49,16 +49,107 @@ require 'csv'
 #     end
 # end
 
-# Position
-['Billing', 'Technician' ].each do |stage|
-    if Position.find_by_name("#{stage}").present?
-        puts "STAGE EXISTS #{stage}----------Skipping"        
+# # Departments
+# ['Billing', 'Technical' ].each do |departments|
+#     if Department.find_by_name("#{departments}").present?
+#         puts "STAGE EXISTS #{departments}----------Skipping"        
+#     else
+#         Department.find_or_create_by({name: departments, description: "This is a stage desc"})
+#         puts "Stage #{departments}----------SAVED" 
+#     end
+# end
+
+# # Subdepartments Billing
+# ['Meter Reading'].each do |sudepartment|
+#     if Subdepartment.find_by(name: "#{sudepartment}").present?
+#         puts "DEPT EXISTS #{sudepartment}----------Skipping"        
+#     else
+#         Subdepartment.find_or_create_by({name: sudepartment, description: "This is a subDept desc", department_id: Department.find_by(name: 'Billing').id})
+#         puts "DEPT #{sudepartment}----------SAVED" 
+#     end
+# end
+
+# #  Subdepartments Technical
+# ['Disconnection', 'NRW'].each do |subdepartment|
+#     if Subdepartment.find_by(name: "#{subdepartment}").present?
+#         puts "SUBDEPT EXISTS #{subdepartment}----------Skipping"        
+#     else
+#         Subdepartment.find_or_create_by({name: subdepartment, description: "This is a Subdept desc", department_id: Department.find_by(name: 'Technical').id})
+#         puts "SUBDEPT #{subdepartment}----------SAVED" 
+#     end
+# end
+
+# # Position Billing meter Readers
+# ['Meter Readers' ].each do |pos|
+#     if Position.find_by(name: "#{pos}").present?
+#         puts "STAGE EXISTS #{pos}----------Skipping"        
+#     else
+#         Position.find_or_create_by({name: pos, description: "This is a stage desc", subdepartment_id: Subdepartment.find_by(name:'Meter Reading' ).id })
+#         puts "Position #{pos}----------SAVED" 
+#     end
+# end
+
+# # Position Technical disconnection
+# ['Plumber Disconnection' ].each do |pos|
+#     if Position.find_by(name: "#{pos}").present?
+#         puts "STAGE EXISTS #{pos}----------Skipping"        
+#     else
+#         Position.find_or_create_by({name: pos, description: "This is a POS desc", subdepartment_id: Subdepartment.find_by(name:'Disconnection' ).id })
+#         puts "Position #{pos}----------SAVED" 
+#     end
+# end
+
+# # Position Technical NRW
+# ['Plumber NRW' ].each do |pos|
+#     if Position.find_by(name: "#{pos}").present?
+#         puts "STAGE EXISTS #{pos}----------Skipping"        
+#     else
+#         Position.find_or_create_by({name: pos, description: "This is a POS desc", subdepartment_id: Subdepartment.find_by(name:'NRW' ).id })
+#         puts "Position #{pos}----------SAVED" 
+#     end
+# end
+
+# staff Meter readers position
+['Jacob Bingu', 'James Mwangi'].each do |pos|
+    firstName   = pos.split(' ')[0]
+    lastName    = pos.split(' ')[1]
+    position_id = Position.find_by(name: 'Meter Readers').id
+
+    if Staff.find_by(firstName: firstName, lastName: lastName).present?
+        puts "STAFF EXISTS #{pos}----------Skipping"        
     else
-        Position.find_or_create_by({name: stage, description: "This is a stage desc"})
-        puts "Stage #{stage}----------SAVED" 
+        Staff.find_or_create_by({firstName: firstName,  lastName: lastName, position_id: position_id })
+        puts "STAFF #{pos}----------SAVED" 
     end
 end
 
+# staff Plumbers Disconn position
+['Brian Ruto', 'Elijah Mwilu' ].each do |pos|
+    firstName   = pos.split(' ')[0]
+    lastName    = pos.split(' ')[1]
+    position_id = Position.find_by(name: 'Plumber Disconnection').id
+
+    if Staff.find_by(firstName: firstName, lastName: lastName).present?
+        puts "STAFF EXISTS #{pos}----------Skipping"        
+    else
+        Staff.find_or_create_by({firstName: firstName,  lastName: lastName, position_id: position_id })
+        puts "STAFF #{pos}----------SAVED" 
+    end
+end
+
+# staff Plumbers NRW position
+['Jefta Rotich', 'Peter Luganje' ].each do |pos|
+    firstName   = pos.split(' ')[0]
+    lastName    = pos.split(' ')[1]
+    position_id = Position.find_by(name: 'Plumber NRW').id
+
+    if Staff.find_by(firstName: firstName, lastName: lastName).present?
+        puts "STAFF EXISTS #{pos}----------Skipping"        
+    else
+        Staff.find_or_create_by({firstName: firstName,  lastName: lastName, position_id: position_id })
+        puts "STAFF #{pos}----------SAVED" 
+    end
+end
 
 # csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts.csv'))
 # # display the wall of text
