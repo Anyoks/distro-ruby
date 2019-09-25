@@ -14,4 +14,5 @@
 
 class Staff < ApplicationRecord
     belongs_to :position
+    has_many :assignments
 end

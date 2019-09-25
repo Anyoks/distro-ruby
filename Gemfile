@@ -46,7 +46,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'graphiql-rails', '1.5.0'
+  # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 gem 'devise' # user authentication
@@ -60,4 +61,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # authentication for the API
 gem 'devise_token_auth'
 gem 'omniauth'
-gem 'rack-cors', :require => 'rack/cors'
+
+#graphQl 
+# gem 'graphql', '1.8.3'
+gem 'graphql', '~> 1.9', '>= 1.9.12'

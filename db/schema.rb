@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_112530) do
+ActiveRecord::Schema.define(version: 2019_09_25_165835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_112530) do
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "number"
-    t.string "meterSerial"
+    t.string "meter_serial"
     t.string "name"
     t.uuid "walkroute_id"
     t.string "address"
@@ -28,6 +28,21 @@ ActiveRecord::Schema.define(version: 2019_09_17_112530) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["walkroute_id"], name: "index_accounts_on_walkroute_id"
+  end
+
+  create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "task_id", null: false
+    t.uuid "staff_id", null: false
+    t.uuid "stage_id", null: false
+    t.uuid "account_id", null: false
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "finishTime", null: false
+    t.index ["account_id"], name: "index_assignments_on_account_id"
+    t.index ["staff_id"], name: "index_assignments_on_staff_id"
+    t.index ["stage_id"], name: "index_assignments_on_stage_id"
+    t.index ["task_id"], name: "index_assignments_on_task_id"
   end
 
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -69,9 +84,9 @@ ActiveRecord::Schema.define(version: 2019_09_17_112530) do
   end
 
   create_table "staffs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "firstName"
-    t.string "lastName"
-    t.string "phoneNumber"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
     t.string "description"
     t.uuid "position_id"
     t.datetime "created_at", null: false
@@ -130,8 +145,8 @@ ActiveRecord::Schema.define(version: 2019_09_17_112530) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.string "firstName"
-    t.string "secondName"
+    t.string "first_name"
+    t.string "last_name"
     t.string "email"
     t.integer "role_id"
     t.json "tokens"
@@ -160,6 +175,10 @@ ActiveRecord::Schema.define(version: 2019_09_17_112530) do
   end
 
   add_foreign_key "accounts", "walkroutes"
+  add_foreign_key "assignments", "accounts"
+  add_foreign_key "assignments", "staffs"
+  add_foreign_key "assignments", "stages"
+  add_foreign_key "assignments", "tasks"
   add_foreign_key "positions", "subdepartments"
   add_foreign_key "sch_zone_details", "schemes"
   add_foreign_key "sch_zone_details", "zones"

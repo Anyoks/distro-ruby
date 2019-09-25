@@ -16,4 +16,5 @@
 
 class Account < ApplicationRecord
     belongs_to :walkroute
+    has_many :assignments
 end
