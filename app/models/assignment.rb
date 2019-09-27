@@ -18,4 +18,6 @@ class Assignment < ApplicationRecord
     belongs_to :task
     belongs_to :account
     belongs_to :staff
+    has_one :report
+    
 end

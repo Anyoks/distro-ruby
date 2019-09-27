@@ -9,12 +9,22 @@ require 'csv'
 
 
 #   ROles seeds
-['admin','moderator', 'employee'].each do |role|
-	if Role.find_by(name: role).present?
-		puts "ROLE EXISTS #{role}----------Skipping"
+# ['admin','moderator', 'employee'].each do |role|
+# 	if Role.find_by(name: role).present?
+# 		puts "ROLE EXISTS #{role}----------Skipping"
+# 	else
+#          Role.find_or_create_by({name: role})
+#          puts "ROLE CREATED #{role}----------SAVED"
+#  	end
+# end
+
+# Further action seeds
+['revisit to complete job','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
+	if FurtherAction.find_by(name: role).present?
+		puts "Action EXISTS #{role}----------Skipping"
 	else
-         Role.find_or_create_by({name: role})
-         puts "ROLE CREATED #{role}----------SAVED"
+		FurtherAction.find_or_create_by({name: role})
+         puts "Action CREATED #{role}----------SAVED"
  	end
 end
 

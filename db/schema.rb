@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_165835) do
+ActiveRecord::Schema.define(version: 2019_09_27_064342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(version: 2019_09_25_165835) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "further_actions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "others", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "further_action_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["further_action_id"], name: "index_others_on_further_action_id"
+  end
+
   create_table "positions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -59,6 +74,19 @@ ActiveRecord::Schema.define(version: 2019_09_25_165835) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subdepartment_id"], name: "index_positions_on_subdepartment_id"
+  end
+
+  create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "completed"
+    t.string "comments"
+    t.uuid "further_action_id"
+    t.uuid "assignment_id"
+    t.uuid "stage_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_reports_on_assignment_id"
+    t.index ["further_action_id"], name: "index_reports_on_further_action_id"
+    t.index ["stage_id"], name: "index_reports_on_stage_id"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
@@ -179,7 +207,11 @@ ActiveRecord::Schema.define(version: 2019_09_25_165835) do
   add_foreign_key "assignments", "staffs"
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
+  add_foreign_key "others", "further_actions"
   add_foreign_key "positions", "subdepartments"
+  add_foreign_key "reports", "assignments"
+  add_foreign_key "reports", "further_actions"
+  add_foreign_key "reports", "stages"
   add_foreign_key "sch_zone_details", "schemes"
   add_foreign_key "sch_zone_details", "zones"
   add_foreign_key "staffs", "positions"

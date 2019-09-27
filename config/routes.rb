@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :others
+  resources :reports
+  resources :further_actions
   post "/graphql", to: "graphql#execute"
 
   if Rails.env.development?
