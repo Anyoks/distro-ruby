@@ -7,8 +7,8 @@ module Types
     field :account, Types::AccountType, null: false 
     field :comment ,String, null: false   
     
-    def stage
-      object.stage.name
-    end
+    # def stage
+    #   object.stage.name
+    # end
   end
 end

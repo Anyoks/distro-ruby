@@ -28,8 +28,12 @@ module Types
     field :positions, [Types::PositionType], null: false,
       description: "A list of all positions"
 
-    field :staff, [Types::StaffType], null: false,
+    # Geting Staff
+    field :staffs, [Types::StaffType], null: false,
       description: "A list of all Staff"
+    field :staff, Types::StaffType, null: false do
+        argument :id, String, required: true
+    end
 
     field :stages, [Types::StageType], null: false,
       description: "A list of all stages"
@@ -89,8 +93,13 @@ module Types
       Position.all
     end
 
-    def staff
+    def staffs
       Staff.all
+    end
+
+    def staff(id)
+      # byebug
+      Staff.find(id[:id])
     end
 
     def stages
