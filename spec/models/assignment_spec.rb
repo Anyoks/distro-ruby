@@ -7,10 +7,8 @@
 #  staff_id   :uuid             not null
 #  stage_id   :uuid             not null
 #  account_id :uuid             not null
-#  comment    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  finishTime :datetime         not null
 #
 
 require 'rails_helper'

@@ -21,8 +21,8 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
-#  firstName              :string
-#  secondName             :string
+#  first_name             :string
+#  last_name              :string
 #  email                  :string
 #  role_id                :integer
 #  tokens                 :json

@@ -4,7 +4,7 @@
 #
 #  id           :uuid             not null, primary key
 #  number       :string
-#  meterSerial  :string
+#  meter_serial :string
 #  name         :string
 #  walkroute_id :uuid
 #  address      :string
