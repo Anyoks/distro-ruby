@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_064342) do
+ActiveRecord::Schema.define(version: 2019_09_27_123357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -35,10 +35,8 @@ ActiveRecord::Schema.define(version: 2019_09_27_064342) do
     t.uuid "staff_id", null: false
     t.uuid "stage_id", null: false
     t.uuid "account_id", null: false
-    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "finishTime", null: false
     t.index ["account_id"], name: "index_assignments_on_account_id"
     t.index ["staff_id"], name: "index_assignments_on_staff_id"
     t.index ["stage_id"], name: "index_assignments_on_stage_id"
@@ -81,12 +79,10 @@ ActiveRecord::Schema.define(version: 2019_09_27_064342) do
     t.string "comments"
     t.uuid "further_action_id"
     t.uuid "assignment_id"
-    t.uuid "stage_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assignment_id"], name: "index_reports_on_assignment_id"
     t.index ["further_action_id"], name: "index_reports_on_further_action_id"
-    t.index ["stage_id"], name: "index_reports_on_stage_id"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
@@ -211,7 +207,6 @@ ActiveRecord::Schema.define(version: 2019_09_27_064342) do
   add_foreign_key "positions", "subdepartments"
   add_foreign_key "reports", "assignments"
   add_foreign_key "reports", "further_actions"
-  add_foreign_key "reports", "stages"
   add_foreign_key "sch_zone_details", "schemes"
   add_foreign_key "sch_zone_details", "zones"
   add_foreign_key "staffs", "positions"

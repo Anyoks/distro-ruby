@@ -18,15 +18,48 @@ require 'csv'
 #  	end
 # end
 
-# Further action seeds
-['revisit to complete job','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
-	if FurtherAction.find_by(name: role).present?
-		puts "Action EXISTS #{role}----------Skipping"
-	else
-		FurtherAction.find_or_create_by({name: role})
-         puts "Action CREATED #{role}----------SAVED"
- 	end
-end
+# # Further action seeds
+# ['revisit to complete job','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
+# 	if FurtherAction.find_by(name: role).present?
+# 		puts "Action EXISTS #{role}----------Skipping"
+# 	else
+# 		FurtherAction.find_or_create_by({name: role})
+#          puts "Action CREATED #{role}----------SAVED"
+#  	end
+# end
+
+# # Task  seeds
+# ['verify'].each do |role|
+# 	if Task.find_by(name: role).present?
+# 		puts "Task EXISTS #{role}----------Skipping"
+# 	else
+# 		Task.find_or_create_by({name: role, subdepartment_id: 'a3726ba8-fafd-40f3-9ddc-0ec22cb7a815'})
+#          puts "Task CREATED #{role}----------SAVED"
+#  	end
+# end
+
+# # Task  seeds
+# ['disconnect', 'disconnect from mains', 'reconnect', 'new connection'].each do |role|
+# 	if Task.find_by(name: role).present?
+# 		puts "Task EXISTS #{role}----------Skipping"
+# 	else
+# 		Task.find_or_create_by({name: role, subdepartment_id: '7aad0c94-a32e-44e5-a888-c9c4e2bc8751'})
+#          puts "Task CREATED #{role}----------SAVED"
+#  	end
+# end
+
+# Assignments seed
+Task.all.order("RANDOM()").each do |task|
+    Staff.all.order("RANDOM()").each do |staff|
+      Account.all.order("RANDOM()").first(10).each do |acc|
+		p "#{task.name} == #{staff.first_name} == #{acc.name}"
+		Assignment.create!(staff_id: staff.id, task_id: task.id, account_id: acc.id)
+      break
+      end
+    break
+    end
+  end
+	
 
 #   Scheme seeds
 # ['Ruiru', 'Jacaranda', 'Juja'].each do |schm|
