@@ -46,6 +46,9 @@ module Types
     field :role, [Types::RoleType], null: false,
       description: "A list of all role"
 
+    field :furtheractions, [Types::FurtherActionType], null: false,
+      description: "A list of all further actions"
+
     def test_field
       "Hello World!"
     end
@@ -108,6 +111,10 @@ module Types
 
     def roles
       Role.all
+    end
+
+    def furtheractions
+      FurtherAction.all
     end
 
   end
