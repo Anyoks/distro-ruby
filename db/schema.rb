@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_123357) do
+ActiveRecord::Schema.define(version: 2019_09_30_041156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -32,13 +32,12 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
 
   create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "task_id", null: false
-    t.uuid "staff_id", null: false
     t.uuid "stage_id", null: false
     t.uuid "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "staff_id", null: false
     t.index ["account_id"], name: "index_assignments_on_account_id"
-    t.index ["staff_id"], name: "index_assignments_on_staff_id"
     t.index ["stage_id"], name: "index_assignments_on_stage_id"
     t.index ["task_id"], name: "index_assignments_on_task_id"
   end
@@ -78,10 +77,10 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
     t.boolean "completed"
     t.string "comments"
     t.uuid "further_action_id"
-    t.uuid "assignment_id"
+    t.uuid "assignment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_reports_on_assignment_id"
+    t.index ["assignment_id"], name: "index_reports_on_assignment_id", unique: true
     t.index ["further_action_id"], name: "index_reports_on_further_action_id"
   end
 
@@ -108,14 +107,39 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
   end
 
   create_table "staffs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.boolean "allow_password_change", default: false
+    t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.string "first_name"
     t.string "last_name"
+    t.string "email"
     t.string "phone_number"
-    t.string "description"
     t.uuid "position_id"
+    t.json "tokens"
+    t.text "authentication_token"
+    t.datetime "authentication_token_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["authentication_token"], name: "index_staffs_on_authentication_token", unique: true
+    t.index ["confirmation_token"], name: "index_staffs_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_staffs_on_email", unique: true
+    t.index ["phone_number"], name: "index_staffs_on_phone_number", unique: true
     t.index ["position_id"], name: "index_staffs_on_position_id"
+    t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_staffs_on_uid_and_provider", unique: true
   end
 
   create_table "stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -176,6 +200,9 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "authentication_token"
+    t.datetime "authentication_token_created_at"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -200,7 +227,6 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
 
   add_foreign_key "accounts", "walkroutes"
   add_foreign_key "assignments", "accounts"
-  add_foreign_key "assignments", "staffs"
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
   add_foreign_key "others", "further_actions"
@@ -209,7 +235,6 @@ ActiveRecord::Schema.define(version: 2019_09_27_123357) do
   add_foreign_key "reports", "further_actions"
   add_foreign_key "sch_zone_details", "schemes"
   add_foreign_key "sch_zone_details", "zones"
-  add_foreign_key "staffs", "positions"
   add_foreign_key "subdepartments", "departments"
   add_foreign_key "subzones", "zones"
   add_foreign_key "tasks", "subdepartments"

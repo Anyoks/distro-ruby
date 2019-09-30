@@ -30,17 +30,15 @@ module Mutations
           {
             report: report,
             other: nil,
-            errors: [],
+            errors: [report.errors.full_messages],
           }
         
         end
       else
         # Failed save, return the errors to the client
-        {
-          report: nil,
-          errors: report.errors.full_messages
-        }
+        # raise GraphQL::ExecutionError, report.errors.full_messages.join(", ")
       end
+      # raise GraphQL::ExecutionError, report.errors.full_messages.join(", ")
     end
 
   end

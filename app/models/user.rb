@@ -32,6 +32,7 @@
 
 
 class User < ActiveRecord::Base
+  include GraphQL::Interface
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
@@ -40,9 +41,17 @@ class User < ActiveRecord::Base
          :rememberable, 
          :trackable, 
          :validatable,
-         :omniauthable
+         :omniauthable,
+         :token_authenticatable
   
-  include DeviseTokenAuth::Concerns::User
+    
+  # include DeviseTokenAuth::Concerns::User
 
   belongs_to :role
+  before_create :set_default_role
+  before_validation :set_default_role
+
+  def set_default_role
+		self.role ||= Role.find_by_name('moderator') 
+	end
 end

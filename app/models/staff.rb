@@ -13,6 +13,15 @@
 #
 
 class Staff < ApplicationRecord
+    include GraphQL::Interface
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, :trackable, 
+         :validatable,
+         :omniauthable,
+         :token_authenticatable
+
     belongs_to :position
     has_many :assignments
 end

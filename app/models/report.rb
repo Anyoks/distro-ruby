@@ -17,10 +17,10 @@ class Report < ApplicationRecord
   belongs_to :assignment
   after_commit :update_assignment_stage, on: :create
 
-  "Assign"
-  "Further Action"
-  "Pending"
-  "Complete"
+  # "Assign"
+  # "Further Action"
+  # "Pending"
+  # "Complete"
   
   def update_assignment_stage
     if (self.completed && self.further_action == 'none') 

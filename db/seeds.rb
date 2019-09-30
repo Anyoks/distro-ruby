@@ -48,17 +48,17 @@ require 'csv'
 #  	end
 # end
 
-# Assignments seed
-Task.all.order("RANDOM()").each do |task|
-    Staff.all.order("RANDOM()").each do |staff|
-      Account.all.order("RANDOM()").first(10).each do |acc|
-		p "#{task.name} == #{staff.first_name} == #{acc.name}"
-		Assignment.create!(staff_id: staff.id, task_id: task.id, account_id: acc.id)
-      break
-      end
-    break
-    end
-  end
+# # Assignments seed
+# Task.all.order("RANDOM()").each do |task|
+#     Staff.all.order("RANDOM()").each do |staff|
+#       Account.all.order("RANDOM()").first(10).each do |acc|
+# 		p "#{task.name} == #{staff.first_name} == #{acc.name}"
+# 		Assignment.create!(staff_id: staff.id, task_id: task.id, account_id: acc.id)
+#       break
+#       end
+#     break
+#     end
+#   end
 	
 
 #   Scheme seeds
@@ -162,3 +162,15 @@ Task.all.order("RANDOM()").each do |task|
 #     end
 #   end
 
+names = ['Brigitte Kalondu 0736789809 kalondu@gmail.com', 'Edward Mutiso 0722345467 mutiso@gmail.com', 'Dickson Muteti 0721334412 muteti@gmail.com']
+fill = names
+Position.all.each do |pos|
+  details = fill.last
+  first_name   = details.split(' ')[0]
+  last_name    = details.split(' ')[1]
+  phone_number = details.split(' ')[2]
+  email        = details.split(' ')[3]
+  Staff.create!(first_name: first_name, last_name: last_name, phone_number: phone_number, uid:email ,email: email, password: '1234567', password_confirmation: '1234567', position_id: pos.id)
+  p "#{first_name} , #{last_name}, #{phone_number}, #{email}, #{pos.id}"
+  fill.pop
+end

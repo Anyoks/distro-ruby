@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :staffs
   resources :others
   resources :reports
   resources :further_actions

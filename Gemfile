@@ -47,6 +47,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'graphiql-rails', '1.5.0'
+  # to enable vscode ruby extensions
+  gem 'solargraph'
+  
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -60,8 +63,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # authentication for the API
 gem 'devise_token_auth'
+gem 'devise-token_authenticatable', '~> 1.1.0'
 gem 'omniauth'
 
 #graphQl 
 # gem 'graphql', '1.8.3'
-gem 'graphql', '~> 1.9', '>= 1.9.12'
+gem 'graphql', '1.9.3'
