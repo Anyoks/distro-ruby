@@ -19,7 +19,7 @@ require 'csv'
 # end
 
 # # Further action seeds
-# ['revisit to complete job','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
+# ['revisit to complete job','none','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
 # 	if FurtherAction.find_by(name: role).present?
 # 		puts "Action EXISTS #{role}----------Skipping"
 # 	else

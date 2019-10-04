@@ -9,7 +9,7 @@ module Mutations
   
       def resolve(args)
         user = User.find_for_database_authentication(email: args[:email])
-  
+        # byebug
         if user.present?
           if user.valid_password?(args[:password])
             context[:current_user] = user

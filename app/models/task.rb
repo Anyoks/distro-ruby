@@ -13,4 +13,10 @@
 class Task < ApplicationRecord
     belongs_to :subdepartment
     has_many :assignments
+
+
+
+    def staffs
+        self.subdepartment.staffs
+    end
 end

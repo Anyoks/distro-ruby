@@ -53,6 +53,9 @@ module Types
     field :furtheractions, [Types::FurtherActionType], null: false,
       description: "A list of all further actions"
 
+    field :reports, [Types::ReportType],null: true,
+      description: "A list of all Reports"
+
     def test_field
       "Hello World!"
     end
@@ -124,6 +127,10 @@ module Types
 
     def furtheractions
       FurtherAction.all
+    end
+
+    def reports
+      Report.all
     end
 
   end
