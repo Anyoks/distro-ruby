@@ -162,15 +162,82 @@ require 'csv'
 #     end
 #   end
 
-names = ['Brigitte Kalondu 0736789809 kalondu@gmail.com', 'Edward Mutiso 0722345467 mutiso@gmail.com', 'Dickson Muteti 0721334412 muteti@gmail.com']
-fill = names
-Position.all.each do |pos|
-  details = fill.last
-  first_name   = details.split(' ')[0]
-  last_name    = details.split(' ')[1]
-  phone_number = details.split(' ')[2]
-  email        = details.split(' ')[3]
-  Staff.create!(first_name: first_name, last_name: last_name, phone_number: phone_number, uid:email ,email: email, password: '1234567', password_confirmation: '1234567', position_id: pos.id)
-  p "#{first_name} , #{last_name}, #{phone_number}, #{email}, #{pos.id}"
-  fill.pop
+# names = ['Brigitte Kalondu 0736789809 kalondu@gmail.com', 'Edward Mutiso 0722345467 mutiso@gmail.com', 'Dickson Muteti 0721334412 muteti@gmail.com']
+# fill = names
+# Position.all.each do |pos|
+#   details = fill.last
+#   first_name   = details.split(' ')[0]
+#   last_name    = details.split(' ')[1]
+#   phone_number = details.split(' ')[2]
+#   email        = details.split(' ')[3]
+#   Staff.create!(first_name: first_name, last_name: last_name, phone_number: phone_number, uid:email ,email: email, password: '1234567', password_confirmation: '1234567', position_id: pos.id)
+#   p "#{first_name} , #{last_name}, #{phone_number}, #{email}, #{pos.id}"
+#   fill.pop
+# end
+
+
+
+
+Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
+  report = Report.new(completed: true, comments: "No issues", further_action_id: "da5f0404-5287-4ad1-a4a6-54d48210cae8", assignment_id: assign.id)
+  if (report.save)
+    p " complete report SAved #{report.id}"
+  else
+    p "complete resort Not SAved :: #{report.errors}"
+  end
+  
 end
+# counter = 0
+# Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
+
+#  f = ["4520f5f7-8b67-445c-9712-75f3a7776593",
+# "0e77913a-1077-4e0d-8644-f877eaba3a3b",
+# "06723a70-c4d8-4fbc-97e8-cb368c1267f3",
+# "670d7515-45ff-4dcd-9095-6be89abf4e1c"]
+  
+#   report = Report.new(completed: true, comments: "No issues", further_action_id: f[counter], assignment_id: assign.id)
+#   if (report.save)
+#     if (counter < 3)
+#       p "F action resort SAved #{report.id}"
+#       counter = counter + 1
+#     else
+#       counter = 0
+#     end
+#   else
+#     p "F action  resort Not SAved :: #{report.errors} "
+#   end
+  
+# end
+
+# counter2 = 0
+# Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
+
+#  f = ["4520f5f7-8b67-445c-9712-75f3a7776593",
+# "0e77913a-1077-4e0d-8644-f877eaba3a3b",
+# "06723a70-c4d8-4fbc-97e8-cb368c1267f3",
+# "670d7515-45ff-4dcd-9095-6be89abf4e1c"]
+  
+#   report = Report.new(completed: false, comments: "No issues", further_action_id: f[counter2], assignment_id: assign.id)
+#   if (report.save)
+#     if (counter2 < 3)
+#       p "pending resort SAved #{report.id}"
+#       counter2 = counter2 + 1
+#     else
+#       counter2 = 0
+#     end
+#   else
+#     p "pending  resort Not SAved :: #{report.errors}"
+#   end
+  
+# end
+
+ days = 30
+ Assignment.all.each do |assign|
+   date = Date.today - days
+
+   assign.update_attributes(updated_at: date)
+   days = days - 1
+   if days == 0
+     days = 30
+   end
+ end

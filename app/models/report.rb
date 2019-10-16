@@ -23,11 +23,11 @@ class Report < ApplicationRecord
   # "Complete"
   
   def update_assignment_stage
-    if (self.completed && self.further_action == 'none') 
+    if (self.completed && self.further_action.name == 'none') 
       logger.debug "complete"	
       # completed
       self.assignment.update_attributes(stage_id: Stage.where(name:  "Complete").first.id )
-    elsif (completed && self.further_action != 'none')
+    elsif (self.completed && self.further_action.name != 'none')
       logger.debug "F action"	
       # further action
       self.assignment.update_attributes(stage_id: Stage.where(name: "Further Action").first.id )

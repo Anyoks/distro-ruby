@@ -33,6 +33,7 @@
 
 class User < ActiveRecord::Base
   include GraphQL::Interface
+  include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
@@ -48,10 +49,18 @@ class User < ActiveRecord::Base
   # include DeviseTokenAuth::Concerns::User
 
   belongs_to :role
-  before_create :set_default_role
+  before_create :set_default_role, :set_uid, :skip_confirmation
   before_validation :set_default_role
 
   def set_default_role
 		self.role ||= Role.find_by_name('moderator') 
-	end
+  end
+
+  def set_uid
+       self.uid = self.email
+  end
+
+  def skip_confirmation
+    self.skip_confirmation!
+  end
 end

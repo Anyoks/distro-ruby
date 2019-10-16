@@ -13,6 +13,7 @@ module Mutations
         if staff.present?
           if staff.valid_password?(args[:password])
             context[:current_staff] = staff
+            context[:session][:token] = staff.authentication_token
             # byebug
             MutationResult.call(obj: { staff: staff }, success: true)
           else

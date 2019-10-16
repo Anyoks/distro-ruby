@@ -6,5 +6,9 @@ module Types
     field :subdepartment, Types::SubdepartmentType, null: true
     field :assignments, [Types::AssignmentType], null: true
     field :staffs, [Types::StaffType], null: true
+    field :total_assignments, Integer, null: false
+    field :total_assign_group_by_week, [Types::GroupDateType] , null: true
   end
+
+  
 end

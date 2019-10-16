@@ -7,6 +7,8 @@
 
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
+
+    # before_action :authenticate_user!  
     # Add your custom classes if you have them:
     # This is used for generating payload types
     object_class Types::BaseObject

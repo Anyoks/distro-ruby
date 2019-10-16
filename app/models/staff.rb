@@ -14,6 +14,7 @@
 
 class Staff < ApplicationRecord
     include GraphQL::Interface
+    include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -24,4 +25,13 @@ class Staff < ApplicationRecord
 
     belongs_to :position
     has_many :assignments
+    before_create :set_uid, :skip_confirmation
+
+    def set_uid
+       self.uid = self.email
+  end
+
+  def skip_confirmation
+    self.skip_confirmation!
+  end
 end

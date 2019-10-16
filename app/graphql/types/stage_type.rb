@@ -4,5 +4,8 @@ module Types
     field :id, ID, null: false
     field :description, String, null: false
     field :assignments, [Types::AssignmentType], null: true
+    field :total_assignments, Integer, null: false
   end
+
+ 
 end

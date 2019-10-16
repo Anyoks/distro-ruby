@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: stages
@@ -10,5 +12,9 @@
 #
 
 class Stage < ApplicationRecord
-    has_many :assignments #, dependent: :destroy
+  has_many :assignments # , dependent: :destroy
+
+  def total_assignments
+    self.assignments.count
+ end
 end
