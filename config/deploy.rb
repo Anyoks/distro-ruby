@@ -2,7 +2,7 @@
 lock "~> 3.11.2"
 
 set :application, "distro"
-set :repo_url, "git@bitbucket.org:discouchernbo/distro.git"
+set :repo_url, "git@github.com:flux-devs/distro-ruby.git"
 
 set :passenger_restart_with_touch, true
 
