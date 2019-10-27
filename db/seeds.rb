@@ -231,13 +231,13 @@ end
   
 # end
 
- days = 30
- Assignment.all.each do |assign|
-   date = Date.today - days
+#  days = 30
+#  Assignment.all.each do |assign|
+#    date = Date.today - days
 
-   assign.update_attributes(updated_at: date)
-   days = days - 1
-   if days == 0
-     days = 30
-   end
- end
+#    assign.update_attributes(updated_at: date)
+#    days = days - 1
+#    if days == 0
+#      days = 30
+#    end
+#  end

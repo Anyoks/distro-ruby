@@ -34,4 +34,19 @@ class Staff < ApplicationRecord
   def skip_confirmation
     self.skip_confirmation!
   end
+
+  def undone_assignments
+    self.assignments.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+  end
+
+  def done_assignments
+    self.assignments.where("id IN (SELECT  assignment_id FROM Reports)")
+  end
+
+  def total_assignments
+    self.assignments.count
+  end
+  def total_un_done_assignments
+    self.undone_assignments.count
+  end
 end

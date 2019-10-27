@@ -16,12 +16,19 @@ class Report < ApplicationRecord
   belongs_to :further_action
   belongs_to :assignment
   after_commit :update_assignment_stage, on: :create
+  before_validation :default_f_action, on: :create
 
   # "Assign"
   # "Further Action"
   # "Pending"
   # "Complete"
   
+  def default_f_action
+    if self.further_action_id == nil 
+      self.further_action_id = FurtherAction.where(name:"none").first.id
+    end
+  end
+
   def update_assignment_stage
     if (self.completed && self.further_action.name == 'none') 
       logger.debug "complete"	

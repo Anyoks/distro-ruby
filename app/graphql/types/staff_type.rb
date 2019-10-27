@@ -6,7 +6,10 @@ module Types
     field :phoneNumber, String, null: false
     field :position, Types::PositionType, null: true
     field :assignments, [Types::AssignmentType], null: true
+    field :undoneAssignments, [Types::AssignmentType], null: true
+    field :doneAssignments, [Types::AssignmentType], null: true
     field :total_assignments, Integer, null: false
+    field :total_un_done_assignments, Integer, null: false
 
     field :authentication_token, String, null: false
     def authentication_token

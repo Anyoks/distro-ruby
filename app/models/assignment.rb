@@ -24,6 +24,14 @@ class Assignment < ApplicationRecord
     def add_default_stage
         self.stage_id = Stage.find_by(name: "Assign").id
     end
+
+    
+    
+    
+
+    def self.undone_assingments
+        Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+    end
     
 end
 

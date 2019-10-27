@@ -18,7 +18,7 @@ module Mutations
     def resolve(completed:,comments:,further_action_id:,assignment_id:, other_comment:)
       report = Report.new(completed: completed ,comments: comments,further_action_id: further_action_id,assignment_id: assignment_id)
       if report.save
-        if other_comment != nil
+        if other_comment.length != 0
           Other.create!(name: other_comment, further_action_id: further_action_id)
           # Successful creation, return the created object with no errors
           {
