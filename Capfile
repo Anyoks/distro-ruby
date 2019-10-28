@@ -24,7 +24,7 @@ require 'capistrano/rails'
 require 'capistrano/rvm'
 require 'capistrano/passenger'
 # sidekiq deployment
-require 'capistrano/sidekiq'
+# require 'capistrano/sidekiq'
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
