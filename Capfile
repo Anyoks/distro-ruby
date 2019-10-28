@@ -3,7 +3,6 @@ require "capistrano/setup"
 
 # Include default deployment tasks
 require "capistrano/deploy"
-
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"
@@ -15,6 +14,17 @@ require "capistrano/deploy"
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
 
+require 'capistrano/rails'
+# if i want to skip migrations uncomment the next 2 lines, leaving cap/migrations commented
+# require 'capistrano/bundler' 
+# require 'capistrano/rails/assets'
+# require 'capistrano/rails/migrations'
+# 
+
+require 'capistrano/rvm'
+require 'capistrano/passenger'
+# sidekiq deployment
+require 'capistrano/sidekiq'
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
