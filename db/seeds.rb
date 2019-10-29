@@ -178,15 +178,15 @@ require 'csv'
 
 
 
-Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
-  report = Report.new(completed: true, comments: "No issues", further_action_id: "da5f0404-5287-4ad1-a4a6-54d48210cae8", assignment_id: assign.id)
-  if (report.save)
-    p " complete report SAved #{report.id}"
-  else
-    p "complete resort Not SAved :: #{report.errors}"
-  end
+# Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
+#   report = Report.new(completed: true, comments: "No issues", further_action_id: "da5f0404-5287-4ad1-a4a6-54d48210cae8", assignment_id: assign.id)
+#   if (report.save)
+#     p " complete report SAved #{report.id}"
+#   else
+#     p "complete resort Not SAved :: #{report.errors}"
+#   end
   
-end
+# end
 # counter = 0
 # Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)").limit(30).each do |assign|
 
@@ -241,3 +241,392 @@ end
 #      days = 30
 #    end
 #  end
+
+#############################################################################
+#############################################################################
+######################## LIVE SERVER SEEDS###################################
+#############################################################################
+#############################################################################
+
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Further Action.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if FurtherAction.find_by(name: "#{row['Action']}")
+        puts "Action EXISTS number #{row['Action']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name        = row['Action'].downcase
+        description   = row['Description']
+      
+        object = FurtherAction.new( name: name, description: description)
+        
+        # Save the obeject
+        if object.valid?
+            puts "#{object.name} ==> Ready to be saved"
+        else
+            puts "#{object.name} ERR:: Failed to Save! "
+            puts "\n"
+            puts "****Error****"
+            puts "#{object.errors.messages}"
+        end
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################Schemes#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Scheme.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Scheme.find_by(name: "#{row['SCHEME']}")
+        puts "SCHEME EXISTS number #{row['SCHEME']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name        = row['SCHEME'].downcase
+        # description   = row['Description']
+      
+        object = Scheme.new( name: name)
+        
+        # Save the obeject
+        if object.valid?
+            puts "#{object.name} ==> Ready to be saved"
+        else
+            puts "#{object.name} ERR:: Failed to Save! "
+            puts "\n"
+            puts "****Error****"
+            puts "#{object.errors.messages}"
+        end
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################Zones#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Zones.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Zone.find_by(name: "#{row['Zones']}")
+        puts "Zones EXISTS number #{row['Zones']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name        = row['Zones'].downcase
+        # description   = row['Description']
+        scheme_name = row['Scheme'].downcase
+        sub_zone    = row['Sub-Zones'].downcase
+      
+        object = Zone.new( name: name)
+        
+        
+        # Save the obeject
+        if object.valid?
+            puts "#{object.name} ==> Ready to be saved"
+            # create a subzone
+
+            if Subzone.find_by(name: sub_zone)
+              puts "Subzone EXISTS  #{sub_zone}----------Skipping"
+            else
+              
+              object0 = object.subzones.new(name: sub_zone)
+             if object0.valid? 
+                puts"#########################################
+                ########creating subzone for zone ###########"
+                 puts "#{object0.name} ==> Ready to be saved"
+             else
+                puts "#{object0.name} ERR:: Failed to Save! "
+                puts "\n"
+                puts "****Error****"
+                puts "#{object0.errors.messages}"
+
+             end
+            end
+            
+
+            # create scheme for it
+              if Scheme.find_by(name: scheme_name)
+                  puts "SCHEME EXISTS number #{scheme_name}----------Skipping"
+              else
+                # Create a new Obeject             
+                object1 = object.schemes.new( name: scheme_name)
+                # Save the obeject
+                if object1.valid?
+                  puts"#########################################
+                  ########creating Scheme for zone ###########"
+                    puts "#{object1.name} ==> Ready to be saved"
+                else
+                    puts "#{object1.name} ERR:: Failed to Save! "
+                    puts "\n"
+                    puts "****Error****"
+                    puts "#{object1.errors.messages}"
+                end
+              end
+        else
+            puts "#{object.name} ERR:: Failed to Save! "
+            puts "\n"
+            puts "****Error****"
+            puts "#{object.errors.messages}"
+        end
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################Departments#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Dept.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Department.find_by(name: "#{row['Departments']}")
+        puts "SCHEME EXISTS number #{row['Departments']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name        = row['Departments'].downcase
+        subdept     = row['Sub Department']
+      
+        object = Department.new( name: name)
+        
+        # Save the obeject
+        if object.valid?
+            puts "#{object.name} ==> Ready to be saved"
+            # create scheme for it
+              if Subdepartment.find_by(name: subdept)
+                  puts "SCHEME EXISTS number #{subdept}----------Skipping"
+              else
+                # Create a new Obeject             
+                object1 = object.subdepartments.new( name: subdept)
+                # Save the obeject
+                if object1.valid?
+                  puts"#########################################
+                  ########creating Subdept for dept ###########"
+                    puts "#{object1.name} ==> Ready to be saved"
+                else
+                    puts "#{object1.name} ERR:: Failed to Save! "
+                    puts "\n"
+                    puts "****Error****"
+                    puts "#{object1.errors.messages}"
+                end
+              end
+        else
+            puts "#{object.name} ERR:: Failed to Save! "
+            puts "\n"
+            puts "****Error****"
+            puts "#{object.errors.messages}"
+        end
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################Positions#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Positions.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Position.find_by(name: "#{row['Position Name']}")
+        puts "Positions EXISTS number #{row['Position Name']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name          = row['Position Name'].downcase
+        description   = row['Description'].downcase
+        subdept_name  = row['Sub Department'].downcase
+      
+        subdept  = Subdepartment.where(name:subdept_name).first
+        
+        if subdept.present?
+          object = Position.new( name: name, description: description, subdepartment_id: subdept.id)
+          # Save the obeject
+          if object.valid?
+              puts "#{object.name} ==> Ready to be saved"
+          else
+              puts "#{object.name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        else
+           puts "Subdepartment DOES NOT EXIST  #{row['Position Name']}----------Skipping"
+        end
+        
+    end
+end
+
+
+puts"#############################################################################
+#############################################################################
+##########################Tasks#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Tasks.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Task.find_by(name: "#{row['Tasks']}")
+        puts "Task EXISTS  #{row['Tasks']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name          = row['Tasks'].downcase
+        # description   = row['Description'].downcase
+        subdept_name  = row['Sub Department'].downcase
+      
+        subdept  = Subdepartment.where(name:subdept_name).first
+        
+        if subdept.present?
+          object = Task.new( name: name, subdepartment_id: subdept.id)
+          # Save the obeject
+          if object.valid?
+              puts "#{object.name} ==> Ready to be saved"
+          else
+              puts "#{object.name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        else
+           puts "SDEPARTMENT DOES NOT EXIST For task  #{row['Task']}----------Skipping"
+        end
+        
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################WalkRoute#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Walkroutes.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Walkroute.find_by(name: "#{row['Walk-routes']}")
+        puts "Walk-routes EXISTS  #{row['Walk-routes']}----------Skipping"
+    else
+        # Create a new Obeject 
+        name          = row['Walk-routes'].downcase
+        # description   = row['Description'].downcase
+        subzone_name  = row['Sub Department'].downcase
+      
+        subzone  = Subzone.where(name:subzone_name).first
+        
+        if subzone.present?
+          object = Walkroute.new( name: name, subzone_id: subzone.id)
+          # Save the obeject
+          if object.valid?
+              puts "#{object.name} ==> Ready to be saved"
+          else
+              puts "#{object.name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        else
+           puts "Subzone DOES NOT EXIST For walkroute  #{row['Walk-routes']}----------Skipping"
+        end
+        
+    end
+end
+
+
+puts"#############################################################################
+#############################################################################
+##########################Staff#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Staff.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Staff.find_by(phone_number: "#{row['Phone Number']}")
+        puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
+    else
+        # Create a new Obeject 
+        phone_number          = row['Phone Number']
+        first_name          = row['First Name'].downcase
+        last_name          = row['Last Name'].downcase
+        position_name         = row['Position'].downcase
+        password                = last_name
+        
+      
+        position  = Position.where(name:position_name).first
+        
+        if position.present?
+          object = Staff.new( email: "#{first_name + '@'+'test.com'}",first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password, position_id: position.id)
+          # Save the obeject
+          if object.valid?
+              puts "#{object.name} ==> Ready to be saved"
+          else
+              puts "#{object.name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        else
+           puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
+        end
+        
+    end
+end
+
+
+# Meter Serial,Account,Account Name,Walk Route,Long,Lat
+
+puts"#############################################################################
+#############################################################################
+##########################Accounts#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts C.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if Account.find_by(meter_serial: "#{row['Meter Serial']}")
+        puts "Account EXISTS  #{row['Meter Serial']}----------Skipping"
+    else
+        # Create a new Obeject 
+        meter_serial          = row['Meter Serial']
+        acc_name          = row['Account Name']
+        acc_no          = row['Account']
+        walkroute_name         = row['Walk Route'].downcase
+        longitude               = row['Long']
+        latitude                = row['Lat']
+        
+      
+        walkroute  = Walkroute.where(name:walkroute_name).first
+        
+        if walkroute.present?
+          
+          object = Account.new( number:acc_no, meter_serial: meter_serial, name: acc_name, walkroute_id: walkroute.id, latitude: latitude, longitude: longitude  )
+          # Save the obeject
+          if object.valid?
+              puts "#{object.name} ==> Ready to be saved"
+          else
+              puts "#{object.name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        else
+           puts "WalkROUTE DOES NOT EXIST For aCCOUNT  #{row['Walk Route']}----------Skipping"
+        end
+        
+    end
+end
