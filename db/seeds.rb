@@ -254,7 +254,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Further Action.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if FurtherAction.find_by(name: "#{row['Action']}")
+    if FurtherAction.find_by(name: "#{row['Action'].downcase}")
         puts "Action EXISTS number #{row['Action']}----------Skipping"
     else
         # Create a new Obeject 
@@ -286,7 +286,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Scheme.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Scheme.find_by(name: "#{row['SCHEME']}")
+    if Scheme.find_by(name: "#{row['SCHEME'].downcase}")
         puts "SCHEME EXISTS number #{row['SCHEME']}----------Skipping"
     else
         # Create a new Obeject 
@@ -318,7 +318,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Zones.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Zone.find_by(name: "#{row['Zones']}")
+    if Zone.find_by(name: "#{row['Zones'].downcase}")
         puts "Zones EXISTS number #{row['Zones']}----------Skipping"
     else
         # Create a new Obeject 
@@ -394,7 +394,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Dept.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Department.find_by(name: "#{row['Departments']}")
+    if Department.find_by(name: "#{row['Departments'].downcase}")
         puts "SCHEME EXISTS number #{row['Departments']}----------Skipping"
     else
         # Create a new Obeject 
@@ -445,7 +445,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Positions.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Position.find_by(name: "#{row['Position Name']}")
+    if Position.find_by(name: "#{row['Position Name'].downcase}")
         puts "Positions EXISTS number #{row['Position Name']}----------Skipping"
     else
         # Create a new Obeject 
@@ -485,7 +485,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Tasks.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Task.find_by(name: "#{row['Tasks']}")
+    if Task.find_by(name: "#{row['Tasks'].downcase}")
         puts "Task EXISTS  #{row['Tasks']}----------Skipping"
     else
         # Create a new Obeject 
@@ -524,7 +524,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Walkroutes.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if Walkroute.find_by(name: "#{row['Walk-routes']}")
+    if Walkroute.find_by(name: "#{row['Walk-routes'].downcase}")
         puts "Walk-routes EXISTS  #{row['Walk-routes']}----------Skipping"
     else
         # Create a new Obeject 
@@ -639,6 +639,50 @@ csv.each do |row|
         else
            puts "WalkROUTE DOES NOT EXIST For aCCOUNT  #{row['Walk Route']}----------Skipping"
         end
+        
+    end
+end
+
+puts"#############################################################################
+#############################################################################
+##########################Admin#############################################
+#############################################################################"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Admin.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+    if User.find_by(phone_number: "#{row['Phone Number']}")
+        puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
+    else
+        # Create a new Obeject 
+        phone_number          = row['Phone Number']
+        email                 = row['Email']
+        id_number             = row['ID Number']
+        first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
+        last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
+        position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
+        password                = id_number
+        
+      
+        # position  = Position.where(name:position_name).first
+        
+        # if position.present?
+          object = User.new( email: email ,first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password)
+          # Save the obeject
+          if object.valid?
+              object.save!
+              puts "#{object.first_name} ==> Ready to be saved"
+          else
+              puts "#{object.first_name} ERR:: Failed to Save! "
+              puts "\n"
+              puts "****Error****"
+              puts "#{object.errors.messages}"
+          end
+        # else
+          #  puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
+        # end
         
     end
 end
