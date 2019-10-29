@@ -258,8 +258,8 @@ csv.each do |row|
         puts "Action EXISTS number #{row['Action']}----------Skipping"
     else
         # Create a new Obeject 
-        name        = row['Action'].downcase
-        description   = row['Description']
+        name        = row['Action'].nil? ? row['Action'] : row['Action'].downcase
+        description   = row['Description'].nil? ? row['Description'] : row['Description'].downcase
       
         object = FurtherAction.new( name: name, description: description)
         
@@ -290,7 +290,7 @@ csv.each do |row|
         puts "SCHEME EXISTS number #{row['SCHEME']}----------Skipping"
     else
         # Create a new Obeject 
-        name        = row['SCHEME'].downcase
+        name        = row['SCHEME'].nil? ? row['SCHEME'] : row['SCHEME'].downcase
         # description   = row['Description']
       
         object = Scheme.new( name: name)
@@ -322,10 +322,10 @@ csv.each do |row|
         puts "Zones EXISTS number #{row['Zones']}----------Skipping"
     else
         # Create a new Obeject 
-        name        = row['Zones'].downcase
+        name        = row['Zones'].nil? ? row['Zones'] : row['Zones'].downcase
         # description   = row['Description']
-        scheme_name = row['Scheme'].downcase
-        sub_zone    = row['Sub-Zones'].downcase
+        scheme_name = row['Scheme'].nil? ? row['Scheme'] : row['Scheme'].downcase
+        sub_zone    = row['Sub-Zones'].nil? ? row['Sub-Zones'] : row['Sub-Zones'].downcase
       
         object = Zone.new( name: name)
         
@@ -398,8 +398,8 @@ csv.each do |row|
         puts "SCHEME EXISTS number #{row['Departments']}----------Skipping"
     else
         # Create a new Obeject 
-        name        = row['Departments'].downcase
-        subdept     = row['Sub Department']
+        name        = row['Departments'].nil? ? row['Departments'] : row['Departments'].downcase
+        subdept     = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
       
         object = Department.new( name: name)
         
@@ -449,9 +449,9 @@ csv.each do |row|
         puts "Positions EXISTS number #{row['Position Name']}----------Skipping"
     else
         # Create a new Obeject 
-        name          = row['Position Name'].downcase
-        description   = row['Description'].downcase
-        subdept_name  = row['Sub Department'].downcase
+        name          =  row['Position Name'].nil? ?  row['Position Name'] : row['Position Name'].downcase
+        description   = row['Description'].nil? ? row['Description'] : row['Description'].downcase
+        subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
       
         subdept  = Subdepartment.where(name:subdept_name).first
         
@@ -489,9 +489,9 @@ csv.each do |row|
         puts "Task EXISTS  #{row['Tasks']}----------Skipping"
     else
         # Create a new Obeject 
-        name          = row['Tasks'].downcase
+        name          = row['Tasks'].nil? ? row['Tasks'] : row['Tasks'].downcase
         # description   = row['Description'].downcase
-        subdept_name  = row['Sub Department'].downcase
+        subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
       
         subdept  = Subdepartment.where(name:subdept_name).first
         
@@ -528,9 +528,9 @@ csv.each do |row|
         puts "Walk-routes EXISTS  #{row['Walk-routes']}----------Skipping"
     else
         # Create a new Obeject 
-        name          = row['Walk-routes'].downcase
+        name          = row['Walk-routes'].nil? ? row['Walk-routes'] : row['Walk-routes'].downcase
         # description   = row['Description'].downcase
-        subzone_name  = row['Sub Department'].downcase
+        subzone_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
       
         subzone  = Subzone.where(name:subzone_name).first
         
@@ -569,9 +569,9 @@ csv.each do |row|
     else
         # Create a new Obeject 
         phone_number          = row['Phone Number']
-        first_name          = row['First Name'].downcase
-        last_name          = row['Last Name'].downcase
-        position_name         = row['Position'].downcase
+        first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].downcase
+        last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
+        position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
         password                = last_name
         
       
@@ -616,7 +616,7 @@ csv.each do |row|
         meter_serial          = row['Meter Serial']
         acc_name          = row['Account Name']
         acc_no          = row['Account']
-        walkroute_name         = row['Walk Route'].downcase
+        walkroute_name         = row['Walk Route'].nil? ? row['Walk Route'] : row['Walk Route'].downcase
         longitude               = row['Long']
         latitude                = row['Lat']
         
