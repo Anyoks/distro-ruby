@@ -569,7 +569,7 @@ csv.each do |row|
     else
         # Create a new Obeject 
         phone_number          = row['Phone Number']
-        first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].downcase
+        first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
         last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
         position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
         password                = "#{first_name}" + "." + "#{last_name}"
