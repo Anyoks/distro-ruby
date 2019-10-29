@@ -333,8 +333,8 @@ csv.each do |row|
         # Save the obeject
         if object.valid?
             object.save!
-             scheme = Scheme.find_by(name: "#{row['Scheme']}".downcase
-			            if scheme
+             scheme = Scheme.find_by(name: "#{row['Scheme']}").downcase
+			            if scheme.present?
 			              object.schemes << scheme
 			               puts "#{object.name} ==>Added "
 			            end
