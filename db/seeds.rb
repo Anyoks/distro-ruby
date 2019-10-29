@@ -94,14 +94,14 @@ require 'csv'
 
 # stages
 
-# ['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
-#     if Stage.find_by_name("#{stage}").present?
-#         puts "STAGE EXISTS #{stage}----------Skipping"        
-#     else
-#         Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
-#         puts "Stage #{stage}----------SAVED" 
-#     end
-# end
+['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
+    if Stage.find_by_name("#{stage}").present?
+        puts "STAGE EXISTS #{stage}----------Skipping"        
+    else
+        Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
+        puts "Stage #{stage}----------SAVED" 
+    end
+end
 
 # # Position
 # ['Billing', 'Technician' ].each do |stage|
@@ -342,7 +342,7 @@ csv.each do |row|
               
               object0 = object.subzones.new(name: sub_zone)
              if object0.valid? 
-                object.save!
+                object0.save!
                 puts"#########################################
                 ########creating subzone for zone ###########"
                  puts "#{object0.name} ==> Ready to be saved"
@@ -667,9 +667,9 @@ csv.each do |row|
         
       
         # position  = Position.where(name:position_name).first
-        
+        # role = Role.f
         # if position.present?
-          object = User.new( email: email ,first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password)
+          object = User.new( email: email ,first_name: first_name, last_name: last_name, password: password, password_confirmation: password)
           # Save the obeject
           if object.valid?
               object.save!
