@@ -572,7 +572,7 @@ csv.each do |row|
         first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].downcase
         last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
         position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
-        password                = last_name
+        password                = "#{first_name}" + "." + "#{last_name}"
         
       
         position  = Position.where(name:position_name).first
@@ -582,9 +582,9 @@ csv.each do |row|
           # Save the obeject
           if object.valid?
               object.save!
-              puts "#{object.name} ==> Ready to be saved"
+              puts "#{object.first_name} ==> Ready to be saved"
           else
-              puts "#{object.name} ERR:: Failed to Save! "
+              puts "#{object.first_name} ERR:: Failed to Save! "
               puts "\n"
               puts "****Error****"
               puts "#{object.errors.messages}"
