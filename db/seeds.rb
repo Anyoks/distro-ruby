@@ -530,7 +530,7 @@ csv.each do |row|
         # Create a new Obeject 
         name          = row['Walk-routes'].nil? ? row['Walk-routes'] : row['Walk-routes'].downcase
         # description   = row['Description'].downcase
-        subzone_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
+        subzone_name  = row['Subzone'].nil? ? row['Subzone'] : row['Subzone'].downcase
       
         subzone  = Subzone.where(name:subzone_name).first
         
