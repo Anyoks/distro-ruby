@@ -333,6 +333,11 @@ csv.each do |row|
         # Save the obeject
         if object.valid?
             object.save!
+            scheme = Scheme.find_by(name: "#{row['Scheme'].downcase
+            if scheme
+              object.schemes << scheme
+               puts "#{object.name} ==>Added "
+            end
             puts "#{object.name} ==> Ready to be saved"
             # create a subzone
 
@@ -653,8 +658,8 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'Admin.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    if User.find_by(phone_number: "#{row['Phone Number']}")
-        puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
+    if User.find_by(email: "#{row['Email']}")
+        puts "USER EXISTS  #{row['Email']}----------Skipping"
     else
         # Create a new Obeject 
         phone_number          = row['Phone Number']
