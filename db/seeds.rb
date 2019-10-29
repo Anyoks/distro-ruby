@@ -265,6 +265,7 @@ csv.each do |row|
         
         # Save the obeject
         if object.valid?
+            object.save!
             puts "#{object.name} ==> Ready to be saved"
         else
             puts "#{object.name} ERR:: Failed to Save! "
@@ -296,6 +297,7 @@ csv.each do |row|
         
         # Save the obeject
         if object.valid?
+            object.save!
             puts "#{object.name} ==> Ready to be saved"
         else
             puts "#{object.name} ERR:: Failed to Save! "
@@ -330,6 +332,7 @@ csv.each do |row|
         
         # Save the obeject
         if object.valid?
+            object.save!
             puts "#{object.name} ==> Ready to be saved"
             # create a subzone
 
@@ -339,6 +342,7 @@ csv.each do |row|
               
               object0 = object.subzones.new(name: sub_zone)
              if object0.valid? 
+                object.save!
                 puts"#########################################
                 ########creating subzone for zone ###########"
                  puts "#{object0.name} ==> Ready to be saved"
@@ -360,6 +364,7 @@ csv.each do |row|
                 object1 = object.schemes.new( name: scheme_name)
                 # Save the obeject
                 if object1.valid?
+                  object1.save!
                   puts"#########################################
                   ########creating Scheme for zone ###########"
                     puts "#{object1.name} ==> Ready to be saved"
@@ -400,6 +405,7 @@ csv.each do |row|
         
         # Save the obeject
         if object.valid?
+            object.save!
             puts "#{object.name} ==> Ready to be saved"
             # create scheme for it
               if Subdepartment.find_by(name: subdept)
@@ -409,6 +415,7 @@ csv.each do |row|
                 object1 = object.subdepartments.new( name: subdept)
                 # Save the obeject
                 if object1.valid?
+                  object1.save!
                   puts"#########################################
                   ########creating Subdept for dept ###########"
                     puts "#{object1.name} ==> Ready to be saved"
@@ -452,6 +459,7 @@ csv.each do |row|
           object = Position.new( name: name, description: description, subdepartment_id: subdept.id)
           # Save the obeject
           if object.valid?
+              object.save!
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "
@@ -491,6 +499,7 @@ csv.each do |row|
           object = Task.new( name: name, subdepartment_id: subdept.id)
           # Save the obeject
           if object.valid?
+              object.save!
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "
@@ -529,6 +538,7 @@ csv.each do |row|
           object = Walkroute.new( name: name, subzone_id: subzone.id)
           # Save the obeject
           if object.valid?
+              object.save!
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "
@@ -571,6 +581,7 @@ csv.each do |row|
           object = Staff.new( email: "#{first_name + '@'+'test.com'}",first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password, position_id: position.id)
           # Save the obeject
           if object.valid?
+              object.save!
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "
@@ -617,6 +628,7 @@ csv.each do |row|
           object = Account.new( number:acc_no, meter_serial: meter_serial, name: acc_name, walkroute_id: walkroute.id, latitude: latitude, longitude: longitude  )
           # Save the obeject
           if object.valid?
+              object.save!
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "
