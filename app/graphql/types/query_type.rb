@@ -81,7 +81,7 @@ module Types
     end
 
     def assignments
-      Assignment.all
+      Assignment.all.order("created_at DESC")
     end
 
     def departments
@@ -114,7 +114,7 @@ module Types
     end
 
     def tasks
-      Task.all
+      Task.all.order("created_at DESC")
     end
 
     def users
