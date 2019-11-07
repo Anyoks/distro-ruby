@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_041156) do
+ActiveRecord::Schema.define(version: 2019_11_07_041617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 2019_09_30_041156) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "old_account_number"
+    t.string "sewer"
+    t.string "water"
+    t.string "connection_status"
+    t.string "tariff"
+    t.string "building_type"
+    t.string "house_type"
+    t.string "house_units"
     t.index ["walkroute_id"], name: "index_accounts_on_walkroute_id"
   end
 
@@ -37,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_041156) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "staff_id", null: false
+    t.uuid "user_id", default: "06471470-813f-40d6-8896-5acccd13f841", null: false
     t.index ["account_id"], name: "index_assignments_on_account_id"
     t.index ["stage_id"], name: "index_assignments_on_stage_id"
     t.index ["task_id"], name: "index_assignments_on_task_id"
@@ -202,6 +211,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_041156) do
     t.datetime "updated_at", null: false
     t.text "authentication_token"
     t.datetime "authentication_token_created_at"
+    t.uuid "subdepartment_id", default: "46dd7aed-4aba-40ff-8bde-38674a287765", null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

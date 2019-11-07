@@ -12,4 +12,5 @@
 
 class Subzone < ApplicationRecord
     belongs_to :zone
+    has_many :walkroutes
 end
