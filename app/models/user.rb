@@ -49,8 +49,10 @@ class User < ActiveRecord::Base
   # include DeviseTokenAuth::Concerns::User
 
   belongs_to :role
+  belongs_to :subdepartment
   before_create :set_default_role, :set_uid, :skip_confirmation
   before_validation :set_default_role
+  has_many :assignments
 
   def set_default_role
 		self.role ||= Role.find_by_name('moderator') 

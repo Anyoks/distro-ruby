@@ -19,6 +19,7 @@ class Assignment < ApplicationRecord
     belongs_to :task
     belongs_to :account
     belongs_to :staff
+    belongs_to :user
     has_one :report
 
     def add_default_stage

@@ -23,6 +23,19 @@ class Task < ApplicationRecord
     def total_assignments
       self.assignments.count
     end
+    
+    def my_total_assignments(userId)
+      byebug
+      user_id = User.find_by(uid: userId[:user_id]).id
+      self.assignments.where(user_id).count
+    end
+
+    # get tasks for a user's subdepartment
+    def self.mytasks(userId)
+      # byebug
+      user_id = User.find_by(uid: userId).id
+      User.find(user_id).subdepartment.tasks
+    end
 
     def total_assign_group_by_week
       # total assignments for this taks by week since ever

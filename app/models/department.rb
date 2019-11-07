@@ -11,4 +11,5 @@
 
 class Department < ApplicationRecord
     has_many :subdepartments, dependent: :destroy
+    has_many :users, through: :subdepartments
 end

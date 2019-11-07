@@ -8,20 +8,21 @@ module Mutations
     # "staff_id"    : "687c109e-1d9c-4413-b2a6-562aeba91f6b" ,
     # "task_id"     : "2b88a491-95ff-44eb-8665-5609fc832897"
 
+    argument :user_id, String, required: true
     argument :staff_id, String, required: true
     argument :task_id, String, required: true
     argument :account_ids, [String], required: true
 
     field :assignments, [Types::AssignmentType], null: true
 
-    def resolve(task_id:, staff_id:, account_ids:)
+    def resolve(user_id:,task_id:, staff_id:, account_ids:)
       created_assignments = []
       assignment_errors = []
       assignments = []
       failed_assignments = []
 
       account_ids.each do |account|
-        assignment = Assignment.create!(task_id: task_id, staff_id: staff_id, account_id: account)
+        assignment = Assignment.create!(user_id: user_id, task_id: task_id, staff_id: staff_id, account_id: account)
 
         if assignment.persisted?
           created_assignments << assignment.id

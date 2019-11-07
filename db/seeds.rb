@@ -604,49 +604,49 @@ end
 
 # Meter Serial,Account,Account Name,Walk Route,Long,Lat
 
-puts"#############################################################################
-#############################################################################
-##########################Accounts#############################################
-#############################################################################"
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts C.csv'))
+# puts"#############################################################################
+# #############################################################################
+# ##########################Accounts#############################################
+# #############################################################################"
+# csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts C.csv'))
 # display the wall of text
 # puts csv_text  
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-csv.each do |row|
-    if Account.find_by(meter_serial: "#{row['Meter Serial']}")
-        puts "Account EXISTS  #{row['Meter Serial']}----------Skipping"
-    else
-        # Create a new Obeject 
-        meter_serial          = row['Meter Serial']
-        acc_name          = row['Account Name']
-        acc_no          = row['Account']
-        walkroute_name         = row['Walk Route'].nil? ? row['Walk Route'] : row['Walk Route'].downcase
-        longitude               = row['Long']
-        latitude                = row['Lat']
+# csv.each do |row|
+#     if Account.find_by(meter_serial: "#{row['Meter Serial']}")
+#         puts "Account EXISTS  #{row['Meter Serial']}----------Skipping"
+#     else
+#         # Create a new Obeject 
+#         meter_serial          = row['Meter Serial']
+#         acc_name          = row['Account Name']
+#         acc_no          = row['Account']
+#         walkroute_name         = row['Walk Route'].nil? ? row['Walk Route'] : row['Walk Route'].downcase
+#         longitude               = row['Long']
+#         latitude                = row['Lat']
         
       
-        walkroute  = Walkroute.where(name:walkroute_name).first
+#         walkroute  = Walkroute.where(name:walkroute_name).first
         
-        if walkroute.present?
+#         if walkroute.present?
           
-          object = Account.new( number:acc_no, meter_serial: meter_serial, name: acc_name, walkroute_id: walkroute.id, latitude: latitude, longitude: longitude  )
-          # Save the obeject
-          if object.valid?
-              object.save!
-              puts "#{object.name} ==> Ready to be saved"
-          else
-              puts "#{object.name} ERR:: Failed to Save! "
-              puts "\n"
-              puts "****Error****"
-              puts "#{object.errors.messages}"
-          end
-        else
-           puts "WalkROUTE DOES NOT EXIST For aCCOUNT  #{row['Walk Route']}----------Skipping"
-        end
+#           object = Account.new( number:acc_no, meter_serial: meter_serial, name: acc_name, walkroute_id: walkroute.id, latitude: latitude, longitude: longitude  )
+#           # Save the obeject
+#           if object.valid?
+#               object.save!
+#               puts "#{object.name} ==> Ready to be saved"
+#           else
+#               puts "#{object.name} ERR:: Failed to Save! "
+#               puts "\n"
+#               puts "****Error****"
+#               puts "#{object.errors.messages}"
+#           end
+#         else
+#            puts "WalkROUTE DOES NOT EXIST For aCCOUNT  #{row['Walk Route']}----------Skipping"
+#         end
         
-    end
-end
+#     end
+# end
 
 puts"#############################################################################
 #############################################################################

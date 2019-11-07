@@ -19,6 +19,11 @@ module Types
     field :assignments, [Types::AssignmentType], null: false,
       description: "A list of all assignmets or jobs"
     
+    field :myassignments, [Types::AssignmentType], null: false,
+      description: "A list of all assignmets or tasks specific to a user" do
+        argument :userId, String, required: true
+    end
+
     field :departments, [Types::DepartmentType], null: false,
       description: "A list of all departments"
     
@@ -38,11 +43,22 @@ module Types
     field :stages, [Types::StageType], null: false,
       description: "A list of all stages"
 
+    # field :mystages, [Types::StageType], null: false,
+    #   description: "A list of all stages with totals"
+    #   do
+    #     argument :userId, String, required: false
+    # end
+
     field :subzones, [Types::SubzoneType], null: false,
       description: "A list of all subzones"
 
     field :tasks, [Types::TaskType], null: false,
       description: "A list of all tasks"
+
+    field :mytasks, [Types::TaskType], null: false,
+      description: "A list of all tasks specific to a user" do
+        argument :userId, String, required: true
+    end
 
     field :users, [Types::UserType], null: false,
       description: "A list of all users"
@@ -84,7 +100,12 @@ module Types
       Assignment.all.order("created_at DESC")
     end
 
-    def departments
+    def myassignments(userId)
+      # byebug
+      Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+    end
+
+    def departments 
       Department.all
     end
 
@@ -105,7 +126,7 @@ module Types
       Staff.find(id[:id])
     end
 
-    def stages
+    def stages      
       Stage.all
     end
 
@@ -115,6 +136,11 @@ module Types
 
     def tasks
       Task.all.order("created_at DESC")
+    end
+
+    def mytasks(userId)
+      # byebug
+      Task.mytasks(userId[:user_id]).order("created_at DESC")
     end
 
     def users
