@@ -741,15 +741,16 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'PilotAccounts_RUJWASCO.csv
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
-    acc = Account.find_by(number: "#{row['New Acc. No.']}")
+    acc = Account.find_by(number: "#{row['New Acc']}")
+    # puts row.to_hash
     if acc.present?
-        puts "Account EXISTS  #{row['New Acc. No.']}----------Update"
+        puts "Account EXISTS  #{row['New Acc']}----------Update"
 
-        # New Acc. No.,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+        # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
         old_acc         = row['Old Acc. Number']
-        acc_name          = row['New Acc. No.']
-        acc_no          = row['New Acc. No.']
+        acc_name          = row['New Acc']
+        acc_no          = row['New Acc']
         walkroute_name         = row['Walkroute'].nil? ? row['Walkroute'] : row['Walkroute'].downcase
         longitude               = row['Longitude']
         latitude                = row['Latitude']
@@ -788,13 +789,13 @@ csv.each do |row|
        
         
     else
-         puts "Account DOES NOT EXIST  #{row['New Acc. No.']}----------CREATE"
+         puts "Account DOES NOT EXIST  #{row['New Acc']}----------CREATE"
 
-        # New Acc. No.,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+        # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
         old_acc         = row['Old Acc. Number']
-        acc_name          = row['New Acc. No.']
-        acc_no          = row['New Acc. No.']
+        acc_name          = row['New Acc']
+        acc_no          = row['New Acc']
         walkroute_name         = row['Walkroute'].nil? ? row['Walkroute'] : row['Walkroute'].downcase
         longitude               = row['Longitude']
         latitude                = row['Latitude']
@@ -818,7 +819,7 @@ csv.each do |row|
                 new_walkroute = subzone.walkroutes.new(name: walkroute_name)
                 if new_walkroute.save!
                     puts "Walk Created  #{walkroute_name}----------create Account"
-                   Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
+                   Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: new_walkroute.id, name: acc_name )
                 else
                     puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
                     puts "#{new_walkroute.errors.messages}"
