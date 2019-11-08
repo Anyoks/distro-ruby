@@ -26,12 +26,14 @@ class Assignment < ApplicationRecord
         self.stage_id = Stage.find_by(name: "Assign").id
     end
 
-    
-    
-    
-
     def self.undone_assingments
         Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+    end
+
+    def self.myassignments(userId)
+      # byebug
+      user = User.find_by(uid: userId)
+      user.assignments
     end
     
 end

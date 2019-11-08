@@ -102,7 +102,8 @@ module Types
 
     def myassignments(userId)
       # byebug
-      Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+      # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+      Assignment.myassignments(userId[:user_id])
     end
 
     def departments 

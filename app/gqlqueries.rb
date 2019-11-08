@@ -42,6 +42,13 @@ query {
    
  }
 }
+# another way to query
+query($userId: String!) {
+    mytasks(userId: $userId ) {
+      name
+      myTotalAssignments(userId: $userId)
+    }
+  }
 
 # get tototal stats for user
  query {
