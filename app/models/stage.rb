@@ -21,12 +21,12 @@ class Stage < ApplicationRecord
   def my_total_assignments(userId)
     # byebug
     user_id = User.find_by(uid: userId[:user_id]).id
-    self.assignments.where(user_id).count
+    self.assignments.where(user_id: user_id).count
   end
 
   def myassignments(userId)
     user_id = User.find_by(uid: userId[:user_id]).id
-    self.assignments.where(user_id)
+    self.assignments.where(user_id: user_id)
   end
 
   def self.allOfMine(userId)

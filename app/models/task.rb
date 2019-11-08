@@ -25,9 +25,10 @@ class Task < ApplicationRecord
     end
     
     def my_total_assignments(userId)
-      byebug
+      
       user_id = User.find_by(uid: userId[:user_id]).id
-      self.assignments.where(user_id).count
+      # byebug
+      self.assignments.where(user_id: user_id).count
     end
 
     # get tasks for a user's subdepartment
