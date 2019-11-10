@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   before_create :set_default_role, :set_uid, :skip_confirmation
   before_validation :set_default_role
   has_many :assignments
+  has_many :reports, through: :assignments
 
   def set_default_role
 		self.role ||= Role.find_by_name('moderator') 
@@ -65,4 +66,5 @@ class User < ActiveRecord::Base
   def skip_confirmation
     self.skip_confirmation!
   end
+  
 end
