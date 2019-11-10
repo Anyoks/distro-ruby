@@ -33,7 +33,7 @@ class Assignment < ApplicationRecord
     def self.myassignments(userId)
       # byebug
       user = User.find_by(uid: userId)
-      user.assignments
+      user.assignments.includes(:task, :staff, :stage, :account, :report)
     end
     
 end
