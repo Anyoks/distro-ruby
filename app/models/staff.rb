@@ -25,6 +25,7 @@ class Staff < ApplicationRecord
 
     belongs_to :position
     has_many :assignments
+    has_many :reports, through: :assignments
     before_create :set_uid, :skip_confirmation
 
     def set_uid
@@ -49,4 +50,9 @@ class Staff < ApplicationRecord
   def total_un_done_assignments
     self.undone_assignments.count
   end
+
+  def full_names
+    "#{self.first_name} #{self.last_name}".titlecase
+  end
+
 end

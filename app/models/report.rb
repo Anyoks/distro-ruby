@@ -54,5 +54,9 @@ class Report < ApplicationRecord
     user = User.find_by(uid: userId)
     user.reports.includes( :assignment, :further_action)
   end
+
+  def complete
+    self.completed.to_s
+  end
   
 end
