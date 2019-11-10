@@ -17,4 +17,9 @@
 class Account < ApplicationRecord
     belongs_to :walkroute
     has_many :assignments
+
+
+    def zone
+        self.walkroute.subzone.zone
+    end
 end
