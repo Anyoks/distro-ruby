@@ -20,7 +20,7 @@ module Types
       description: "A list of all assignmets or jobs"
     
     field :myassignments, [Types::AssignmentType], null: false,
-      description: "A list of all assignmets or tasks specific to a user" do
+      description: "A list of all assignmets or tasks specific to a user." do
         argument :userId, String, required: true
     end
 
@@ -71,6 +71,12 @@ module Types
 
     field :reports, [Types::ReportType],null: true,
       description: "A list of all Reports"
+    
+    field :myreports, [Types::ReportType], null: false,
+      description: "A list of all reports specific to a user" do
+        argument :userId, String, required: true
+    end
+    
 
     def test_field
       "Hello World!"
@@ -85,7 +91,8 @@ module Types
     # end
 
     def accounts
-      Account.all
+      # Account.all
+      Account.all.includes(walkroute:[subzone:[:zone]])
     end
 
     def walkroutes
@@ -97,7 +104,8 @@ module Types
     end
 
     def assignments
-      Assignment.all.order("created_at DESC")
+      # Assignment.all.order("created_at DESC")
+      Assignment.all.includes(:task, :staff, :stage, :account, :report).order("created_at DESC")
     end
 
     def myassignments(userId)
@@ -158,6 +166,10 @@ module Types
 
     def reports
       Report.all
+    end
+
+    def myreports(userId)
+      Report.myreports(userId[:user_id])
     end
 
   end
