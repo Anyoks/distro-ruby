@@ -48,5 +48,15 @@ class Report < ApplicationRecord
       self.assignment.update_attributes(stage_id: id)
     end
   end
+
+  def self.myreports(userId)
+    # byebug
+    user = User.find_by(uid: userId)
+    user.reports.includes( :assignment, :further_action)
+  end
+
+  def complete
+    self.completed.to_s
+  end
   
 end

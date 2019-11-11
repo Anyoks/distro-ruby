@@ -19,18 +19,21 @@ class Assignment < ApplicationRecord
     belongs_to :task
     belongs_to :account
     belongs_to :staff
+    belongs_to :user
     has_one :report
 
     def add_default_stage
         self.stage_id = Stage.find_by(name: "Assign").id
     end
 
-    
-    
-    
-
     def self.undone_assingments
         Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+    end
+
+    def self.myassignments(userId)
+      # byebug
+      user = User.find_by(uid: userId)
+      user.assignments.includes(:task, :staff, :stage, :account, :report)
     end
     
 end
