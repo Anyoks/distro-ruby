@@ -11,6 +11,17 @@
 #
 
 class Position < ApplicationRecord
-    belongs_to :subdepartment
+    has_and_belongs_to_many :subdepartments
     has_many :staffs
+
+
+
+
+    
+    # def Self.populate_join_table
+    #     Position.all.each do |pos|
+    #         sub = Subdepartment.find(pos.subdepartment_id)
+    #         sub.positions << pos
+    #     end
+    # end
 end

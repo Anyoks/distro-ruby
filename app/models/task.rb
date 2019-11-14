@@ -11,13 +11,32 @@
 #
 
 class Task < ApplicationRecord
-    belongs_to :subdepartment
+    # belongs_to :subdepartment
+    has_and_belongs_to_many :subdepartments
     has_many :assignments
 
 
 
+    # def staffs
+    #     self.subdepartment.staffs
+    # end
+    def self.populate_join_table
+        Task.all.each do |pos|
+            sub = Subdepartment.find(pos.subdepartment_id)
+            sub.tasks << pos
+        end
+    end
+
+
     def staffs
-        self.subdepartment.staffs
+      staffs = []
+      self.subdepartments.each do |sub|
+        sub.staffs.each do |staff|
+          staffs << staff
+        end
+      end
+
+      return staffs
     end
 
     def total_assignments

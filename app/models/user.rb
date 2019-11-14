@@ -66,5 +66,14 @@ class User < ActiveRecord::Base
   def skip_confirmation
     self.skip_confirmation!
   end
+
+  def full_names
+    p"#{self.first_name} #{self.last_name}"
+  end
   
+  def self.users
+    User.all.each do |user|
+      p "#{user.full_names}  #{user.uid}"
+    end
+  end
 end
