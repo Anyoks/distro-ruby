@@ -15,13 +15,14 @@ module Mutations
     field :errors, [String], null: false
     field :other, String, null: true
 
-
+    
     def resolve(completed:,comments:,further_action_id:,assignment_id:, other_comment:, picture:)
       report = Report.new(completed: completed ,comments: comments,further_action_id: further_action_id,assignment_id: assignment_id)
       # byebug
       if report.save
-
-        upload = upload_picture(report, picture)
+        # uncomment the line below on update of the new apk
+        # upload = upload_picture(report, picture)
+        upload = true
 
         # byebug
         if upload
