@@ -55,4 +55,10 @@ class Staff < ApplicationRecord
     "#{self.first_name} #{self.last_name}".titlecase
   end
 
+   def self.users
+    Staff.all.each do |user|
+      p "#{user.full_names}  #{user.uid}"
+    end
+  end
+
 end
