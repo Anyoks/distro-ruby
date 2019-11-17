@@ -13,10 +13,17 @@
 #
 
 class Report < ApplicationRecord
+
+  attr_accessor :picture_data
+
   belongs_to :further_action
   belongs_to :assignment
   after_commit :update_assignment_stage, on: :create
   before_validation :default_f_action, on: :create
+  has_many :pictures
+
+  # mount_uploader :picture, PictureUploader # using carrier wave
+
 
   # "Assign"
   # "Further Action"

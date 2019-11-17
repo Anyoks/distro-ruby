@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_104420) do
+ActiveRecord::Schema.define(version: 2019_11_14_105213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
     t.index ["further_action_id"], name: "index_others_on_further_action_id"
   end
 
+  create_table "pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "report_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture"
+    t.index ["report_id"], name: "index_pictures_on_report_id"
+  end
+
   create_table "positions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -82,6 +90,13 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
     t.index ["subdepartment_id"], name: "index_positions_on_subdepartment_id"
   end
 
+  create_table "positions_subdepartments", id: false, force: :cascade do |t|
+    t.uuid "position_id"
+    t.uuid "subdepartment_id"
+    t.index ["position_id"], name: "index_positions_subdepartments_on_position_id"
+    t.index ["subdepartment_id"], name: "index_positions_subdepartments_on_subdepartment_id"
+  end
+
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.boolean "completed"
     t.string "comments"
@@ -89,6 +104,7 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
     t.uuid "assignment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "picture"
     t.index ["assignment_id"], name: "index_reports_on_assignment_id", unique: true
     t.index ["further_action_id"], name: "index_reports_on_further_action_id"
   end
@@ -167,6 +183,14 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
     t.index ["department_id"], name: "index_subdepartments_on_department_id"
   end
 
+  create_table "subdepartments_tasks", id: false, force: :cascade do |t|
+    t.uuid "task_id"
+    t.uuid "subdepartment_id"
+    t.index ["subdepartment_id", "task_id"], name: "index_subdepartments_tasks_on_subdepartment_id_and_task_id", unique: true
+    t.index ["subdepartment_id"], name: "index_subdepartments_tasks_on_subdepartment_id"
+    t.index ["task_id"], name: "index_subdepartments_tasks_on_task_id"
+  end
+
   create_table "subzones", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -179,10 +203,8 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.uuid "subdepartment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subdepartment_id"], name: "index_tasks_on_subdepartment_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -240,6 +262,7 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
   add_foreign_key "others", "further_actions"
+  add_foreign_key "pictures", "reports"
   add_foreign_key "positions", "subdepartments"
   add_foreign_key "reports", "assignments"
   add_foreign_key "reports", "further_actions"
@@ -247,6 +270,5 @@ ActiveRecord::Schema.define(version: 2019_11_05_104420) do
   add_foreign_key "sch_zone_details", "zones"
   add_foreign_key "subdepartments", "departments"
   add_foreign_key "subzones", "zones"
-  add_foreign_key "tasks", "subdepartments"
   add_foreign_key "walkroutes", "subzones"
 end
