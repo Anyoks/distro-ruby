@@ -16,7 +16,7 @@ module Mutations
     field :other, String, null: true
 
     
-    def resolve(completed:,comments:,further_action_id:,assignment_id:, other_comment:, picture:)
+    def resolve(completed:,comments:,further_action_id:,assignment_id:, other_comment:)
       report = Report.new(completed: completed ,comments: comments,further_action_id: further_action_id,assignment_id: assignment_id)
       # byebug
       if report.save
