@@ -53,8 +53,9 @@ class Task < ApplicationRecord
     # get tasks for a user's subdepartment
     def self.mytasks(userId)
       # byebug
-      user_id = User.find_by(uid: userId).id
-      User.find(user_id).subdepartment.tasks
+      user_id = User.find_by(uid: userId)
+      # User.find(user_id).subdepartment.tasks
+      user_id.subdepartment.tasks
     end
 
     def total_assign_group_by_week
