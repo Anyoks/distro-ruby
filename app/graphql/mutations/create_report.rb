@@ -21,8 +21,8 @@ module Mutations
       # byebug
       if report.save
         # uncomment the line below on update of the new apk
-        # upload = upload_picture(report, picture)
-        upload = true
+        upload = upload_picture(report, picture)
+        # upload = true
 
         # byebug
         if upload
