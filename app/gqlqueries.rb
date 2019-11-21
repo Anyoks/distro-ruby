@@ -162,3 +162,15 @@ mutation(
       }
     }
   }
+
+
+  mutation($byteData: Upload!) {
+     uploadImage(
+        input:{
+          reportId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }

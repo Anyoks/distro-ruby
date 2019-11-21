@@ -5,6 +5,7 @@ module Types
     field :lastName, String, null: false
     field :full_names, String, null: true
     field :phoneNumber, String, null: false
+    field :email, String, null: true
     field :position, Types::PositionType, null: true
     field :assignments, [Types::AssignmentType], null: true
     field :undoneAssignments, [Types::AssignmentType], null: true

@@ -37,7 +37,7 @@ module Types
     field :staffs, [Types::StaffType], null: false,
       description: "A list of all Staff"
     field :staff, Types::StaffType, null: false do
-        argument :id, String, required: true
+        argument :phone_number, String, required: true
     end
 
     field :stages, [Types::StageType], null: false,
@@ -130,9 +130,10 @@ module Types
       Staff.all
     end
 
-    def staff(id)
+    def staff(phone_number)
       # byebug
-      Staff.find(id[:id])
+      #  Staff.find_by(phone_number: id[:id])
+       Staff.find_by(phone_number)
     end
 
     def stages      

@@ -9,7 +9,8 @@ module Mutations
     argument :further_action_id, String, required: true
     argument :assignment_id, String, required: true
     argument :other_comment, String, required: false
-    argument :picture, String, required: false # base 64 string
+    # argument :picture, String, required: false # base 64 string
+    # argument :file, ApolloUploadServer::Upload, required: false
 
     field :report, Types::ReportType, null: false
     field :errors, [String], null: false
@@ -18,7 +19,7 @@ module Mutations
     
     def resolve(completed:,comments:,further_action_id:,assignment_id:, other_comment:)
       report = Report.new(completed: completed ,comments: comments,further_action_id: further_action_id,assignment_id: assignment_id)
-      # byebug
+      
       if report.save
         # uncomment the line below on update of the new apk
         # upload = upload_picture(report, picture)

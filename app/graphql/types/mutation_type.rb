@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :uploadImage, mutation: Mutations::UploadImage
     field :createAssignment, mutation: Mutations::CreateAssignment
     field :createReport, mutation: Mutations::CreateReport
 
