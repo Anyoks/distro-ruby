@@ -835,11 +835,347 @@ end
 # end
 
 
+# puts"#############################################################################
+# #############################################################################
+# ######Accounts with subzones & acc numbers without walkroutes####################
+# #############################################################################"
+# csv_text = File.read(Rails.root.join('lib', 'seeds', 'Pilot Mapped Accounts_RUJWASCO2.csv'))
+# # display the wall of text
+# # puts csv_text  
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+# csv.each do |row|
+#     acc = Account.find_by(number: "#{row['New Acc No']}")
+#     # puts row.to_hash
+#     if acc.present?
+#         puts "Account EXISTS  #{row['New Acc No']}----------Update"
+
+#         # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+#         old_acc         = row['Old Acc No']
+#         acc_name          = row['New Acc No']
+#         acc_no          = row['New Acc No']
+#         zone              = row['Zone'].downcase
+#         longitude               = row['Longitude']
+#         latitude                = row['Latitude']
+#         sub_zone_name        = row['Subzone'].downcase
+#         walkroute_name      = "unknown"
+        
+#         subzone = Subzone.find_by(name: sub_zone_name)
+
+#         if subzone.present?
+#             puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#             walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#             if walkroute.present?
+#                 puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+#                 # update
+#                  acc.update_attributes(old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id )
+#             else
+#                  puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                 # create walkroute
+#                 new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                 if new_walkroute.save!
+#                     puts "Walk Created  #{walkroute_name}----------Update Account"
+#                     acc.update_attributes(old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: new_walkroute.id, name: acc_name )
+#                 else
+#                     puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                     puts "#{new_walkroute.errors.messages}"
+#                     puts "--------------"
+#                 end
+                
+#             end
+#         else 
+#             # subzone is absent.
+#             puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#         end
+#          #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
+#         #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
+#         # water: nil, connection_status: nil, tariff: nil, building_type: nil, house_type: nil, house_units: nil> 
+       
+        
+#     else
+#          puts "Account DOES NOT EXIST  #{row['New Acc No']}----------CREATE"
+
+#         # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+#        old_acc         = row['Old Acc No']
+#         acc_name          = row['New Acc No']
+#         acc_no          = row['New Acc No']
+#         zone              = row['Zone'].downcase
+#         longitude               = row['Longitude']
+#         latitude                = row['Latitude']
+#         sub_zone_name        = row['Subzone'].downcase
+#         walkroute_name      = "unknown"
+        
+#         subzone = Subzone.find_by(name: sub_zone_name)
+        
+      
+
+
+#          if subzone.present?
+#             puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#             walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#             if walkroute.present?
+#                 puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
+#                 # create
+#                  Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
+#             else
+#                  puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                 # create walkroute
+#                 new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                 if new_walkroute.save!
+#                     puts "Walk Created  #{walkroute_name}----------create Account"
+#                    Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: new_walkroute.id, name: acc_name )
+#                 else
+#                     puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                     puts "#{new_walkroute.errors.messages}"
+#                     puts "--------------"
+#                 end
+                
+#             end
+#         else 
+#             # subzone is absent.
+#             puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#         end        
+#     end
+# end
+
+
+# puts"#############################################################################
+# #############################################################################
+# ######Accounts with subzones & long acc numbers & tarrifs ####################
+# #############################################################################"
+# csv_text = File.read(Rails.root.join('lib', 'seeds', 'Pilot Account Info_RUJWASCO.csv'))
+# # display the wall of text
+# # puts csv_text  
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+# csv.each do |row|
+#     if row['Acc Number'].present?
+#         puts "RAW ACCOUNT NUMBER PRESENT PROCESSING DETAILS"
+        
+#         acc_no  = row['Acc Number'].split('-')[0]
+#         old_acc = row['Acc Number'].split('-')[1]
+#         acc = Account.find_by(number: "#{acc_no}")
+#         # puts row.to_hash
+#         if acc.present?
+#             puts "Account EXISTS  #{row['Acc Number']}----------Update"
+
+#             # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#             # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+
+
+#             # Acc Number,New Acc No,Old Acc No,Meter No,Acc Name,Subzone,Tariff,Connection Status
+#             # old_acc             = row['Old Acc No']
+#             acc_name            = row['Acc Name']
+#             # acc_no              = row['New Acc No']
+#             # zone              = row['Zone'].downcase
+#             meter_number        = row['Meter No']
+#             # longitude               = row['Longitude']
+#             # latitude                = row['Latitude']
+#             sub_zone_name        = row['Subzone'].downcase
+#             walkroute_name       = "unknown"
+#             tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
+#             connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
+            
+#             subzone = Subzone.find_by(name: sub_zone_name)
+
+#             if subzone.present?
+#                 puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#                 walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#                 if walkroute.present?
+#                     puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+#                     # update
+#                     acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                 else
+#                     puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                     # create walkroute
+#                     new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                     if new_walkroute.save!
+#                         puts "Walk Created  #{walkroute_name}----------Update Account"
+#                         acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                     else
+#                         puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                         puts "#{new_walkroute.errors.messages}"
+#                         puts "--------------"
+#                     end
+                    
+#                 end
+#             else 
+#                 # subzone is absent.
+#                 puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#             end
+#             #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
+#             #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
+#             # water: nil, connection_status: nil, tariff: nil, building_type: nil, house_type: nil, house_units: nil> 
+        
+            
+#         else
+#             puts "Account DOES NOT EXIST  #{row['Acc Number']}----------CREATE"
+
+#             # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#             # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+#             acc_name            = row['Acc Name']
+#             # acc_no              = row['New Acc No']
+#             # zone              = row['Zone'].downcase
+#             meter_number        = row['Meter No']
+#             # longitude               = row['Longitude']
+#             # latitude                = row['Latitude']
+#             sub_zone_name        = row['Subzone'].downcase
+#             walkroute_name       = "unknown"
+#             tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
+#             connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
+            
+#             subzone = Subzone.find_by(name: sub_zone_name)
+            
+#             if subzone.present?
+#                 puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#                 walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#                 if walkroute.present?
+#                     puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
+#                     # create
+#                     # Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
+#                     Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                 else
+#                     puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                     # create walkroute
+#                     new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                     if new_walkroute.save!
+#                         puts "Walk Created  #{walkroute_name}----------create Account"
+#                         Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                     else
+#                         puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                         puts "#{new_walkroute.errors.messages}"
+#                         puts "--------------"
+#                     end
+                    
+#                 end
+#             else 
+#                 # subzone is absent.
+#                 puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#             end        
+#         end
+#     else
+#         # New account Number is present
+#         puts "RAW ACCOUNT NUMBER EMPTY PROCESSING WITH NEW ACCOUNT DETAILS"
+#         acc_no              = row['New Acc No']
+#         old_acc             = row['Old Acc No']
+#         acc = Account.find_by(number: "#{acc_no}")
+#         # puts row.to_hash
+#         if acc.present?
+#             puts "Account EXISTS  #{row['New Acc No']}----------Update"
+
+#             # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#             # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+
+
+#             # Acc Number,New Acc No,Old Acc No,Meter No,Acc Name,Subzone,Tariff,Connection Status
+#             # old_acc             = row['Old Acc No']
+#             acc_name            = row['Acc Name']
+#             # acc_no              = row['New Acc No']
+#             # zone              = row['Zone'].downcase
+#             meter_number        = row['Meter No']
+#             # longitude               = row['Longitude']
+#             # latitude                = row['Latitude']
+#             sub_zone_name        = row['Subzone'].downcase
+#             walkroute_name       = "unknown"
+#             tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
+            
+#             connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
+            
+#             subzone = Subzone.find_by(name: sub_zone_name)
+
+#             if subzone.present?
+#                 puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#                 walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#                 if walkroute.present?
+#                     puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+#                     # update
+#                     acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                 else
+#                     puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                     # create walkroute
+#                     new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                     if new_walkroute.save!
+#                         puts "Walk Created  #{walkroute_name}----------Update Account"
+#                         acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                     else
+#                         puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                         puts "#{new_walkroute.errors.messages}"
+#                         puts "--------------"
+#                     end
+                    
+#                 end
+#             else 
+#                 # subzone is absent.
+#                 puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#             end
+#             #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
+#             #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
+#             # water: nil, connection_status: nil, tariff: nil, building_type: nil, house_type: nil, house_units: nil> 
+        
+            
+#         else
+#             puts "Account DOES NOT EXIST  #{row['New Acc No']}----------CREATE"
+
+#             # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
+#             # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
+#             acc_name            = row['Acc Name']
+#             # acc_no              = row['New Acc No']
+#             # zone              = row['Zone'].downcase
+#             meter_number        = row['Meter No']
+#             # longitude               = row['Longitude']
+#             # latitude                = row['Latitude']
+#             sub_zone_name        = row['Subzone'].downcase
+#             walkroute_name       = "unknown"
+#             tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
+#             connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
+            
+#             subzone = Subzone.find_by(name: sub_zone_name)
+            
+#             if subzone.present?
+#                 puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
+#                 walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+#                 if walkroute.present?
+#                     puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
+#                     # create
+#                     # Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
+#                     Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                 else
+#                     puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+#                     # create walkroute
+#                     new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+#                     if new_walkroute.save!
+#                         puts "Walk Created  #{walkroute_name}----------create Account"
+#                         Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
+#                         walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+#                     else
+#                         puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+#                         puts "#{new_walkroute.errors.messages}"
+#                         puts "--------------"
+#                     end
+                    
+#                 end
+#             else 
+#                 # subzone is absent.
+#                 puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+#             end        
+#         end
+#     end
+# end
+
 puts"#############################################################################
 #############################################################################
-######Accounts with subzones & acc numbers without walkroutes####################
+######Accounts with Zones & acc numbers without walkroutes ####################
 #############################################################################"
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'Pilot Mapped Accounts_RUJWASCO2.csv'))
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'all accounts.csv'))
 # display the wall of text
 # puts csv_text  
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
@@ -853,40 +1189,131 @@ csv.each do |row|
         # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
         old_acc         = row['Old Acc No']
-        acc_name          = row['New Acc No']
+        acc_name          = row['Name'].nil? ? row['Name'] : row['Name'].downcase #row['Name'].downcase
         acc_no          = row['New Acc No']
-        zone              = row['Zone'].downcase
-        longitude               = row['Longitude']
-        latitude                = row['Latitude']
-        sub_zone_name        = row['Subzone'].downcase
+        zone_name              = row['Zone'].nil? ? row['Zone'] : row['Zone'].downcase
+        sub_zone_name        = "unknown"
         walkroute_name      = "unknown"
-        
-        subzone = Subzone.find_by(name: sub_zone_name)
+        serial              = row['serial']
+        water               = row['Water']
+        connection_status   = row['Connected']
+        sewer               = row['Sewer']
+        tariff              = row['Tarriff']
+        # Water,Sewer,Connected,Tarriff
+        zone = Zone.find_by(name: zone_name)
 
-        if subzone.present?
-            puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-            walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-            if walkroute.present?
-                puts "Walk route EXISTS  #{walkroute_name}----------Update account"
-                # update
-                 acc.update_attributes(old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id )
-            else
-                 puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                # create walkroute
-                new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                if new_walkroute.save!
-                    puts "Walk Created  #{walkroute_name}----------Update Account"
-                    acc.update_attributes(old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: new_walkroute.id, name: acc_name )
+        if zone.present?
+            puts "Zone EXISTS  #{zone_name}----------Check walk route"
+            subzone = zone.subzones.find_by(name: walkroute_name)
+
+            if subzone.present?
+                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                if walkroute.present?
+                    puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                    # update
+                    acc.update_attributes({ name: acc_name, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                        water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
                 else
-                    puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                    puts "#{new_walkroute.errors.messages}"
-                    puts "--------------"
+                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                    # create walkroute
+                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                    if new_walkroute.save!
+                        puts "Walk Created  #{walkroute_name}----------Update Account"
+                        acc.update_attributes({ name: acc_name, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                        water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                    else
+                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                        puts "#{new_walkroute.errors.messages}"
+                        puts "--------------"
+                    end
+                    
                 end
-                
+            else 
+                subzone = zone.subzones.new(name: sub_zone_name)
+
+                if subzone.save!
+                    walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                    if walkroute.present?
+                        puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                        # update
+                        acc.update_attributes({ name: acc_name, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                    else
+                        puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                        # create walkroute
+                        new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                        if new_walkroute.save!
+                            puts "Walk Created  #{walkroute_name}----------Update Account"
+                            acc.update_attributes({ name: acc_name, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                            puts "#{new_walkroute.errors.messages}"
+                            puts "--------------"
+                        end
+                        
+                    end
+                end
             end
+
+            
         else 
-            # subzone is absent.
-            puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
+            new_zone = Zone.new(name: zone_name)
+
+            if new_zone.save!
+                subzone = new_zone.subzones.find_by(name: walkroute_name)
+
+                if subzone.present?
+                    walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                    if walkroute.present?
+                        puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                        # update
+                        acc.update_attributes({name: acc_name, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                    else
+                        puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                        # create walkroute
+                        new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                        if new_walkroute.save!
+                            puts "Walk Created  #{walkroute_name}----------Update Account"
+                            acc.update_attributes({ name: acc_name, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                            puts "#{new_walkroute.errors.messages}"
+                            puts "--------------"
+                        end
+                        
+                    end 
+                else
+                    subzone = new_zone.subzones.new(name: sub_zone_name)
+
+                    if subzone.save!
+                        walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                        if walkroute.present?
+                            puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                            # update
+                            acc.update_attributes({name: acc_name, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                                water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                            # create walkroute
+                            new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                            if new_walkroute.save!
+                                puts "Walk Created  #{walkroute_name}----------Update Account"
+                                acc.update_attributes({name: acc_name, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                                water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                            else
+                                puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                                puts "#{new_walkroute.errors.messages}"
+                                puts "--------------"
+                            end
+                            
+                        end
+                    end
+                end
+            end
+            
         end
          #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
         #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
@@ -898,276 +1325,138 @@ csv.each do |row|
 
         # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
         # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
-       old_acc         = row['Old Acc No']
-        acc_name          = row['New Acc No']
+        old_acc         = row['Old Acc No']
+        acc_name          = row['Name'].nil? ? row['Name'] : row['Name'].downcase #row['Name'].downcase
         acc_no          = row['New Acc No']
-        zone              = row['Zone'].downcase
-        longitude               = row['Longitude']
-        latitude                = row['Latitude']
-        sub_zone_name        = row['Subzone'].downcase
+        zone_name              = row['Zone'].nil? ? row['Zone'] : row['Zone'].downcase
+        sub_zone_name        = "unknown"
         walkroute_name      = "unknown"
+        serial              = row['serial']
+        water               = row['Water']
+        connection_status   = row['Connected']
+        sewer               = row['Sewer']
+        tariff              = row['Tarriff']
         
         subzone = Subzone.find_by(name: sub_zone_name)
         
-      
+        
+        zone = Zone.find_by(name: zone_name)
 
+        if zone.present?
+            puts "Zone EXISTS  #{zone_name}----------Check walk route"
+            subzone = zone.subzones.find_by(name: walkroute_name)
 
-         if subzone.present?
-            puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-            walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-            if walkroute.present?
-                puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
-                # create
-                 Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
-            else
-                 puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                # create walkroute
-                new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                if new_walkroute.save!
-                    puts "Walk Created  #{walkroute_name}----------create Account"
-                   Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: new_walkroute.id, name: acc_name )
+            if subzone.present?
+                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                if walkroute.present?
+                    puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                    # update
+                    # acc = 
+                    Account.create!({name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                        water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
                 else
-                    puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                    puts "#{new_walkroute.errors.messages}"
-                    puts "--------------"
+                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                    # create walkroute
+                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                    if new_walkroute.save!
+                        puts "Walk Created  #{walkroute_name}----------Update Account"
+                         Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                        water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                    else
+                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                        puts "#{new_walkroute.errors.messages}"
+                        puts "--------------"
+                    end
+                    
                 end
-                
+            else 
+                subzone = zone.subzones.new(name: sub_zone_name)
+
+                if subzone.save!
+                    walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                    if walkroute.present?
+                        puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                        # update
+                         Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                    else
+                        puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                        # create walkroute
+                        new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                        if new_walkroute.save!
+                            puts "Walk Created  #{walkroute_name}----------Update Account"
+                             Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                            puts "#{new_walkroute.errors.messages}"
+                            puts "--------------"
+                        end
+                        
+                    end
+                end
             end
+
+            
         else 
-            # subzone is absent.
-            puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
-        end        
-    end
-end
+            new_zone = Zone.new(name: zone_name)
 
+            if new_zone.save!
+                subzone = new_zone.subzones.find_by(name: walkroute_name)
 
-puts"#############################################################################
-#############################################################################
-######Accounts with subzones & long acc numbers & tarrifs ####################
-#############################################################################"
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'Pilot Account Info_RUJWASCO.csv'))
-# display the wall of text
-# puts csv_text  
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-
-csv.each do |row|
-    if row['Acc Number'].present?
-        puts "RAW ACCOUNT NUMBER PRESENT PROCESSING DETAILS"
-        
-        acc_no  = row['Acc Number'].split('-')[0]
-        old_acc = row['Acc Number'].split('-')[1]
-        acc = Account.find_by(number: "#{acc_no}")
-        # puts row.to_hash
-        if acc.present?
-            puts "Account EXISTS  #{row['Acc Number']}----------Update"
-
-            # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
-            # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
-
-
-            # Acc Number,New Acc No,Old Acc No,Meter No,Acc Name,Subzone,Tariff,Connection Status
-            # old_acc             = row['Old Acc No']
-            acc_name            = row['Acc Name']
-            # acc_no              = row['New Acc No']
-            # zone              = row['Zone'].downcase
-            meter_number        = row['Meter No']
-            # longitude               = row['Longitude']
-            # latitude                = row['Latitude']
-            sub_zone_name        = row['Subzone'].downcase
-            walkroute_name       = "unknown"
-            tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
-            connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
-            
-            subzone = Subzone.find_by(name: sub_zone_name)
-
-            if subzone.present?
-                puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-                if walkroute.present?
-                    puts "Walk route EXISTS  #{walkroute_name}----------Update account"
-                    # update
-                    acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                else
-                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                    # create walkroute
-                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                    if new_walkroute.save!
-                        puts "Walk Created  #{walkroute_name}----------Update Account"
-                        acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
+                if subzone.present?
+                    walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                    if walkroute.present?
+                        puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                        # update
+                        Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
                     else
-                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                        puts "#{new_walkroute.errors.messages}"
-                        puts "--------------"
+                        puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                        # create walkroute
+                        new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                        if new_walkroute.save!
+                            puts "Walk Created  #{walkroute_name}----------Update Account"
+                             Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                            puts "#{new_walkroute.errors.messages}"
+                            puts "--------------"
+                        end
+                        
+                    end 
+                else
+                    subzone = new_zone.subzones.new(name: sub_zone_name)
+
+                    if subzone.save!
+                        walkroute = subzone.walkroutes.find_by(name: walkroute_name)
+                        if walkroute.present?
+                            puts "Walk route EXISTS  #{walkroute_name}----------Update account"
+                            # update
+                            Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: walkroute.id, meter_serial: serial, 
+                            water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                        else
+                            puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
+                            # create walkroute
+                            new_walkroute = subzone.walkroutes.new(name: walkroute_name)
+                            if new_walkroute.save!
+                                puts "Walk Created  #{walkroute_name}----------Update Account"
+                                Account.create!({ name: acc_name, number: acc_no, old_account_number: old_acc, walkroute_id: new_walkroute.id, meter_serial: serial, 
+                                     water: water, sewer: sewer, tariff: tariff, connection_status: connection_status }.reject{ |k,v| v.blank?} )
+                            else
+                                puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
+                                puts "#{new_walkroute.errors.messages}"
+                                puts "--------------"
+                            end
+                            
+                        end
                     end
-                    
                 end
-            else 
-                # subzone is absent.
-                puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
             end
-            #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
-            #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
-            # water: nil, connection_status: nil, tariff: nil, building_type: nil, house_type: nil, house_units: nil> 
-        
             
-        else
-            puts "Account DOES NOT EXIST  #{row['Acc Number']}----------CREATE"
-
-            # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
-            # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
-            acc_name            = row['Acc Name']
-            # acc_no              = row['New Acc No']
-            # zone              = row['Zone'].downcase
-            meter_number        = row['Meter No']
-            # longitude               = row['Longitude']
-            # latitude                = row['Latitude']
-            sub_zone_name        = row['Subzone'].downcase
-            walkroute_name       = "unknown"
-            tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
-            connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
-            
-            subzone = Subzone.find_by(name: sub_zone_name)
-            
-            if subzone.present?
-                puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-                if walkroute.present?
-                    puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
-                    # create
-                    # Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
-                    Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                else
-                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                    # create walkroute
-                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                    if new_walkroute.save!
-                        puts "Walk Created  #{walkroute_name}----------create Account"
-                        Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                    else
-                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                        puts "#{new_walkroute.errors.messages}"
-                        puts "--------------"
-                    end
-                    
-                end
-            else 
-                # subzone is absent.
-                puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
-            end        
         end
-    else
-        # New account Number is present
-        puts "RAW ACCOUNT NUMBER EMPTY PROCESSING WITH NEW ACCOUNT DETAILS"
-        acc_no              = row['New Acc No']
-        old_acc             = row['Old Acc No']
-        acc = Account.find_by(number: "#{acc_no}")
-        # puts row.to_hash
-        if acc.present?
-            puts "Account EXISTS  #{row['New Acc No']}----------Update"
 
-            # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
-            # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
-
-
-            # Acc Number,New Acc No,Old Acc No,Meter No,Acc Name,Subzone,Tariff,Connection Status
-            # old_acc             = row['Old Acc No']
-            acc_name            = row['Acc Name']
-            # acc_no              = row['New Acc No']
-            # zone              = row['Zone'].downcase
-            meter_number        = row['Meter No']
-            # longitude               = row['Longitude']
-            # latitude                = row['Latitude']
-            sub_zone_name        = row['Subzone'].downcase
-            walkroute_name       = "unknown"
-            tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
-            
-            connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
-            
-            subzone = Subzone.find_by(name: sub_zone_name)
-
-            if subzone.present?
-                puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-                if walkroute.present?
-                    puts "Walk route EXISTS  #{walkroute_name}----------Update account"
-                    # update
-                    acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                else
-                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                    # create walkroute
-                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                    if new_walkroute.save!
-                        puts "Walk Created  #{walkroute_name}----------Update Account"
-                        acc.update_attributes({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                    else
-                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                        puts "#{new_walkroute.errors.messages}"
-                        puts "--------------"
-                    end
-                    
-                end
-            else 
-                # subzone is absent.
-                puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
-            end
-            #<Account id: nil, number: nil, meter_serial: nil, name: nil, walkroute_id: nil, address: nil, 
-            #  latitude: nil, longitude: nil, created_at: nil, updated_at: nil, old_account_number: nil, sewer: nil, 
-            # water: nil, connection_status: nil, tariff: nil, building_type: nil, house_type: nil, house_units: nil> 
-        
-            
-        else
-            puts "Account DOES NOT EXIST  #{row['New Acc No']}----------CREATE"
-
-            # New Acc,Old Acc. Number,Acc.Name,Meter No.,Phone No.,Zone,Sub-Zone,Longitude,Latitude ,
-            # Walkroute,Water,Sewer,Connection Status,Tarriff,Building Type,House Type,Hse. Units
-            acc_name            = row['Acc Name']
-            # acc_no              = row['New Acc No']
-            # zone              = row['Zone'].downcase
-            meter_number        = row['Meter No']
-            # longitude               = row['Longitude']
-            # latitude                = row['Latitude']
-            sub_zone_name        = row['Subzone'].downcase
-            walkroute_name       = "unknown"
-            tariff               = row['Tariff'].nil? ? row['Tariff'] : row['Tariff'].downcase
-            connection_status    = row['Connection Status'].nil? ? row['Connection Status'] : row['Connection Status'].downcase
-            
-            subzone = Subzone.find_by(name: sub_zone_name)
-            
-            if subzone.present?
-                puts "Subzone EXISTS  #{sub_zone_name}----------Check walk route"
-                walkroute = subzone.walkroutes.find_by(name: walkroute_name)
-                if walkroute.present?
-                    puts "Walk route EXISTS  #{walkroute_name}----------CREATE account"
-                    # create
-                    # Account.create!(number: acc_no,  old_account_number: old_acc, longitude: longitude, latitude: latitude, walkroute_id: walkroute.id, name: acc_name )
-                    Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                else
-                    puts "Walk route DOES NOT EXIST  #{walkroute_name}----------create walkroute"
-                    # create walkroute
-                    new_walkroute = subzone.walkroutes.new(name: walkroute_name)
-                    if new_walkroute.save!
-                        puts "Walk Created  #{walkroute_name}----------create Account"
-                        Account.create!({number: acc_no, old_account_number: old_acc, meter_serial: meter_number, name: acc_name,
-                        walkroute_id: new_walkroute.id, tariff: tariff, connection_status: connection_status}.reject{ |k,v| v.blank?} )
-                    else
-                        puts "Error saving Walkroute  #{walkroute_name}---------- ERROR"
-                        puts "#{new_walkroute.errors.messages}"
-                        puts "--------------"
-                    end
-                    
-                end
-            else 
-                # subzone is absent.
-                puts "Subzone DOES NOT EXIST  #{sub_zone_name}----------DOING NOTHING"
-            end        
-        end
     end
 end
 

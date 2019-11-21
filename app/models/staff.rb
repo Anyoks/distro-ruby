@@ -61,4 +61,10 @@ class Staff < ApplicationRecord
     end
   end
 
+  def tasks
+    self.position.subdepartments.first.tasks.each do |task|
+      p task.name
+    end
+  end
+
 end

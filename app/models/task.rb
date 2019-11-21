@@ -39,6 +39,17 @@ class Task < ApplicationRecord
       return staffs
     end
 
+    def staff_names
+      staff_names = []
+      self.subdepartments.each do |sub|
+        sub.staffs.each do |staff|
+          staff_names << staff.full_names
+        end
+      end
+
+      return staff_names
+    end
+
     def total_assignments
       self.assignments.count
     end
