@@ -65,5 +65,33 @@ class Report < ApplicationRecord
   def complete
     self.completed.to_s
   end
+
+  def image_url
+
+		if Rails.env == "development" 
+			root_url = "http://localhost:3000"
+		else
+			root_url = "https://distroapp.io"
+		end
+
+    urls = []
+    full_url = ""
+    if self.pictures.first.present?
+      # byebug
+      url = self.pictures.first.url.present? ? self.pictures.first.url : nil
+      full_url =  url !=nil ? root_url + url : ""
+    end
+    
+			# urls << root_url + pic.image.url(:medium)
+		
+		return full_url	
+	end
   
+  def date
+    self.created_at.strftime("%d/%m/%Y")
+  end
+
+  def reported_by
+    self.assignment.staff.full_names
+  end
 end
