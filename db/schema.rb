@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_14_105213) do
+ActiveRecord::Schema.define(version: 2019_12_19_082933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -65,6 +65,23 @@ ActiveRecord::Schema.define(version: 2019_11_14_105213) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "meter_readings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "previous"
+    t.string "current"
+    t.uuid "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_meter_readings_on_account_id"
+  end
+
+  create_table "other_remarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "remark_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["remark_id"], name: "index_other_remarks_on_remark_id"
+  end
+
   create_table "others", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "further_action_id"
@@ -97,6 +114,13 @@ ActiveRecord::Schema.define(version: 2019_11_14_105213) do
     t.index ["subdepartment_id"], name: "index_positions_subdepartments_on_subdepartment_id"
   end
 
+  create_table "remarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.boolean "completed"
     t.string "comments"
@@ -105,8 +129,12 @@ ActiveRecord::Schema.define(version: 2019_11_14_105213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.uuid "remark_id", default: "e6f350a6-1bb1-4e7b-921b-8dfcc5a534d2", null: false
+    t.string "meter_reading"
+    t.string "meter_serial"
     t.index ["assignment_id"], name: "index_reports_on_assignment_id", unique: true
     t.index ["further_action_id"], name: "index_reports_on_further_action_id"
+    t.index ["remark_id"], name: "index_reports_on_remark_id"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
@@ -261,6 +289,8 @@ ActiveRecord::Schema.define(version: 2019_11_14_105213) do
   add_foreign_key "assignments", "accounts"
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
+  add_foreign_key "meter_readings", "accounts"
+  add_foreign_key "other_remarks", "remarks"
   add_foreign_key "others", "further_actions"
   add_foreign_key "pictures", "reports"
   add_foreign_key "positions", "subdepartments"
