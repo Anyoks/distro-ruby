@@ -35,6 +35,10 @@ class Assignment < ApplicationRecord
       user = User.find_by(uid: userId)
       user.assignments.includes(:task, :staff, :stage, :account, :report)
     end
+
+    def date
+        self.created_at.strftime("%d/%m/%Y")
+    end
     
 end
 
