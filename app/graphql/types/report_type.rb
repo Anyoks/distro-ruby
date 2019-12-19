@@ -9,6 +9,7 @@ module Types
     field :assignment, Types::AssignmentType, null: false
     field :image, String, null: true
     field :date, String, null: false
+    field :stageName, String, null: false
     def image
       object.image_url
     end
