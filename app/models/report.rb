@@ -17,6 +17,7 @@ class Report < ApplicationRecord
   attr_accessor :picture_data
 
   belongs_to :further_action
+  belongs_to :remark
   belongs_to :assignment
   after_commit :update_assignment_stage, on: :create
   before_validation :default_f_action, on: :create
@@ -54,6 +55,10 @@ class Report < ApplicationRecord
       logger.debug "Pending id is #{id}"	
       self.assignment.update_attributes(stage_id: id)
     end
+  end
+
+  def stage_name
+      self.assignment.stage.name
   end
 
   def self.myreports(userId)
