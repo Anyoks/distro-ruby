@@ -21,7 +21,7 @@ require 'csv'
 
 
 #  ************************************************************************
-    UPDATING FURTHER ACTIONS AND REMARKS ALL THROUGH THE DATABASE
+    # UPDATING FURTHER ACTIONS AND REMARKS ALL THROUGH THE DATABASE
 
     ["by pass",
     "meter detached",
