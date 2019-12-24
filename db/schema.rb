@@ -10,12 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_082933) do
+ActiveRecord::Schema.define(version: 2019_12_22_102508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "account_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "current_reading"
+    t.string "previous_reading"
+    t.uuid "account_id"
+    t.uuid "account_status_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "meter_serial"
+    t.uuid "building_type_cartegory_id"
+    t.index ["account_id"], name: "index_account_details_on_account_id"
+    t.index ["account_status_id"], name: "index_account_details_on_account_status_id"
+    t.index ["building_type_cartegory_id"], name: "index_account_details_on_building_type_cartegory_id"
+  end
+
+  create_table "account_statuses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "number"
@@ -49,6 +70,30 @@ ActiveRecord::Schema.define(version: 2019_12_19_082933) do
     t.index ["account_id"], name: "index_assignments_on_account_id"
     t.index ["stage_id"], name: "index_assignments_on_stage_id"
     t.index ["task_id"], name: "index_assignments_on_task_id"
+  end
+
+  create_table "building_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.uuid "building_type_cartegory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["building_type_cartegory_id"], name: "index_building_details_on_building_type_cartegory_id"
+  end
+
+  create_table "building_type_cartegories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.uuid "building_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["building_type_id"], name: "index_building_type_cartegories_on_building_type_id"
+  end
+
+  create_table "building_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -285,10 +330,15 @@ ActiveRecord::Schema.define(version: 2019_12_19_082933) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "account_details", "account_statuses"
+  add_foreign_key "account_details", "accounts"
+  add_foreign_key "account_details", "building_type_cartegories"
   add_foreign_key "accounts", "walkroutes"
   add_foreign_key "assignments", "accounts"
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
+  add_foreign_key "building_details", "building_type_cartegories"
+  add_foreign_key "building_type_cartegories", "building_types"
   add_foreign_key "meter_readings", "accounts"
   add_foreign_key "other_remarks", "remarks"
   add_foreign_key "others", "further_actions"
