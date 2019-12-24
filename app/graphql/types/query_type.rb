@@ -68,6 +68,9 @@ module Types
 
     field :furtheractions, [Types::FurtherActionType], null: false,
       description: "A list of all further actions"
+    
+    field :remarks, [Types::RemarkType], null: false,
+      description: "A list of all Remarks"
 
     field :reports, [Types::ReportType],null: true,
       description: "A list of all Reports"
@@ -76,6 +79,14 @@ module Types
       description: "A list of all reports specific to a user" do
         argument :userId, String, required: true
     end
+
+    field :accountstatus, [Types::AccountStatusType],null: true,
+      description: "A list of all Account Status"
+    
+    field :buildingtypes, [Types::BuildingTypeType],null: true,
+      description: "A list of all Building Types"
+
+    
     
 
     def test_field
@@ -165,12 +176,24 @@ module Types
       FurtherAction.all
     end
 
+    def remarks
+      Remark.all
+    end
+
     def reports
       Report.all
     end
 
     def myreports(userId)
       Report.myreports(userId[:user_id])
+    end
+
+    def accountstatus
+      AccountStatus.all
+    end
+
+    def buildingtypes
+      BuildingType.all
     end
 
   end
