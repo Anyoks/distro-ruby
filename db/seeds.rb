@@ -19,7 +19,9 @@ require 'csv'
 # end
 
 
-    # UPDATING FURTHER ACTIONS AND REMARKS ALL THROUGH THE DATABASE
+
+#  ************************************************************************
+    UPDATING FURTHER ACTIONS AND REMARKS ALL THROUGH THE DATABASE
 
     ["by pass",
     "meter detached",
@@ -49,7 +51,7 @@ require 'csv'
         if FurtherAction.find_by(name: fAction)
             action = FurtherAction.find_by(name: fAction)
             puts "Remark EXISTS #{fAction}----------Skipping"
-            furtherAction << action.id
+            # furtherAction << action.id
         else
             action = FurtherAction.find_or_create_by(name: fAction)
             furtherAction << action.id
@@ -57,22 +59,65 @@ require 'csv'
         end
     end
 
-    puts "NOW UPDATING ALL REPORTS"
-     Report.all.each do |rep|
-        curr = rep.further_action_id
-        rep.update_attributes(further_action_id: furtherAction.sample)
-        puts "CHanging F Action from  #{curr}---to #{rep.further_action_id}----SAVED"
+    
+    if furtherAction.length > 0
+        puts "NOW UPDATING ALL REPORTS"
+         Report.all.each do |rep|
+            curr = rep.further_action_id
+            rep.update_attributes(further_action_id: furtherAction.sample)
+            puts "CHanging F Action from  #{curr}---to #{rep.further_action_id}----SAVED"
+        end
+
+         Other.destroy_all
+        puts "NOW Deleteing  ALL Unesseary Further actions"
+        FurtherAction.all.each do |action|
+            unless furtherAction.include?(action.id)
+                puts "#{action.name} - Destroyed"
+                action.destroy 
+            end
+         end
     end
-
-
-    Other.destroy_all
-     puts "NOW Deleteing  ALL Unesseary Further actions"
-    FurtherAction.all.each do |action|
-        unless furtherAction.include?(action.id)
-            puts "#{action.name} - Destroyed"
-            action.destroy 
+    
+    ['private', 'commercial'].each do |type|
+        if BuildingType.find_by(name: type)
+             puts "Building Type EXISTS #{type}----------Skipping"
+        else
+            BuildingType.find_or_create_by(name: type)
+            puts "Remark CREATED #{type}----------SAVED"
         end
     end
+
+    [{type: "commercial", sub: "commercial", desc: 'commercial'}, {type: "private", desc: "single dwelling unit", sub: "sdu"}, {type: "private", desc: "multi dwelling unit", sub: "mdu"}].each do |type|
+        # "#{b[:type]}  #{b[:desc]}  #{b[:sub]}"
+        building = BuildingType.find_by(name: type[:type])
+        if building
+            # building = BuildingType.find_or_create_by(name: type[:type])
+             puts "Building Type EXISTS #{type[:type]}----------checking sub cartegories"
+             if building.building_type_cartegories.find_or_create_by(name: type[:sub], description: type[:desc])
+                 puts "Building type carteory #{type[:sub]}----------saved"
+             end
+        else
+            building = BuildingType.find_or_create_by(name: type[:type])
+            puts "Buikusbg typ CREATED #{type[:type]}----------SAVED"
+           if  building.building_type_cartegories.create!(name: type[:sub], description: type[:desc])
+              puts "Building cartegory  CREATED for  #{type[:type]}----------SAVED"  
+           end
+            
+        end
+    end
+
+    ['active', 'faulty', 'disconnected'].each do |status|
+         acc_status = AccountStatus.find_by(name: status)
+
+         if acc_status
+             puts "Account statuw EXISTS #{status}----------skipping"
+         else
+            AccountStatus.find_or_create_by(name: status)
+            puts "Account status created  #{status}----------Saved"
+         end
+    end
+
+   
 
 # # Further action seeds
 # ['revisit to complete job','none','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
