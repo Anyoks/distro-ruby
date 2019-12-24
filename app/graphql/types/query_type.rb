@@ -122,7 +122,7 @@ module Types
     def myassignments(userId)
       # byebug
       # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
-      Assignment.myassignments(userId[:user_id])
+      Assignment.myassignments(userId[:user_id]).order("created_at DESC")
     end
 
     def departments 
@@ -181,11 +181,11 @@ module Types
     end
 
     def reports
-      Report.all
+      Report.order("created_at DESC")
     end
 
     def myreports(userId)
-      Report.myreports(userId[:user_id])
+      Report.myreports(userId[:user_id]).order("created_at DESC")
     end
 
     def accountstatus
