@@ -37,11 +37,35 @@ class Report < ApplicationRecord
   def account
     self.assignment.account
   end
+
+  def building_type
+    self.account.account_details.building_type
+  end
   
   def default_f_action
     if self.further_action_id == nil 
       self.further_action_id = FurtherAction.where(name:"none").first.id
     end
+  end
+
+  def current_reading
+    self.meter_reading
+  end
+
+  def previous_reading
+    self.account.account_details.latest_pervious_reading
+  end
+
+  def remarks
+    if self.remark.name == "other"
+      self.remark.other_remark.name
+    else
+      self.remark.name
+    end
+  end
+
+  def account_status
+    self.account.account_details.account_status
   end
 
   def update_assignment_stage
