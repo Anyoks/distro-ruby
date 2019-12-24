@@ -10,6 +10,11 @@ module Types
     field :image, String, null: true
     field :date, String, null: false
     field :stageName, String, null: false
+    field :building_type, String, null: true
+    field :account_status, String, null: true
+    field :remarks, String, null: true
+    field :current_reading, String, null: true
+    field :previous_reading, String, null: true
     def image
       object.image_url
     end
