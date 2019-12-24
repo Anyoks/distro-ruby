@@ -6,10 +6,13 @@
 #  completed         :boolean
 #  comments          :string
 #  further_action_id :uuid
-#  assignment_id     :uuid
-#  stage_id          :uuid
+#  assignment_id     :uuid             not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  picture           :string
+#  remark_id         :uuid             default("e6f350a6-1bb1-4e7b-921b-8dfcc5a534d2"), not null
+#  meter_reading     :string
+#  meter_serial      :string
 #
 
 class Report < ApplicationRecord
@@ -30,6 +33,10 @@ class Report < ApplicationRecord
   # "Further Action"
   # "Pending"
   # "Complete"
+
+  def account
+    self.assignment.account
+  end
   
   def default_f_action
     if self.further_action_id == nil 
