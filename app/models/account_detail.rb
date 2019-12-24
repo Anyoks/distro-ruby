@@ -30,4 +30,66 @@ class AccountDetail < ApplicationRecord
     end
     
   end
+
+  def self.latest_pervious_reading
+    details = AccountDetail.order("created_at").last
+    if details.nil?
+      ""
+    else
+      details.previous_reading
+    end
+  end
+
+  # We get the current account status by getting the latest account detail, 
+  # this one is to get the latest from a list
+  def self.account_status
+    details = AccountDetail.order("created_at").last
+    if details.nil?
+      ""
+    else
+      if details.account_status.nil?
+        ""
+      else
+        details.account_status.name
+      end
+    end
+  end
+
+  def my_account_status
+    
+      if self.account_status.nil?
+        ""
+      else
+        self.account_status.name
+      end
+  
+  end
+
+  # We get the current building type by getting the latest account details
+  # this one is to get the latest from a list
+  def self.building_type
+
+    # byebug 
+
+    if AccountDetail.order("created_at").last.nil?
+      ""
+    else
+      if AccountDetail.order("created_at").last.building_type_cartegory.nil?
+        ""
+      else
+        AccountDetail.order("created_at").last.building_type_cartegory.building_type.name
+      end
+    end
+    
+  end
+
+  def my_building_type
+     
+      if self.building_type_cartegory.nil?
+        ""
+      else
+       self.building_type_cartegory.building_type.name
+      end
+    
+  end
 end
