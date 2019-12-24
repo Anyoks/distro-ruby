@@ -123,6 +123,38 @@ query {
     }
   }
 
+# All Further Actions
+query{
+  furtheractions{
+    name
+    id
+  }
+}
+# All remarks
+query{
+  remarks{
+    name
+    id
+  }
+}
+
+# All Account status types 
+# faulty, discounnect, active
+query{
+  accountstatus{
+    name
+    id
+  }
+}
+
+# All Building Types
+query{
+  buildingtypes{
+    name
+    id
+  }
+}
+
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################
@@ -134,12 +166,15 @@ mutation{
     completed:true,
     comments:"no isses",
     furtherActionId: "6e7be5dc-4ff7-44b9-a5a1-4d129410f023",
-    assignmentId: "302f12b7-56ed-4f2c-929d-be2809b0f1f2"  ,
+    assignmentId: "4caa579a-4f5a-4ec3-9764-19c78f9ce74e"  ,
     otherComment: "Testing this other",
     remarkId:"038d36fc-1cb0-4aeb-8bd9-607acb1a6e8e",
     otherRemark: "testing this other remark",
     meterSerial:"19040599",
-    meterReading:"1234567", 
+    meterReading:"1234567",
+    buildingTypeCartegoryId: "5f4d956d-c0c5-476a-9189-437001de5b33",
+    accountStatusId: "9a5842ef-3676-403c-9b94-4b8f45554039",
+    buildingDetail: "Bed sitter"
   }
   ){
     report{
