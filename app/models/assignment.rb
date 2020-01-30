@@ -21,7 +21,7 @@ class Assignment < ApplicationRecord
     belongs_to :account
     belongs_to :staff
     belongs_to :user
-    has_one :report
+    has_one :report , dependent: :destroy
 
     def add_default_stage
         self.stage_id = Stage.find_by(name: "Assign").id

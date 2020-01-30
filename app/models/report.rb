@@ -24,7 +24,7 @@ class Report < ApplicationRecord
   belongs_to :assignment
   after_commit :update_assignment_stage, on: :create
   before_validation :default_f_action, on: :create
-  has_many :pictures
+  has_many :pictures, dependent: :destroy
 
   # mount_uploader :picture, PictureUploader # using carrier wave
 

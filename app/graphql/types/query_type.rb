@@ -87,7 +87,11 @@ module Types
       description: "A list of all Building Types"
 
     
+    field :accounts_connection, Types::AccountType.connection_type, null: false
     
+    def accounts_connection(**_args)
+      Account.all.includes(walkroute:[subzone:[:zone]])
+    end
 
     def test_field
       "Hello World!"

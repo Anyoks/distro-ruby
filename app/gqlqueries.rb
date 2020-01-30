@@ -154,6 +154,35 @@ query{
     id
   }
 }
+## accounts paginated
+
+ query($first: Int!, $after: String! ) {
+    
+      accountsConnection(first: $first, after: $after) {
+        pageInfo {
+          endCursor
+          startCursor
+          hasPreviousPage
+          hasNextPage
+        }
+        edges{
+          node{
+            id
+            name
+            meterSerial
+            number
+            oldAccountNumber
+            walkroute {
+              subzone {
+                zone {
+                  name
+                }
+              }
+            }
+          }
+        }
+    }
+  }
 
 #########################################################################
 #####################   MUTATIONS  ######################################

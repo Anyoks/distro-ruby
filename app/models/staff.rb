@@ -43,7 +43,7 @@ class Staff < ApplicationRecord
          :token_authenticatable
 
     belongs_to :position
-    has_many :assignments
+    has_many :assignments, dependent: :destroy
     has_many :reports, through: :assignments
     before_create :set_uid, :skip_confirmation
 
