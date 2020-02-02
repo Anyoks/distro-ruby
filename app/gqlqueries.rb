@@ -184,6 +184,25 @@ query{
     }
   }
 
+  # ### Accounts by zone.
+
+  query($zoneId: String!) {
+    zoneaccounts(zoneId: "e9e23e75-d0c0-4a49-8e33-baaec55cdd3a"){
+      id
+      name
+      meterSerial
+      number
+      oldAccountNumber
+      walkroute {
+        subzone {
+          zone {
+            name
+          }
+        }
+      }
+    }
+  }
+
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################

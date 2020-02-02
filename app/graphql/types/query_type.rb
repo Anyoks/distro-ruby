@@ -87,7 +87,16 @@ module Types
       description: "A list of all Building Types"
 
     
-    field :accounts_connection, Types::AccountType.connection_type, null: false
+    field :accounts_connection, Types::AccountType.connection_type, null: false,
+      description: "A paginated list of nodes of accounts"
+
+    field :zones,[Types::ZoneType], null: false,
+      description: "A list of all Zone Types"
+
+    field :zoneaccounts, [Types::AccountType],null: true,
+      description: "A list of all Accounts in this zone" do 
+        argument :zoneId, String, required: true
+    end
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -198,6 +207,15 @@ module Types
 
     def buildingtypes
       BuildingType.all
+    end
+    
+    def zones
+      Zone.order(:name)
+    end
+
+    def zoneaccounts(zoneId)
+      zone = Zone.find(zoneId[:zone_id])
+      zone.accounts
     end
 
   end

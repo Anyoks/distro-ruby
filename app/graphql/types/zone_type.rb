@@ -5,5 +5,6 @@ module Types
     field :desctiption, String, null: false
     field :subzone, [Types::SubzoneType], null: true
     field :scheme, [Types::SchemeType], null: true
+    field :accounts, [Types::AccountType], null: true
   end
 end
