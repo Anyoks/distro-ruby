@@ -1,0 +1,56 @@
+COPY doctors(customer_number,address_line_1,address_line_2,address_line_3,city,state,zip_code,primary_phone,prof_first_name,prof_middle_name,prof_last_name,prof_name_prefix,prof_name_suffix,primary_specialty,secondary_specialty,npi,ims,me,primary_specialty_dscr,latitude,longitude) TO '/Users/dmoore/projects/colddata-amgen/nplate_doc_finder/db/seeds/nplate_doctors.csv' DELIMITER ',' CSV HEADER;
+
+\copy account_details(id,name,current_reading,previous_reading,account_id,account_status_id,meter_serial,building_type_cartegory_id) TO './account_details.csv' DELIMITER ',' CSV HEADER;
+
+\copy account_statuses(id,name,created_at,updated_at) TO './account_statuses.csv' DELIMITER ',' CSV HEADER;
+
+\copy accounts(id,number,meter_serial,name,walkroute_id,address,latitude,longitude,created_at,updated_at,old_account_number,sewer,water,connection_status,tariff,building_type,house_type,house_units) TO './accounts.csv' DELIMITER ',' CSV HEADER;
+
+\copy assignments(id,task_id,stage_id,account_id,created_at,updated_at,staff_id,user_id) TO './assignments.csv' DELIMITER ',' CSV HEADER;
+
+\copy building_details(id,name,description,building_type_cartegory_id,created_at,updated_at) TO './building_details.csv' DELIMITER ',' CSV HEADER;
+
+\copy building_type_cartegories(id,name,description,building_type_id,created_at,updated_at) TO './building_type_cartegories.csv' DELIMITER ',' CSV HEADER;
+
+\copy building_types(id,name,created_at,updated_at) TO './building_types.csv' DELIMITER ',' CSV HEADER;
+
+\copy departments(id,name,description,created_at,updated_at) TO './departments.csv' DELIMITER ',' CSV HEADER;
+
+\copy further_actions(id,name,description,created_at,updated_at) TO './further_actions.csv' DELIMITER ',' CSV HEADER;
+
+\copy meter_readings(id,previous,current,account_id,created_at,updated_at) TO './meter_readings.csv' DELIMITER ',' CSV HEADER;
+
+\copy other_remarks(id,name,remark_id,created_at,updated_at) TO './other_remarks.csv' DELIMITER ',' CSV HEADER;
+
+\copy others(id,name,further_action_id,created_at,updated_at) TO './others.csv' DELIMITER ',' CSV HEADER;
+
+\copy positions(id,name,description,subdepartment_id,created_at,updated_at) TO './positions.csv' DELIMITER ',' CSV HEADER;
+
+\copy positions_subdepartments(position_id,subdepartment_id) TO './positions_subdepartments.csv' DELIMITER ',' CSV HEADER;
+
+\copy remarks(id,name,description,created_at,updated_at) TO './remarks.csv' DELIMITER ',' CSV HEADER;
+
+\copy roles(id,name) TO './roles.csv' DELIMITER ',' CSV HEADER;
+
+\copy sch_zone_details(scheme_id,zone_id) TO './sch_zone_details.csv' DELIMITER ',' CSV HEADER;
+
+\copy schemes(name,description) TO './schemes.csv' DELIMITER ',' CSV HEADER;
+
+\copy staffs(id,provider,uid,allow_password_change,first_name,last_name,email,phone_number,position_id,authentication_token,authentication_token_created_at,created_at,updated_at) TO './staffs.csv' DELIMITER ',' CSV HEADER;
+
+\copy stages(name,description) TO './stages.csv' DELIMITER ',' CSV HEADER;
+
+\copy subdepartments(name,description,department_id) TO './subdepartments.csv' DELIMITER ',' CSV HEADER;
+
+\copy subdepartments_tasks(task_id,subdepartment_id) TO './subdepartments_tasks.csv' DELIMITER ',' CSV HEADER;
+
+\copy subzones(name,description,zone_id) TO './subzones.csv' DELIMITER ',' CSV HEADER;
+
+\copy tasks(name,description) TO './tasks.csv' DELIMITER ',' CSV HEADER;
+
+
+\copy users(id,provider,uid,allow_password_change,first_name,last_name,email,role_id,created_at,updated_at,authentication_token,authentication_token_created_at,subdepartment_id) TO './users.csv' DELIMITER ',' CSV HEADER;
+
+\copy walkroutes(name,description,subzone_id) TO './walkroutes.csv' DELIMITER ',' CSV HEADER;
+
+\copy zones(name,description) TO './zones.csv' DELIMITER ',' CSV HEADER;

@@ -21,8 +21,6 @@ query {
    report{
      comments
    }
-
-  
  }
 }
 
