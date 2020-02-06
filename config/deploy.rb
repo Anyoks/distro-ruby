@@ -20,7 +20,7 @@ set :deploy_to, "/home/deploy/distro"
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 # 
 set :bundle_binstubs, nil
-set :linked_files, %w{config/database.yml config/secrets.yml config/initializers/devise.rb}
+set :linked_files, %w{config/database.yml config/secrets.yml config/initializers/devise.rb config/initializers/apartment.rb }
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images}
 
 # cap production deploy:upload_yml
@@ -31,6 +31,7 @@ namespace :deploy do
         execute "mkdir #{shared_path}/config -p"
         upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
         upload! StringIO.new(File.read("config/secrets.yml")), "#{shared_path}/config/secrets.yml"
+        upload! StringIO.new(File.read("config/initializers/apartment.rb")), "#{shared_path}/config/initializers/apartment.rb"
         # upload! StringIO.new(File.read("config/initializers/devise.rb}")), "#{shared_path}/config/initializers/devise.rb"
       end
     end
