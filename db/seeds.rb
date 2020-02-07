@@ -683,7 +683,7 @@ puts"###########################################################################
 #############################################################################
 ##########################Tasks#############################################
 #############################################################################"
-Apartment::Tenant.switch('ruiru') do
+# Apartment::Tenant.switch('ruiru') do
     csv_text = File.read(Rails.root.join('lib', 'seeds', 'Tasks.csv'))
     # display the wall of text
     # puts csv_text  
@@ -701,24 +701,14 @@ Apartment::Tenant.switch('ruiru') do
             subdept  = Subdepartment.where(name:subdept_name).first
             
             if subdept.present?
-            object = Task.new( name: name, subdepartment_id: subdept.id)
-            # Save the obeject
-            if object.valid?
-                object.save!
-                puts "#{object.name} ==> Ready to be saved"
+                 
             else
-                puts "#{object.name} ERR:: Failed to Save! "
-                puts "\n"
-                puts "****Error****"
-                puts "#{object.errors.messages}"
-            end
-            else
-            puts "SDEPARTMENT DOES NOT EXIST For task  #{row['Task']}----------Skipping"
+                puts "SDEPARTMENT DOES NOT EXIST For task  #{row['Task']}----------Skipping"
             end
             
         end
     end
-end
+# end
 
 # puts"#############################################################################
 # #############################################################################
@@ -765,7 +755,7 @@ puts"###########################################################################
 #############################################################################
 ##########################Staff#############################################
 #############################################################################"
-Apartment::Tenant.switch('ruiru') do
+# Apartment::Tenant.switch('ruiru') do
     csv_text = File.read(Rails.root.join('lib', 'seeds', 'Staff.csv'))
     # display the wall of text
     # puts csv_text  
@@ -803,7 +793,7 @@ Apartment::Tenant.switch('ruiru') do
             
         end
     end
-end
+# end
 
 # Meter Serial,Account,Account Name,Walk Route,Long,Lat
 
@@ -1593,7 +1583,7 @@ puts"###########################################################################
 ##########################Admin#############################################
 #############################################################################"
 
-Apartment::Tenant.switch('ruiru') do
+# Apartment::Tenant.switch('ruiru') do
         csv_text = File.read(Rails.root.join('lib', 'seeds', 'Admin.csv'))
     # display the wall of text
     # puts csv_text  
@@ -1634,6 +1624,6 @@ Apartment::Tenant.switch('ruiru') do
             
         end
     end
-end
+# end
 
 
