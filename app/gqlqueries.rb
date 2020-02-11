@@ -265,3 +265,184 @@ mutation(
           id
         }
       }
+
+###############################################
+###  CREATE/ UPDATE DEPARTMENTS
+
+mutation{
+  createDepartment(input:
+  	{
+      name: "tes1t",
+			description: "test1"    
+    }
+  ){
+    department{
+      name
+      id
+    }
+  }
+}
+
+mutation{
+  updateDepartment(input:
+  	{
+      name: "Incredible",
+			description: "testing accordingly" ,
+      id: "c26802a7-2e02-4ee0-8d0b-4592cd216e48"
+    }
+  ){
+    department{
+      name
+      desctription
+      id
+    }
+  }
+}
+
+###############################################
+###  CREATE/ UPDATE SUBDEPARTMENTS
+mutation{
+  createSubdepartment(input:
+  	{
+      name: "tes1t",
+			description: "test1"    
+    }
+  ){
+    department{
+      name
+      id
+    }
+  }
+}
+##udpate
+mutation{
+  updateSubdepartment(input:
+  	{
+      name: "billing & customer relations",
+			description: "Make sure we have cash" ,
+      id: "bf356691-274f-4167-ac51-fa65488ed723",
+      departmentId: "10968d0b-508d-41f7-b78d-eb38d7f3536e"
+      positionIds:["e9334ed6-0841-4b65-be73-17ab3b651011" ]
+    }
+  ){
+    subdepartment{
+      name
+      id
+      description
+      positions{
+        name
+        id
+      }
+    }
+  }
+}
+#####################################
+#CREATE UPDATE POSITIONS
+# CREATE
+mutation{
+  createPosition(input:
+  	{
+      name: "Test",
+			description: "Test very well" ,
+      subdepartmentIds: ["bf356691-274f-4167-ac51-fa65488ed723"]
+    }
+  ){
+    position{
+      name
+      description
+    }
+  }
+}
+# UPDATE
+mutation{
+  updatePosition(input:
+  	{
+      id: "69c29cb1-bd1d-4514-9c7f-fcc1c309689e",
+      name: "Tested",
+			description: "Went very well" ,
+      subdepartmentIds: ["bf356691-274f-4167-ac51-fa65488ed723"]
+    }
+  ){
+    position{
+      id
+      name
+      description
+    }
+  }
+}
+
+# #####################################
+##CREATE UPDATE TASKS
+# CREATE
+mutation{
+  createTask(input:
+  	{
+      name: "test",
+			description: "test" 
+      subdepartmentIds:["3962ee69-eadd-4ebf-b7b1-f82b6bf6f714"]
+    }
+  ){
+    task{
+      name
+      id
+      subdepartments{
+        name
+        id
+      }
+    }
+  }
+}
+# UPDATE
+mutation{
+  updateTask(input:
+  	{
+      id: "cb934cdb-41ec-4edd-a25f-cc5e0a03b40a",
+      name: "testing",
+			description: "tested very well too!" 
+      subdepartmentIds:["3962ee69-eadd-4ebf-b7b1-f82b6bf6f714","c0255136-9405-4eb9-8e61-47caafd56ff1"]
+    }
+  ){
+    task{
+      name
+      id
+      subdepartments{
+        name
+        id
+      }
+    }
+  }
+}
+# ####################################################
+### UPDATE STAFF POSITION
+mutation{
+  updateStaffPosition(input:
+  	{
+      staffId: "067e7f3b-1af1-4c63-ab51-739a9d3b0361",
+      positionId: "94dbf492-f4a4-4d52-a40c-e9464da9b265" ,
+    }
+  ){
+    staff{
+      firstName
+      lastName
+      id
+      position{
+        name
+        id
+      }
+      
+    }
+  }
+}
+# LIST STAFF
+query{
+  staffs{
+    lastName
+    firstName
+    id
+    position{
+      name
+      id
+    }
+  }
+}
+# ########################################

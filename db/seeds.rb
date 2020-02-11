@@ -204,14 +204,14 @@ end
 
 # stages
 
-# ['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
-#     if Stage.find_by_name("#{stage}").present?
-#         puts "STAGE EXISTS #{stage}----------Skipping"        
-#     else
-#         Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
-#         puts "Stage #{stage}----------SAVED" 
-#     end
-# end
+['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
+    if Stage.find_by_name("#{stage}").present?
+        puts "STAGE EXISTS #{stage}----------Skipping"        
+    else
+        Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
+        puts "Stage #{stage}----------SAVED" 
+    end
+end
 
 # Position
 ['Billing', 'Technician' ].each do |stage|
@@ -1627,3 +1627,45 @@ puts"###########################################################################
 # end
 
 
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+
+['Zone A', 'Zone B'].each do |zone|
+    dbzone = Zone.find_by(name: zone.downcase)
+    if dbzone 
+
+    else
+        zoneObj = Zone.new(name: zone.downcase)
+
+        if zoneObj.valid?
+            zoneObj.save!
+            ['scheme a', 'scheme b'].each do |sch|
+                scheme = zoneObj.schemes.find_by(name: sch)
+                if scheme.present?
+                    
+                else
+                    scheme = Scheme.create!(name: sch)
+                    zoneObj.schemes << scheme
+                end
+            end
+
+            ['subzone a','subzone b'].each do |sub|
+                subzone = zoneObj.subzones.find_or_create_by(name: sub )
+
+                ['walkroute a', 'walkroute b'].each do |wlk|
+                    walkroute = subzone.walkroutes.find_or_create_by(name: wlk )
+
+                    ['account a', 'account b'].each do |acc, index|
+                        walkroute.accounts.find_or_create_by({ number: "#{index}", meter_serial: "#{index}3#{index}", name: "#{acc}", 
+                             address: "#{acc}home", old_account_number: "#{acc}#{index}" } )
+                    end
+                end
+            end
+
+        end
+
+    end
+end

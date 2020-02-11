@@ -22,6 +22,7 @@ module Mutations
       failed_assignments = []
 
       account_ids.each do |account|
+        # TODO change user_id from id to email?
         assignment = Assignment.create!(user_id: user_id, task_id: task_id, staff_id: staff_id, account_id: account)
 
         if assignment.persisted?

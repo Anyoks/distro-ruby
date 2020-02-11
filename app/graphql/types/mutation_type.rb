@@ -1,5 +1,14 @@
 module Types
   class MutationType < Types::BaseObject
+    field :updateStaffPosition, mutation: Mutations::UpdateStaffPosition
+    field :updatePosition, mutation: Mutations::UpdatePosition
+    field :createPosition, mutation: Mutations::CreatePosition
+    field :updateSubdepartment, mutation: Mutations::UpdateSubdepartment
+    field :createSubdepartment, mutation: Mutations::CreateSubdepartment
+    field :updateDepartment, mutation: Mutations::UpdateDepartment
+    field :createDepartment, mutation: Mutations::CreateDepartment
+    field :updateTask, mutation: Mutations::UpdateTask
+    field :createTask, mutation: Mutations::CreateTask
     field :uploadImage, mutation: Mutations::UploadImage
     field :createAssignment, mutation: Mutations::CreateAssignment
     field :createReport, mutation: Mutations::CreateReport
