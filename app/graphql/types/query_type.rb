@@ -27,7 +27,7 @@ module Types
     field :departments, [Types::DepartmentType], null: false,
       description: "A list of all departments"
     
-    field :subdpartments, [Types::SubdepartmentType], null: false,
+    field :subdepartments, [Types::SubdepartmentType], null: false,
       description: "A list of all subdepartments"
 
     field :positions, [Types::PositionType], null: false,
@@ -142,7 +142,7 @@ module Types
       Department.all
     end
 
-    def subdpartments
+    def subdepartments
       Subdepartment.all
     end
 

@@ -2,7 +2,7 @@ module Types
   class TaskType < Types::BaseObject
     field :id, String, null: false
     field :name, String, null: false
-    field :description, String, null: false
+    field :description, String, null: true
     field :subdepartments, [Types::SubdepartmentType], null: true
     field :assignments, [Types::AssignmentType], null: true
     field :staffs, [Types::StaffType], null: true
