@@ -8,12 +8,12 @@ module Mutations
     argument :id, String, required: true
     # argument :department_id, String, required: true
     argument :subdepartment_ids, [String], required: true
-    
+     argument :staff_ids,[ String], required: true
 
     field :position, Types::PositionType, null: true
 
 
-    def resolve(name:,description:,id:,subdepartment_ids:)
+    def resolve(name:,description:,id:,subdepartment_ids:,staff_ids:)
       # byebug
       position = Position.find(id)
 
@@ -34,6 +34,18 @@ module Mutations
             # remove all subdepartments
             position.subdepartments = subdepartments
           end
+
+          if !staff_ids.empty?
+            staffs = []
+            staff_ids.each do |id|
+              staff =Staff.find(id)
+              staffs << staff
+            end
+            position.staffs = staffs
+          else
+            # remove all sfatt
+            position.staffs = staffs
+         end
 
           MutationResult.call(
             obj: { position: position },

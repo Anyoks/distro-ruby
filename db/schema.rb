@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_154421) do
+ActiveRecord::Schema.define(version: 2020_02_13_040326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -153,10 +153,8 @@ ActiveRecord::Schema.define(version: 2020_02_10_154421) do
   create_table "positions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.uuid "subdepartment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subdepartment_id"], name: "index_positions_on_subdepartment_id"
   end
 
   create_table "positions_subdepartments", id: false, force: :cascade do |t|
@@ -350,7 +348,6 @@ ActiveRecord::Schema.define(version: 2020_02_10_154421) do
   add_foreign_key "other_remarks", "remarks"
   add_foreign_key "others", "further_actions"
   add_foreign_key "pictures", "reports"
-  add_foreign_key "positions", "subdepartments"
   add_foreign_key "reports", "assignments"
   add_foreign_key "reports", "further_actions"
   add_foreign_key "sch_zone_details", "schemes"

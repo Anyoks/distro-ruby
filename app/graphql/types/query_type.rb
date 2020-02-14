@@ -147,7 +147,7 @@ module Types
     end
 
     def positions
-      Position.all
+      Position.all.includes(:subdepartments, :staffs)
     end
 
     def staffs

@@ -201,6 +201,24 @@ query{
     }
   }
 
+  # positions
+  query{
+  positions{
+    id
+    name
+    description
+    subdepartments{
+      id
+      name
+    }
+    staffs{
+      id
+      firstName 
+      lastName
+    }
+  }
+}
+
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################
@@ -293,7 +311,7 @@ mutation{
   ){
     department{
       name
-      desctription
+      description
       id
     }
   }
@@ -305,7 +323,9 @@ mutation{
   createSubdepartment(input:
   	{
       name: "tes1t",
-			description: "test1"    
+      description: "test1"  
+       departmentId: "052df7ea-6645-4128-bc7a-75591fc477f1"  
+        positionIds:[]
     }
   ){
     department{
@@ -433,6 +453,41 @@ mutation{
     }
   }
 }
+#  CREATE POSITION
+
+ mutation(
+    $name: String!,
+    $description: String!,
+    $subdepartmentIds: [String!]!,
+    $staffIds: [String!]!
+  ){
+  createPosition(
+    input:
+  	{
+      name: $name,
+      description: $description,
+      subdepartmentIds:$subdepartmentIds,
+      staffIds: $staffIds,
+    }
+  ){
+    position{
+      name
+      id
+      description
+      subdepartments {
+        id
+        name
+      }
+      staffs {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+}
+
+
 # LIST STAFF
 query{
   staffs{

@@ -7,11 +7,12 @@ module Mutations
     argument :name, String, required: true
     argument :description, String, required: true
     argument :subdepartment_ids,[ String], required: true
+    argument :staff_ids,[ String], required: true
 
     field :position, Types::PositionType, null: true
 
 
-    def resolve(name:,description:,subdepartment_ids:)
+    def resolve(name:,description:,subdepartment_ids:,staff_ids:)
       position = Position.create!(name: name, description: description)
 
       if position.persisted?
@@ -22,6 +23,15 @@ module Mutations
              subdepartments << subdepartment
            end
            position.subdepartments << subdepartments
+         end
+
+         if !staff_ids.empty?
+          staffs = []
+           staff_ids.each do |id|
+            staff =Staff.find(id)
+            staffs << staff
+           end
+           position.staffs = staffs
          end
         
           MutationResult.call(

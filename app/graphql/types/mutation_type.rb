@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :updateStaff, mutation: Mutations::UpdateStaff
     field :updateStaffPosition, mutation: Mutations::UpdateStaffPosition
     field :updatePosition, mutation: Mutations::UpdatePosition
     field :createPosition, mutation: Mutations::CreatePosition
