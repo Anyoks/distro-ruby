@@ -660,10 +660,11 @@ csv.each do |row|
         subdept  = Subdepartment.where(name:subdept_name).first
         
         if subdept.present?
-          object = Position.new( name: name, description: description, subdepartment_id: subdept.id)
+          object = Position.new( name: name, description: description)
           # Save the obeject
           if object.valid?
               object.save!
+              object.subdepartments << subdept
               puts "#{object.name} ==> Ready to be saved"
           else
               puts "#{object.name} ERR:: Failed to Save! "

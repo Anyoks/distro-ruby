@@ -26,6 +26,7 @@ class Account < ApplicationRecord
     belongs_to :walkroute
     has_many :assignments
     has_many :account_details
+    has_many :reports, through: :assignments
 
 
     def zone

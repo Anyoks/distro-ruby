@@ -62,6 +62,13 @@ query {
    
  }
 }
+# My subdepartment
+query($userId: String!){
+	mySubdepartment(email: $userId){
+    name
+    id
+  }
+}
 # another way to query
 query($userId: String!) {
     mytasks(userId: $userId ) {

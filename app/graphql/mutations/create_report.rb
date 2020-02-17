@@ -19,7 +19,7 @@ module Mutations
     argument :account_status_id, String, required: false 
     argument :building_detail, String, required: false 
     
-    field :report, Types::ReportType, null: false
+    field :report, Types::ReportType, null: true
     field :errors, [String], null: false
     field :other, String, null: true
     field :other_remark, String, null:true
@@ -30,6 +30,7 @@ module Mutations
       
       report = Report.new(completed: completed ,comments: comments,further_action_id: further_action_id,assignment_id: assignment_id,remark_id: remark_id,meter_reading: meter_reading,meter_serial: meter_serial)
       
+      # byebug
       if report.save
           
           # some of this should be done in the background with at task to make this faster...
@@ -76,6 +77,7 @@ module Mutations
         end        
         
       else
+        # byebug
         # Failed save, return the errors to the client
         # raise GraphQL::ExecutionError, report.errors.full_messages.join(", ")
         {

@@ -11,8 +11,12 @@
 
 class Task < ApplicationRecord
     # belongs_to :subdepartment
-    has_and_belongs_to_many :subdepartments
+    has_and_belongs_to_many :subdepartments   # <== rmove this. change it to has_and_belongs_to_many :positions
     has_many :assignments
+
+    # task should have and belong to many positions
+    # this will remove the current state where all staff in a department will be in 
+    # a task just by adding a task to a ssubdpartment
 
 
 

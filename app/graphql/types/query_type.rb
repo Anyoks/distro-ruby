@@ -97,6 +97,16 @@ module Types
       description: "A list of all Accounts in this zone" do 
         argument :zoneId, String, required: true
     end
+
+    field :my_subdepartment, Types::SubdepartmentType, null: false,
+      description: "A users's subdpartment" do
+        argument :email, String, required: true
+    end
+
+     field :account_assignments, [Types::AssignmentType], null: false,
+      description: "An account's assignment history" do
+        argument :id, String, required: true
+    end
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -136,6 +146,13 @@ module Types
       # byebug
       # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
       Assignment.myassignments(userId[:user_id]).order("created_at DESC")
+    end
+
+
+    def account_assignments(id)
+      # byebug
+      # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+      Assignment.account_assignments(id[:id]).order("created_at DESC")
     end
 
     def departments 
@@ -216,6 +233,11 @@ module Types
     def zoneaccounts(zoneId)
       zone = Zone.find(zoneId[:zone_id])
       zone.accounts
+    end
+
+    def my_subdepartment(email)
+      user = User.find_by(email)
+      sub = user.subdepartment
     end
 
   end
