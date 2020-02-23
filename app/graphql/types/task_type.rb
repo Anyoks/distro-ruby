@@ -3,7 +3,7 @@ module Types
     field :id, String, null: false
     field :name, String, null: false
     field :description, String, null: true
-    field :subdepartments, [Types::SubdepartmentType], null: true
+    field :positions, [Types::PositionType], null: true
     field :assignments, [Types::AssignmentType], null: true
     field :staffs, [Types::StaffType], null: true
     field :total_assignments, Integer, null: false

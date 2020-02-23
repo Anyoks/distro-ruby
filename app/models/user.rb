@@ -37,6 +37,7 @@
 class User < ActiveRecord::Base
   include GraphQL::Interface
   include DeviseTokenAuth::Concerns::User
+   before_save :downcase_fields
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
@@ -57,6 +58,11 @@ class User < ActiveRecord::Base
   before_validation :set_default_role
   has_many :assignments
   has_many :reports, through: :assignments
+
+  def downcase_fields
+    self.first_name.downcase!
+    self.last_name.downcase!
+  end
 
   def set_default_role
 		self.role ||= Role.find_by_name('moderator') 

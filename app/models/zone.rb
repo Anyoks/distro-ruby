@@ -10,6 +10,7 @@
 #
 
 class Zone < ApplicationRecord
+    before_save :downcase_fields
     has_many :subzones
     has_many :schZoneDetails
     has_many :schemes, through: :schZoneDetails
@@ -25,6 +26,10 @@ class Zone < ApplicationRecord
         end
 
         return accounts
+    end
+
+    def downcase_fields
+      self.name.downcase!
     end
 
     def self.total_account_by_zone

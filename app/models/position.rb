@@ -13,6 +13,7 @@
 class Position < ApplicationRecord
     has_and_belongs_to_many :subdepartments
     has_many :staffs
+    has_and_belongs_to_many :tasks
 
 
 

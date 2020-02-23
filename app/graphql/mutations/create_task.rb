@@ -6,23 +6,23 @@ module Mutations
 
     argument :name, String, required: true
     argument :description, String, required: true
-    argument :subdepartment_ids, [String], required: true
+    argument :position_ids, [String], required: true
 
     field :task, Types::TaskType, null: true
 
 
-    def resolve(name:,description:,subdepartment_ids:)
+    def resolve(name:,description:,position_ids:)
       task = Task.create!(name: name, description: description)
 
       if task.persisted?
-          subdepartments = []
-          if !subdepartment_ids.empty?
-            subdepartment_ids.each do |sub|
-               subdepartment = Subdepartment.find(sub)
-               subdepartments << subdepartment
+          positions = []
+          if !position_ids.empty?
+            position_ids.each do |sub|
+               position = Position.find(sub)
+               positions << position
             end
 
-            task.subdepartments << subdepartments
+            task.positions << positions
           end
           MutationResult.call(
             obj: { task: task },

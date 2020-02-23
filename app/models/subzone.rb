@@ -13,6 +13,11 @@
 class Subzone < ApplicationRecord
     belongs_to :zone
     has_many :walkroutes
+     before_save :downcase_fields
 
      has_many :accounts, through: :walkroutes
+
+     def downcase_fields
+      self.name.downcase!
+    end
 end

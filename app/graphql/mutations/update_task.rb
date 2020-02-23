@@ -6,32 +6,32 @@ module Mutations
     argument :name, String, required: true
     argument :description, String, required: true
     argument :id, String, required: true
-    argument :subdepartment_ids, [String], required: true
+    argument :position_ids, [String], required: true
     
 
     field :task, Types::TaskType, null: true
 
 
-    def resolve(name:,description:,id:,subdepartment_ids:)
+    def resolve(name:,description:,id:,position_ids:)
       # byebug
       task = Task.find(id)
 
       if task.present?
           task.update_attributes(name: name,description: description)
-          subdepartments = []
-          if !subdepartment_ids.empty?
-            # iterate and add each subdepartment to array
-            subdepartment_ids.each do |sub|
-              subdepartment = Subdepartment.find(sub)
-              if subdepartment
-                 subdepartments << subdepartment
+          positions = []
+          if !position_ids.empty?
+            # iterate and add each position to array
+            position_ids.each do |sub|
+              position = Position.find(sub)
+              if position
+                 positions << position
               end
             end
-            # add all subdepartments to the HABTM join table
-            task.subdepartments = subdepartments
+            # add all positions to the HABTM join table
+            task.positions = positions
           else
-            # remove all subdepartments
-            task.subdepartments = subdepartments
+            # remove all positions
+            task.positions = positions
           end
 
           MutationResult.call(

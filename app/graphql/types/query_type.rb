@@ -103,6 +103,16 @@ module Types
         argument :email, String, required: true
     end
 
+    field :my_positions, [Types::PositionType], null: false,
+      description: "Positions in A users's subdpartment" do
+        argument :email, String, required: true
+    end
+
+    field :all_positions, [Types::PositionType], null: false,
+      description: "All Positions " do
+        argument :email, String, required: true
+    end
+
      field :account_assignments, [Types::AssignmentType], null: false,
       description: "An account's assignment history" do
         argument :id, String, required: true
@@ -165,6 +175,10 @@ module Types
 
     def positions
       Position.all.includes(:subdepartments, :staffs)
+    end
+
+    def all_positions
+      Position.all
     end
 
     def staffs
@@ -238,6 +252,11 @@ module Types
     def my_subdepartment(email)
       user = User.find_by(email)
       sub = user.subdepartment
+    end
+
+    def my_positions(email)
+      user = User.find_by(email)
+      pos = user.subdepartment.positions
     end
 
   end

@@ -34,6 +34,7 @@
 class Staff < ApplicationRecord
     include GraphQL::Interface
     include DeviseTokenAuth::Concerns::User
+     before_save :downcase_fields
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -49,6 +50,11 @@ class Staff < ApplicationRecord
 
     def set_uid
        self.uid = self.email
+  end
+
+  def downcase_fields
+    self.first_name.downcase!
+    self.last_name.downcase!
   end
 
   def skip_confirmation

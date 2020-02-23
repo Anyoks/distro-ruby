@@ -10,9 +10,12 @@
 #
 
 class Task < ApplicationRecord
+   before_save :downcase_fields
     # belongs_to :subdepartment
-    has_and_belongs_to_many :subdepartments   # <== rmove this. change it to has_and_belongs_to_many :positions
+    # has_and_belongs_to_many :subdepartments   # <== rmove this. change it to has_and_belongs_to_many :positions
+    has_and_belongs_to_many :positions
     has_many :assignments
+    has_many :staffs, through: :positions
 
     # task should have and belong to many positions
     # this will remove the current state where all staff in a department will be in 
@@ -30,17 +33,21 @@ class Task < ApplicationRecord
         end
     end
 
-
-    def staffs
-      staffs = []
-      self.subdepartments.each do |sub|
-        sub.staffs.each do |staff|
-          staffs << staff
-        end
-      end
-
-      return staffs
+    def downcase_fields
+      self.name.downcase!
     end
+
+
+    # def staffs
+    #   staffs = []
+    #   self.subdepartments.each do |sub|
+    #     sub.staffs.each do |staff|
+    #       staffs << staff
+    #     end
+    #   end
+
+    #   return staffs
+    # end
 
     def staff_names
       staff_names = []

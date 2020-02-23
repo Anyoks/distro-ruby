@@ -15,7 +15,7 @@ class Subdepartment < ApplicationRecord
     # has_many :positions
     has_and_belongs_to_many :positions, dependent: :destroy
     has_many :users
-    # has_many :tasks
-    has_and_belongs_to_many :tasks
+    has_many :tasks, through: :positions
+    # has_and_belongs_to_many :tasks
     has_many :staffs, through: :positions, dependent: :destroy
 end

@@ -14,9 +14,15 @@
 class Stage < ApplicationRecord
   has_many :assignments # , dependent: :destroy
 
+   before_save :downcase_fields
+
   def total_assignments
     self.assignments.count
   end
+
+  def downcase_fields
+      self.name.downcase!
+    end
 
   def my_total_assignments(userId)
     # byebug
