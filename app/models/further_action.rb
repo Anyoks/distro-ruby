@@ -12,4 +12,7 @@
 class FurtherAction < ApplicationRecord
     has_many :reports
     has_one :other
+
+    has_many :zone_reports
+    has_many :dma_reports
 end

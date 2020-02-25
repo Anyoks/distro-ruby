@@ -1712,3 +1712,142 @@ require 'csv'
         p "DAMA CREATED:: #{dm.name}"
     end
 end
+
+["JUJA",
+"RUIRU",
+"GITHURAI"].each do |s|
+    Scheme.find_or_create_by({name: s.downcase})
+end
+
+
+
+['ACK BOREHOLE',
+'BIDCO COMPANY',
+'BIDCO TEST',
+'BOGIE 6"',
+'BOGIE 8"',
+'BROOKSIDE',
+'BTL',
+'BY-PASS INDUSTRY',
+'GACHORORO 8"',
+'GITAMBAYA DEVIK 4"',
+'GITAMBAYA PRISON 4"',
+'GITAMABAYA TANK 3"',
+'GITHURAI MIX BOREHOLE',
+'JACRIDGE',
+'JKUAT GATE A',
+'JUJA 8"',
+'JUJA FARM',
+'JUJA NEW PLANT',
+'KALIMONI 4"',
+'KALIMONI 8"',
+'KIMBO BOREHOLE',
+'KIRATINA BOREHOLE',
+'KIUU BOREHOLE',
+'KIZITO BOREHOLE',
+'MACHAKOS 3"',
+'MATANGI 6"',
+'MAUA 4"',
+'MAUA 6"',
+'MEMBLEY 6"',
+'MEMBLEY 8"',
+'MILIMAINI BOREHOLE',
+'MONARCH 8"',
+'MUGUTHA 6"',
+'MUGUTHA BOREHOLE',
+'MWIHOKO BOREHOLE',
+'NEW WOOD 8"',
+'PCEA MEMBLEY',
+'RAISING MAIN 6"',
+'RUIRU EAST 4"',
+'RUIRU EAST PLAINSVIEW 4"',
+'RUIRU EAST PLAINSVIEW 8"',
+'RUIRU GREENS 1.5"',
+'RUIRU GREENS 4"',
+'RUIRU GREENS 6"',
+'RUIRU INDUSTRY 4"',
+'RUIRU STADIUM',
+'RUIRU TOWN 6"',
+'RUIRU WTP 6"',
+'SWEET WATERS',
+'TOLL GSU',
+'UKOMBOZI 4"',
+'VARSITY VILLE',
+'WATER SUPPLY 6"',
+'WITEITHIE'].each do |m|
+    BulkMeter.find_or_create_by({name: m.downcase})
+end
+
+["SDU",
+"MDU",
+"INSTITUTIONAL",
+"INDUSTRIAL",
+"WATER KIOSK",
+"BUSINESS ENTERPRISE (OFFICES)",
+"HOTEL/RESTAURANT"].each do |n|
+    BuildingTypeCartegory.find_or_create_by({name: n.downcase})
+end
+
+
+["GROUND FLOUR",
+"ONE STOREY BUILDING",
+"TWO STOREY BUILDING",
+"THREE STOREY BUILDING",
+"FOUR STOREY BUILDING",
+"FIVE STOREY BUILDING",
+"SIX STOREY BUILDING",
+"SEVEN STOREY BUILDING"].each do |k|
+    Floor.find_or_create_by({name: k.downcase})
+end
+
+
+["ACTIVE",
+"STALLED",
+"FAULTY",
+"NO WATER",
+"STOLEN"].each do |k|
+     MeterStatus.find_or_create_by({name: k.downcase})
+end
+
+
+["GATE VALVE LEAKAGE",
+"LINER LEAKAGE",
+"METER LEAKAGE",
+"BURIED",
+"STALLED METER",
+"NONE"].each do |k|
+    MeterStandProblem.find_or_create_by({name: k.downcase})
+end
+
+["METER TAMPERING",
+"CONSUMPTION WITH NO METER",
+"BY-PASS",
+"DISCONNECTED WITH CONSUMPTION",
+"NONE"].each do |k|
+    Illegaluse.find_or_create_by({name: k.downcase})
+end
+
+
+
+["PVC",
+"HDPE",
+"GI",
+"ASBESTOS"].each do |k|
+    Pipematerial.find_or_create_by({name: k.downcase})
+end
+
+
+['1/2" (20mm)',
+'1" (32mm)',
+'1.5" (50mm)',
+'2" (63mm)',
+'3" (90mm)',
+'4" (110mm)',
+'6" (160mm)',
+'8" (225mm)',
+'10" (250mm)',
+'12" (315mm)',
+'20" (500mm)'].each do |k|
+    Pipesize.find_or_create_by({name: k.downcase})
+end
+

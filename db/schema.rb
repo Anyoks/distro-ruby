@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_105506) do
+ActiveRecord::Schema.define(version: 2020_02_25_152850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,6 +59,29 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.index ["walkroute_id"], name: "index_accounts_on_walkroute_id"
   end
 
+  create_table "anomallies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_report_id"
+    t.uuid "dma_report_id"
+    t.uuid "meter_stand_problem_id"
+    t.uuid "illegaluse_id"
+    t.boolean "labelled"
+    t.string "other_problem"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dma_report_id"], name: "index_anomallies_on_dma_report_id"
+    t.index ["illegaluse_id"], name: "index_anomallies_on_illegaluse_id"
+    t.index ["meter_stand_problem_id"], name: "index_anomallies_on_meter_stand_problem_id"
+    t.index ["zone_report_id"], name: "index_anomallies_on_zone_report_id"
+  end
+
+  create_table "anomally_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "anomally_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["anomally_id"], name: "index_anomally_pictures_on_anomally_id"
+  end
+
   create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "task_id", null: false
     t.uuid "stage_id", null: false
@@ -81,6 +104,18 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.index ["building_type_cartegory_id"], name: "index_building_details_on_building_type_cartegory_id"
   end
 
+  create_table "building_infos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "single_rooms"
+    t.integer "bedsitters"
+    t.integer "one_bedrooms"
+    t.integer "two_bedrooms"
+    t.integer "three_bedrooms"
+    t.uuid "floors_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["floors_id"], name: "index_building_infos_on_floors_id"
+  end
+
   create_table "building_type_cartegories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -94,6 +129,52 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "bulk_meters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "burst_and_lealages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_report_id"
+    t.uuid "dma_report_id"
+    t.uuid "pipematerial_id"
+    t.uuid "pipesize_id"
+    t.string "surrounding_area"
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dma_report_id"], name: "index_burst_and_lealages_on_dma_report_id"
+    t.index ["pipematerial_id"], name: "index_burst_and_lealages_on_pipematerial_id"
+    t.index ["pipesize_id"], name: "index_burst_and_lealages_on_pipesize_id"
+    t.index ["zone_report_id"], name: "index_burst_and_lealages_on_zone_report_id"
+  end
+
+  create_table "burst_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "burst_and_lealage_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["burst_and_lealage_id"], name: "index_burst_pictures_on_burst_and_lealage_id"
+  end
+
+  create_table "connection_infos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_report_id"
+    t.uuid "dma_report_id"
+    t.uuid "building_type_cartegory_id"
+    t.uuid "building_info_id"
+    t.boolean "labelled"
+    t.string "connection_number"
+    t.uuid "account_status_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_status_id"], name: "index_connection_infos_on_account_status_id"
+    t.index ["building_info_id"], name: "index_connection_infos_on_building_info_id"
+    t.index ["building_type_cartegory_id"], name: "index_connection_infos_on_building_type_cartegory_id"
+    t.index ["dma_report_id"], name: "index_connection_infos_on_dma_report_id"
+    t.index ["zone_report_id"], name: "index_connection_infos_on_zone_report_id"
   end
 
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -119,6 +200,28 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.index ["user_id"], name: "index_dma_assignments_on_user_id"
   end
 
+  create_table "dma_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "scheme_id"
+    t.uuid "dma_id"
+    t.uuid "bulk_meter_id"
+    t.uuid "dma_assignment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "further_action_id"
+    t.index ["bulk_meter_id"], name: "index_dma_reports_on_bulk_meter_id"
+    t.index ["dma_assignment_id"], name: "index_dma_reports_on_dma_assignment_id"
+    t.index ["dma_id"], name: "index_dma_reports_on_dma_id"
+    t.index ["scheme_id"], name: "index_dma_reports_on_scheme_id"
+  end
+
+  create_table "dmapictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "dma_report_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dma_report_id"], name: "index_dmapictures_on_dma_report_id"
+  end
+
   create_table "dmas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -132,11 +235,55 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "floors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "further_actions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "illegaluses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "land_mark_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "burst_and_lealages_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["burst_and_lealages_id"], name: "index_land_mark_pictures_on_burst_and_lealages_id"
+  end
+
+  create_table "meter_info_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "meter_info_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meter_info_id"], name: "index_meter_info_pictures_on_meter_info_id"
+  end
+
+  create_table "meter_infos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_report_id"
+    t.uuid "dma_report_id"
+    t.uuid "meter_status_id"
+    t.string "meter_serial"
+    t.string "meter_reading"
+    t.boolean "meter_accessible"
+    t.string "meter_present"
+    t.string "meter_stand_location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dma_report_id"], name: "index_meter_infos_on_dma_report_id"
+    t.index ["meter_status_id"], name: "index_meter_infos_on_meter_status_id"
+    t.index ["zone_report_id"], name: "index_meter_infos_on_zone_report_id"
   end
 
   create_table "meter_readings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -148,11 +295,31 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.index ["account_id"], name: "index_meter_readings_on_account_id"
   end
 
+  create_table "meter_stand_problems", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "meter_statuses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "other_illegal_uses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "illegaluse_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["illegaluse_id"], name: "index_other_illegal_uses_on_illegaluse_id"
   end
 
   create_table "other_remarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -177,6 +344,18 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.datetime "updated_at", null: false
     t.string "picture"
     t.index ["report_id"], name: "index_pictures_on_report_id"
+  end
+
+  create_table "pipematerials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pipesizes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "positions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -380,6 +559,28 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
     t.index ["zone_id"], name: "index_zone_assignments_on_zone_id"
   end
 
+  create_table "zone_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "scheme_id"
+    t.uuid "zone_id"
+    t.uuid "bulk_meter_id"
+    t.uuid "zone_assignment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "further_action_id"
+    t.index ["bulk_meter_id"], name: "index_zone_reports_on_bulk_meter_id"
+    t.index ["scheme_id"], name: "index_zone_reports_on_scheme_id"
+    t.index ["zone_assignment_id"], name: "index_zone_reports_on_zone_assignment_id"
+    t.index ["zone_id"], name: "index_zone_reports_on_zone_id"
+  end
+
+  create_table "zonepictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_report_id"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["zone_report_id"], name: "index_zonepictures_on_zone_report_id"
+  end
+
   create_table "zones", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -391,17 +592,44 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
   add_foreign_key "account_details", "accounts"
   add_foreign_key "account_details", "building_type_cartegories"
   add_foreign_key "accounts", "walkroutes"
+  add_foreign_key "anomallies", "dma_reports"
+  add_foreign_key "anomallies", "illegaluses"
+  add_foreign_key "anomallies", "meter_stand_problems"
+  add_foreign_key "anomallies", "zone_reports"
+  add_foreign_key "anomally_pictures", "anomallies"
   add_foreign_key "assignments", "accounts"
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
   add_foreign_key "building_details", "building_type_cartegories"
+  add_foreign_key "building_infos", "floors", column: "floors_id"
   add_foreign_key "building_type_cartegories", "building_types"
+  add_foreign_key "burst_and_lealages", "dma_reports"
+  add_foreign_key "burst_and_lealages", "pipematerials"
+  add_foreign_key "burst_and_lealages", "pipesizes"
+  add_foreign_key "burst_and_lealages", "zone_reports"
+  add_foreign_key "burst_pictures", "burst_and_lealages"
+  add_foreign_key "connection_infos", "account_statuses"
+  add_foreign_key "connection_infos", "building_infos"
+  add_foreign_key "connection_infos", "building_type_cartegories"
+  add_foreign_key "connection_infos", "dma_reports"
+  add_foreign_key "connection_infos", "zone_reports"
   add_foreign_key "dma_assignments", "dmas"
   add_foreign_key "dma_assignments", "staffs"
   add_foreign_key "dma_assignments", "stages"
   add_foreign_key "dma_assignments", "tasks"
   add_foreign_key "dma_assignments", "users"
+  add_foreign_key "dma_reports", "bulk_meters"
+  add_foreign_key "dma_reports", "dma_assignments"
+  add_foreign_key "dma_reports", "dmas"
+  add_foreign_key "dma_reports", "schemes"
+  add_foreign_key "dmapictures", "dma_reports"
+  add_foreign_key "land_mark_pictures", "burst_and_lealages", column: "burst_and_lealages_id"
+  add_foreign_key "meter_info_pictures", "meter_infos"
+  add_foreign_key "meter_infos", "dma_reports"
+  add_foreign_key "meter_infos", "meter_statuses"
+  add_foreign_key "meter_infos", "zone_reports"
   add_foreign_key "meter_readings", "accounts"
+  add_foreign_key "other_illegal_uses", "illegaluses"
   add_foreign_key "other_remarks", "remarks"
   add_foreign_key "others", "further_actions"
   add_foreign_key "pictures", "reports"
@@ -417,4 +645,9 @@ ActiveRecord::Schema.define(version: 2020_02_25_105506) do
   add_foreign_key "zone_assignments", "tasks"
   add_foreign_key "zone_assignments", "users"
   add_foreign_key "zone_assignments", "zones"
+  add_foreign_key "zone_reports", "bulk_meters"
+  add_foreign_key "zone_reports", "schemes"
+  add_foreign_key "zone_reports", "zone_assignments"
+  add_foreign_key "zone_reports", "zones"
+  add_foreign_key "zonepictures", "zone_reports"
 end
