@@ -1,5 +1,7 @@
 module Types
   class MutationType < Types::BaseObject
+    field :createDmaAssignment, mutation: Mutations::CreateDmaAssignment
+    field :createZoneAssignment, mutation: Mutations::CreateZoneAssignment
     field :updateStaff, mutation: Mutations::UpdateStaff
     field :updateStaffPosition, mutation: Mutations::UpdateStaffPosition
     field :updatePosition, mutation: Mutations::UpdatePosition

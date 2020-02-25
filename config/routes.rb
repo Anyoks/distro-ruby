@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :dma_assignments
+  resources :dmas
+  resources :zone_assignments
   resources :organizations
   devise_for :staffs
   resources :others

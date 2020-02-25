@@ -516,3 +516,39 @@ query{
   }
 }
 # ########################################
+# create zone assignment
+mutation{
+  createZoneAssignment(
+  input:{
+   userId: "94ff3257-c8d1-4163-b03d-bfa677b61056",
+    staffId: "363155a7-4ac7-4efd-b413-21065b68b9e3" ,
+    desc: "Install meters",
+    taskId:"a994a495-c1ea-4626-8939-631e920176da",
+    zoneIds:["00f7c06d-a7ea-4c60-95fa-8bcae5aa863e", "faea5e5d-70aa-451e-bd53-e8f016fdb1dd"  ],
+     numberOfAssignments: 2,
+  }
+  ){
+    zoneAssignments{
+      id
+      desc
+    }
+  }
+}
+#  create DMa assignment
+mutation{
+  createDmaAssignment(
+  input:{
+   userId: "94ff3257-c8d1-4163-b03d-bfa677b61056",
+    staffId: "363155a7-4ac7-4efd-b413-21065b68b9e3" ,
+    desc: "Install meters",
+    taskId:"a994a495-c1ea-4626-8939-631e920176da",
+    dmaIds:["7d2b598b-30cf-41a4-925c-218030f17897", "10a34112-2da9-4f4a-af40-d8fd2bb47a61"] ,
+     numberOfAssignments: 2,
+  }
+  ){
+    dmaAssignments{
+      id
+      desc
+    }
+  }
+}

@@ -9,14 +9,15 @@ require 'csv'
 
 
 #   ROles seeds
-['admin','moderator', 'employee'].each do |role|
-	if Role.find_by(name: role).present?
-		puts "ROLE EXISTS #{role}----------Skipping"
-	else
-         Role.find_or_create_by({name: role})
-         puts "ROLE CREATED #{role}----------SAVED"
- 	end
-end
+# KEY FOR DEMO ACCOUNTS
+# ['admin','moderator', 'employee'].each do |role|
+# 	if Role.find_by(name: role).present?
+# 		puts "ROLE EXISTS #{role}----------Skipping"
+# 	else
+#          Role.find_or_create_by({name: role})
+#          puts "ROLE CREATED #{role}----------SAVED"
+#  	end
+# end
 
 
 
@@ -25,41 +26,41 @@ end
 #  ************************************************************************
     # UPDATING FURTHER ACTIONS AND REMARKS ALL THROUGH THE DATABASE
 
-    ["by pass",
-    "meter detached",
-    "consumption without meter",
-    "misty meter",
-    "broken glass",
-    "faulty counter",
-    "reversing",
-    "meter installed in reverse",
-    "stalled",
-    "gate locked",
-    "box locked",
-    "buried",
-    "submerged",
-    "other"].each do |remark|
-        if Remark.find_by(name: remark)
-            puts "Remark EXISTS #{remark}----------Skipping"
-        else
-            Remark.find_or_create_by(name: remark)
-            puts "Remark CREATED #{remark}----------SAVED"
-        end
-    end
+    # ["by pass",
+    # "meter detached",
+    # "consumption without meter",
+    # "misty meter",
+    # "broken glass",
+    # "faulty counter",
+    # "reversing",
+    # "meter installed in reverse",
+    # "stalled",
+    # "gate locked",
+    # "box locked",
+    # "buried",
+    # "submerged",
+    # "other"].each do |remark|
+    #     if Remark.find_by(name: remark)
+    #         puts "Remark EXISTS #{remark}----------Skipping"
+    #     else
+    #         Remark.find_or_create_by(name: remark)
+    #         puts "Remark CREATED #{remark}----------SAVED"
+    #     end
+    # end
 
 
-    furtherAction = []
-    ["dfm","service meter","replace meter","relocate meter","raise meter","other"].each do |fAction|
-        if FurtherAction.find_by(name: fAction)
-            action = FurtherAction.find_by(name: fAction)
-            puts "Remark EXISTS #{fAction}----------Skipping"
-            # furtherAction << action.id
-        else
-            action = FurtherAction.find_or_create_by(name: fAction)
-            furtherAction << action.id
-            puts "Remark CREATED #{fAction}----------SAVED"
-        end
-    end
+    # furtherAction = []
+    # ["dfm","service meter","replace meter","relocate meter","raise meter","other"].each do |fAction|
+    #     if FurtherAction.find_by(name: fAction)
+    #         action = FurtherAction.find_by(name: fAction)
+    #         puts "Remark EXISTS #{fAction}----------Skipping"
+    #         # furtherAction << action.id
+    #     else
+    #         action = FurtherAction.find_or_create_by(name: fAction)
+    #         furtherAction << action.id
+    #         puts "Remark CREATED #{fAction}----------SAVED"
+    #     end
+    # end
 
     
     # if furtherAction.length > 0
@@ -89,45 +90,45 @@ end
     #     end
     # end
 
-    [{type: "commercial", sub: "commercial", desc: 'commercial'}, {type: "private", desc: "single dwelling unit", sub: "sdu"}, {type: "private", desc: "multi dwelling unit", sub: "mdu"}].each do |type|
-        # "#{b[:type]}  #{b[:desc]}  #{b[:sub]}"
-        building = BuildingType.find_by(name: type[:type])
-        if building
-            # building = BuildingType.find_or_create_by(name: type[:type])
-             puts "Building Type EXISTS #{type[:type]}----------checking sub cartegories"
-             if building.building_type_cartegories.find_or_create_by(name: type[:sub], description: type[:desc])
-                 puts "Building type carteory #{type[:sub]}----------saved"
-             end
-        else
-            building = BuildingType.find_or_create_by(name: type[:type])
-            puts "Buikusbg typ CREATED #{type[:type]}----------SAVED"
-           if  building.building_type_cartegories.create!(name: type[:sub], description: type[:desc])
-              puts "Building cartegory  CREATED for  #{type[:type]}----------SAVED"  
-           end
+    # [{type: "commercial", sub: "commercial", desc: 'commercial'}, {type: "private", desc: "single dwelling unit", sub: "sdu"}, {type: "private", desc: "multi dwelling unit", sub: "mdu"}].each do |type|
+    #     # "#{b[:type]}  #{b[:desc]}  #{b[:sub]}"
+    #     building = BuildingType.find_by(name: type[:type])
+    #     if building
+    #         # building = BuildingType.find_or_create_by(name: type[:type])
+    #          puts "Building Type EXISTS #{type[:type]}----------checking sub cartegories"
+    #          if building.building_type_cartegories.find_or_create_by(name: type[:sub], description: type[:desc])
+    #              puts "Building type carteory #{type[:sub]}----------saved"
+    #          end
+    #     else
+    #         building = BuildingType.find_or_create_by(name: type[:type])
+    #         puts "Buikusbg typ CREATED #{type[:type]}----------SAVED"
+    #        if  building.building_type_cartegories.create!(name: type[:sub], description: type[:desc])
+    #           puts "Building cartegory  CREATED for  #{type[:type]}----------SAVED"  
+    #        end
             
-        end
-    end
+    #     end
+    # end
 
-    ['active', 'faulty', 'disconnected'].each do |status|
-         acc_status = AccountStatus.find_by(name: status)
+    # ['active', 'faulty', 'disconnected'].each do |status|
+    #      acc_status = AccountStatus.find_by(name: status)
 
-         if acc_status
-             puts "Account statuw EXISTS #{status}----------skipping"
-         else
-            AccountStatus.find_or_create_by(name: status)
-            puts "Account status created  #{status}----------Saved"
-         end
-    end
+    #      if acc_status
+    #          puts "Account statuw EXISTS #{status}----------skipping"
+    #      else
+    #         AccountStatus.find_or_create_by(name: status)
+    #         puts "Account status created  #{status}----------Saved"
+    #      end
+    # end
 
    
-['ruiru','bomet', 'nakuru'].each do |role|
-	if Organization.find_by(name: role).present?
-		puts "ROLE EXISTS #{role}----------Skipping"
-	else
-         Organization.find_or_create_by({name: role, subdomain: role})
-         puts "ROLE CREATED #{role}----------SAVED"
- 	end
-end
+# ['ruiru','bomet', 'nakuru'].each do |role|
+# 	if Organization.find_by(name: role).present?
+# 		puts "ROLE EXISTS #{role}----------Skipping"
+# 	else
+#          Organization.find_or_create_by({name: role, subdomain: role})
+#          puts "ROLE CREATED #{role}----------SAVED"
+#  	end
+# end
 # # Further action seeds
 # ['revisit to complete job','none','disconnect', 'disconnect from mains', 'reconnect', 'other'].each do |role|
 # 	if FurtherAction.find_by(name: role).present?
@@ -203,25 +204,25 @@ end
 # end
 
 # stages
+# KEY FOR DEMO ACCOUNTS
+# ['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
+#     if Stage.find_by_name("#{stage}").present?
+#         puts "STAGE EXISTS #{stage}----------Skipping"        
+#     else
+#         Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
+#         puts "Stage #{stage}----------SAVED" 
+#     end
+# end
 
-['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
-    if Stage.find_by_name("#{stage}").present?
-        puts "STAGE EXISTS #{stage}----------Skipping"        
-    else
-        Stage.find_or_create_by({name: stage, description: "This is a stage desc"})
-        puts "Stage #{stage}----------SAVED" 
-    end
-end
-
-# Position
-['Billing', 'Technician' ].each do |stage|
-    if Position.find_by_name("#{stage}").present?
-        puts "STAGE EXISTS #{stage}----------Skipping"        
-    else
-        Position.find_or_create_by({name: stage, description: "This is a stage desc"})
-        puts "Stage #{stage}----------SAVED" 
-    end
-end
+# # Position
+# ['Billing', 'Technician' ].each do |stage|
+#     if Position.find_by_name("#{stage}").present?
+#         puts "STAGE EXISTS #{stage}----------Skipping"        
+#     else
+#         Position.find_or_create_by({name: stage, description: "This is a stage desc"})
+#         puts "Stage #{stage}----------SAVED" 
+#     end
+# end
 
 
 # csv_text = File.read(Rails.root.join('lib', 'seeds', 'Accounts.csv'))
@@ -588,128 +589,130 @@ end
 #     end
 # end
 
-puts"#############################################################################
-#############################################################################
-##########################Departments#############################################
-#############################################################################"
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'Dept.csv'))
-# display the wall of text
-# puts csv_text  
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# key for demo accounts too
+# puts"#############################################################################
+# #############################################################################
+# ##########################Departments#############################################
+# #############################################################################"
+# csv_text = File.read(Rails.root.join('lib', 'seeds', 'Dept.csv'))
+# # display the wall of text
+# # puts csv_text  
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-csv.each do |row|
-    if Department.find_by(name: "#{row['Departments'].downcase}")
-        puts "SCHEME EXISTS number #{row['Departments']}----------Skipping"
-    else
-        # Create a new Obeject 
-        name        = row['Departments'].nil? ? row['Departments'] : row['Departments'].downcase
-        subdept     = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
+# csv.each do |row|
+#     if Department.find_by(name: "#{row['Departments'].downcase}")
+#         puts "SCHEME EXISTS number #{row['Departments']}----------Skipping"
+#     else
+#         # Create a new Obeject 
+#         name        = row['Departments'].nil? ? row['Departments'] : row['Departments'].downcase
+#         subdept     = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
       
-        object = Department.new( name: name)
+#         object = Department.new( name: name)
         
-        # Save the obeject
-        if object.valid?
-            object.save!
-            puts "#{object.name} ==> Ready to be saved"
-            # create scheme for it
-              if Subdepartment.find_by(name: subdept)
-                  puts "SCHEME EXISTS number #{subdept}----------Skipping"
-              else
-                # Create a new Obeject             
-                object1 = object.subdepartments.new( name: subdept)
-                # Save the obeject
-                if object1.valid?
-                  object1.save!
-                  puts"#########################################
-                  ########creating Subdept for dept ###########"
-                    puts "#{object1.name} ==> Ready to be saved"
-                else
-                    puts "#{object1.name} ERR:: Failed to Save! "
-                    puts "\n"
-                    puts "****Error****"
-                    puts "#{object1.errors.messages}"
-                end
-              end
-        else
-            puts "#{object.name} ERR:: Failed to Save! "
-            puts "\n"
-            puts "****Error****"
-            puts "#{object.errors.messages}"
-        end
-    end
-end
-
-puts"#############################################################################
-#############################################################################
-##########################Positions#############################################
-#############################################################################"
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'Positions.csv'))
-# display the wall of text
-# puts csv_text  
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-
-csv.each do |row|
-    if Position.find_by(name: "#{row['Position Name'].downcase}")
-        puts "Positions EXISTS number #{row['Position Name']}----------Skipping"
-    else
-        # Create a new Obeject 
-        name          =  row['Position Name'].nil? ?  row['Position Name'] : row['Position Name'].downcase
-        description   = row['Description'].nil? ? row['Description'] : row['Description'].downcase
-        subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
-      
-        subdept  = Subdepartment.where(name:subdept_name).first
-        
-        if subdept.present?
-          object = Position.new( name: name, description: description)
-          # Save the obeject
-          if object.valid?
-              object.save!
-              object.subdepartments << subdept
-              puts "#{object.name} ==> Ready to be saved"
-          else
-              puts "#{object.name} ERR:: Failed to Save! "
-              puts "\n"
-              puts "****Error****"
-              puts "#{object.errors.messages}"
-          end
-        else
-           puts "Subdepartment DOES NOT EXIST  #{row['Position Name']}----------Skipping"
-        end
-        
-    end
-end
-
-
-puts"#############################################################################
-#############################################################################
-##########################Tasks#############################################
-#############################################################################"
-# Apartment::Tenant.switch('ruiru') do
-    csv_text = File.read(Rails.root.join('lib', 'seeds', 'Tasks.csv'))
-    # display the wall of text
-    # puts csv_text  
-    csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-
-    csv.each do |row|
-        if Task.find_by(name: "#{row['Tasks'].downcase}")
-            puts "Task EXISTS  #{row['Tasks']}----------Skipping"
-        else
-            # Create a new Obeject 
-            name          = row['Tasks'].nil? ? row['Tasks'] : row['Tasks'].downcase
-            # description   = row['Description'].downcase
-            subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
-        
-            subdept  = Subdepartment.where(name:subdept_name).first
-            
-            if subdept.present?
-                 
-            else
-                puts "SDEPARTMENT DOES NOT EXIST For task  #{row['Task']}----------Skipping"
-            end
-            
-        end
-    end
+#         # Save the obeject
+#         if object.valid?
+#             object.save!
+#             puts "#{object.name} ==> Ready to be saved"
+#             # create scheme for it
+#               if Subdepartment.find_by(name: subdept)
+#                   puts "SCHEME EXISTS number #{subdept}----------Skipping"
+#               else
+#                 # Create a new Obeject             
+#                 object1 = object.subdepartments.new( name: subdept)
+#                 # Save the obeject
+#                 if object1.valid?
+#                   object1.save!
+#                   puts"#########################################
+#                   ########creating Subdept for dept ###########"
+#                     puts "#{object1.name} ==> Ready to be saved"
+#                 else
+#                     puts "#{object1.name} ERR:: Failed to Save! "
+#                     puts "\n"
+#                     puts "****Error****"
+#                     puts "#{object1.errors.messages}"
+#                 end
+#               end
+#         else
+#             puts "#{object.name} ERR:: Failed to Save! "
+#             puts "\n"
+#             puts "****Error****"
+#             puts "#{object.errors.messages}"
+#         end
+#     end
 # end
+
+# KEY FOR DEMO ACCOUNTS
+# puts"#############################################################################
+# #############################################################################
+# ##########################Positions#############################################
+# #############################################################################"
+# csv_text = File.read(Rails.root.join('lib', 'seeds', 'Positions.csv'))
+# # display the wall of text
+# # puts csv_text  
+# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+# csv.each do |row|
+#     if Position.find_by(name: "#{row['Position Name'].downcase}")
+#         puts "Positions EXISTS number #{row['Position Name']}----------Skipping"
+#     else
+#         # Create a new Obeject 
+#         name          =  row['Position Name'].nil? ?  row['Position Name'] : row['Position Name'].downcase
+#         description   = row['Description'].nil? ? row['Description'] : row['Description'].downcase
+#         subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
+      
+#         subdept  = Subdepartment.where(name:subdept_name).first
+        
+#         if subdept.present?
+#           object = Position.new( name: name, description: description)
+#           # Save the obeject
+#           if object.valid?
+#               object.save!
+#               object.subdepartments << subdept
+#               puts "#{object.name} ==> Ready to be saved"
+#           else
+#               puts "#{object.name} ERR:: Failed to Save! "
+#               puts "\n"
+#               puts "****Error****"
+#               puts "#{object.errors.messages}"
+#           end
+#         else
+#            puts "Subdepartment DOES NOT EXIST  #{row['Position Name']}----------Skipping"
+#         end
+        
+#     end
+# end
+
+# KEY FOR DEMO ACCOUNTS TOO
+# puts"#############################################################################
+# #############################################################################
+# ##########################Tasks#############################################
+# #############################################################################"
+# # Apartment::Tenant.switch('ruiru') do
+#     csv_text = File.read(Rails.root.join('lib', 'seeds', 'Tasks.csv'))
+#     # display the wall of text
+#     # puts csv_text  
+#     csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+#     csv.each do |row|
+#         if Task.find_by(name: "#{row['Tasks'].downcase}")
+#             puts "Task EXISTS  #{row['Tasks']}----------Skipping"
+#         else
+#             # Create a new Obeject 
+#             name          = row['Tasks'].nil? ? row['Tasks'] : row['Tasks'].downcase
+#             # description   = row['Description'].downcase
+#             subdept_name  = row['Sub Department'].nil? ? row['Sub Department'] : row['Sub Department'].downcase
+        
+#             subdept  = Subdepartment.where(name:subdept_name).first
+            
+#             if subdept.present?
+                 
+#             else
+#                 puts "SDEPARTMENT DOES NOT EXIST For task  #{row['Task']}----------Skipping"
+#             end
+            
+#         end
+#     end
+# # end
 
 # puts"#############################################################################
 # #############################################################################
@@ -752,49 +755,49 @@ puts"###########################################################################
 #     end
 # end
 
-puts"#############################################################################
-#############################################################################
-##########################Staff#############################################
-#############################################################################"
-# Apartment::Tenant.switch('ruiru') do
-    csv_text = File.read(Rails.root.join('lib', 'seeds', 'Staff.csv'))
-    # display the wall of text
-    # puts csv_text  
-    csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# puts"#############################################################################
+# #############################################################################
+# ##########################Staff#############################################
+# #############################################################################"
+# # Apartment::Tenant.switch('ruiru') do
+#     csv_text = File.read(Rails.root.join('lib', 'seeds', 'Staff.csv'))
+#     # display the wall of text
+#     # puts csv_text  
+#     csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-    csv.each do |row|
-        if Staff.find_by(phone_number: "#{row['Phone Number']}")
-            puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
-        else
-            # Create a new Obeject 
-            phone_number          = row['Phone Number']
-            first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
-            last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
-            position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
-            password                = "#{first_name}" + "." + "#{last_name}"
+#     csv.each do |row|
+#         if Staff.find_by(phone_number: "#{row['Phone Number']}")
+#             puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
+#         else
+#             # Create a new Obeject 
+#             phone_number          = row['Phone Number']
+#             first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
+#             last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
+#             position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
+#             password                = "#{first_name}" + "." + "#{last_name}"
             
         
-            position  = Position.where(name:position_name).first
+#             position  = Position.where(name:position_name).first
             
-            if position.present?
-            object = Staff.new( email: "#{first_name + '@'+'test.com'}",first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password, position_id: position.id)
-            # Save the obeject
-            if object.valid?
-                object.save!
-                puts "#{object.first_name} ==> Ready to be saved"
-            else
-                puts "#{object.first_name} ERR:: Failed to Save! "
-                puts "\n"
-                puts "****Error****"
-                puts "#{object.errors.messages}"
-            end
-            else
-            puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
-            end
+#             if position.present?
+#             object = Staff.new( email: "#{first_name + '@'+'test.com'}",first_name: first_name, last_name: last_name, phone_number: phone_number, password: password, password_confirmation: password, position_id: position.id)
+#             # Save the obeject
+#             if object.valid?
+#                 object.save!
+#                 puts "#{object.first_name} ==> Ready to be saved"
+#             else
+#                 puts "#{object.first_name} ERR:: Failed to Save! "
+#                 puts "\n"
+#                 puts "****Error****"
+#                 puts "#{object.errors.messages}"
+#             end
+#             else
+#             puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
+#             end
             
-        end
-    end
-# end
+#         end
+#     end
+# # end
 
 # Meter Serial,Account,Account Name,Walk Route,Long,Lat
 
@@ -1579,94 +1582,133 @@ puts"###########################################################################
 
 
 
-puts"#############################################################################
-#############################################################################
-##########################Admin#############################################
-#############################################################################"
+# puts"#############################################################################
+# #############################################################################
+# ##########################Admin#############################################
+# #############################################################################"
 
-# Apartment::Tenant.switch('ruiru') do
-        csv_text = File.read(Rails.root.join('lib', 'seeds', 'Admin.csv'))
-    # display the wall of text
-    # puts csv_text  
-    csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# # Apartment::Tenant.switch('ruiru') do
+#         csv_text = File.read(Rails.root.join('lib', 'seeds', 'Admin.csv'))
+#     # display the wall of text
+#     # puts csv_text  
+#     csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-    csv.each do |row|
-        if User.find_by(email: "#{row['Email']}")
-            puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
-        else
-            # Create a new Obeject 
-            phone_number          = row['Phone Number']
-            email                 = row['Email']
-            id_number             = row['ID Number']
-            first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
-            last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
-            position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
-            password                = id_number
-            subdepartment           = Subdepartment.first
+#     csv.each do |row|
+#         if User.find_by(email: "#{row['Email']}")
+#             puts "Staff EXISTS  #{row['Phone Number']}----------Skipping"
+#         else
+#             # Create a new Obeject 
+#             phone_number          = row['Phone Number']
+#             email                 = row['Email']
+#             id_number             = row['ID Number']
+#             first_name          = row['First Name'].nil? ? row['First Name'] : row['First Name'].strip.downcase
+#             last_name          =  row['Last Name'].nil? ? row['Last Name'] : row['Last Name'].downcase
+#             position_name         = row['Position'].nil? ? row['Position'] : row['Position'].downcase
+#             password                = id_number
+#             subdepartment           = Subdepartment.first
             
         
-            # position  = Position.where(name:position_name).first
-            # role = Role.f
-            # if position.present?
-            object = User.new( email: email ,first_name: first_name, last_name: last_name, password: password, password_confirmation: password, subdepartment_id: subdepartment.id)
-            # Save the obeject
-            if object.valid?
-                object.save!
-                puts "#{object.first_name} ==> Ready to be saved"
-            else
-                puts "#{object.first_name} ERR:: Failed to Save! "
-                puts "\n"
-                puts "****Error****"
-                puts "#{object.errors.messages}"
-            end
-            # else
-            #  puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
-            # end
+#             # position  = Position.where(name:position_name).first
+#             # role = Role.f
+#             # if position.present?
+#             object = User.new( email: email ,first_name: first_name, last_name: last_name, password: password, password_confirmation: password, subdepartment_id: subdepartment.id)
+#             # Save the obeject
+#             if object.valid?
+#                 object.save!
+#                 puts "#{object.first_name} ==> Ready to be saved"
+#             else
+#                 puts "#{object.first_name} ERR:: Failed to Save! "
+#                 puts "\n"
+#                 puts "****Error****"
+#                 puts "#{object.errors.messages}"
+#             end
+#             # else
+#             #  puts "Postion DOES NOT EXIST For Staff  #{row['Position']}----------Skipping"
+#             # end
             
-        end
-    end
+#         end
+#     end
+# # end
+
+
+##############################################################################################
+#########################zones FOR OTHER ORGANIZATIONS #######################################
+#########################zones FOR OTHER ORGANIZATIONS #######################################
+##############################################################################################
+##############################################################################################
+
+# ['Zone A', 'Zone B'].each do |zone|
+#     dbzone = Zone.find_by(name: zone.downcase)
+#     if dbzone 
+
+#     else
+#         zoneObj = Zone.new(name: zone.downcase)
+
+#         if zoneObj.valid?
+#             zoneObj.save!
+#             ['scheme a', 'scheme b'].each do |sch|
+#                 scheme = zoneObj.schemes.find_by(name: sch)
+#                 if scheme.present?
+                    
+#                 else
+#                     scheme = Scheme.create!(name: sch)
+#                     zoneObj.schemes << scheme
+#                 end
+#             end
+
+#             ['subzone a','subzone b'].each do |sub|
+#                 subzone = zoneObj.subzones.find_or_create_by(name: sub )
+
+#                 ['walkroute a', 'walkroute b'].each do |wlk|
+#                     walkroute = subzone.walkroutes.find_or_create_by(name: wlk )
+
+#                     ['account a', 'account b'].each do |acc, index|
+#                         walkroute.accounts.find_or_create_by({ number: "#{index}", meter_serial: "#{index}3#{index}", name: "#{acc}", 
+#                              address: "#{acc}home", old_account_number: "#{acc}#{index}" } )
+#                     end
+#                 end
+#             end
+
+#         end
+
+#     end
 # end
 
 
+
 ##############################################################################################
 ##############################################################################################
 ##############################################################################################
 ##############################################################################################
 ##############################################################################################
 
-['Zone A', 'Zone B'].each do |zone|
-    dbzone = Zone.find_by(name: zone.downcase)
-    if dbzone 
+["WITEITHIE ",
+"KALIMONI ",
+"JUJA EAST ",
+"JUJA ELEVATED TANK ",
+"MILIMAINI ",
+"NEW WOOD ",
+"UPPER THOME ",
+"LOWER THOME ",
+"MUGUTHA ",
+"NEW ESTATE ",
+"RUIRU TOWN ",
+"RUIRU INDUSTRIAL ",
+"GITAMABAYA ",
+"RUIRU EAST ",
+"MEMBLEY 1 ",
+"MEMBLEY 2 ",
+"MEMBLEY 3 ",
+"GIKUMARI ",
+"KIRATINA ",
+"MWIHOKO EAST ",
+"MWIHOKO WEST "] .each do |dma|
+    dm = Dma.find_by(name: dma.downcase)
 
+    if dm
+        p "DAMA PRESENT SKIPPING:: #{dm.name}"
     else
-        zoneObj = Zone.new(name: zone.downcase)
-
-        if zoneObj.valid?
-            zoneObj.save!
-            ['scheme a', 'scheme b'].each do |sch|
-                scheme = zoneObj.schemes.find_by(name: sch)
-                if scheme.present?
-                    
-                else
-                    scheme = Scheme.create!(name: sch)
-                    zoneObj.schemes << scheme
-                end
-            end
-
-            ['subzone a','subzone b'].each do |sub|
-                subzone = zoneObj.subzones.find_or_create_by(name: sub )
-
-                ['walkroute a', 'walkroute b'].each do |wlk|
-                    walkroute = subzone.walkroutes.find_or_create_by(name: wlk )
-
-                    ['account a', 'account b'].each do |acc, index|
-                        walkroute.accounts.find_or_create_by({ number: "#{index}", meter_serial: "#{index}3#{index}", name: "#{acc}", 
-                             address: "#{acc}home", old_account_number: "#{acc}#{index}" } )
-                    end
-                end
-            end
-
-        end
-
+        dm = Dma.create!(name:  dma.downcase)
+        p "DAMA CREATED:: #{dm.name}"
     end
 end

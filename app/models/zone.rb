@@ -11,6 +11,7 @@
 
 class Zone < ApplicationRecord
     before_save :downcase_fields
+    has_and_belongs_to_many :dmas
     has_many :subzones
     has_many :schZoneDetails
     has_many :schemes, through: :schZoneDetails

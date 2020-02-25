@@ -93,6 +93,9 @@ module Types
     field :zones,[Types::ZoneType], null: false,
       description: "A list of all Zone Types"
 
+    field :dmas,[Types::DmaType], null: false,
+      description: "A list of all Dma Types"
+
     field :zoneaccounts, [Types::AccountType],null: true,
       description: "A list of all Accounts in this zone" do 
         argument :zoneId, String, required: true
@@ -113,7 +116,7 @@ module Types
         argument :email, String, required: true
     end
 
-     field :account_assignments, [Types::AssignmentType], null: false,
+    field :account_assignments, [Types::AssignmentType], null: false,
       description: "An account's assignment history" do
         argument :id, String, required: true
     end
@@ -257,6 +260,10 @@ module Types
     def my_positions(email)
       user = User.find_by(email)
       pos = user.subdepartment.positions
+    end
+
+    def dmas
+      Dma.all.order("name ASC")
     end
 
   end

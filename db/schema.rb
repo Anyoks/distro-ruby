@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_092233) do
+ActiveRecord::Schema.define(version: 2020_02_25_105506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -99,6 +99,35 @@ ActiveRecord::Schema.define(version: 2020_02_21_092233) do
   create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dma_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "dma_id"
+    t.uuid "task_id"
+    t.uuid "user_id"
+    t.uuid "staff_id"
+    t.uuid "stage_id"
+    t.string "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dma_id"], name: "index_dma_assignments_on_dma_id"
+    t.index ["staff_id"], name: "index_dma_assignments_on_staff_id"
+    t.index ["stage_id"], name: "index_dma_assignments_on_stage_id"
+    t.index ["task_id"], name: "index_dma_assignments_on_task_id"
+    t.index ["user_id"], name: "index_dma_assignments_on_user_id"
+  end
+
+  create_table "dmas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dmas_zones", id: false, force: :cascade do |t|
+    t.uuid "zone_id"
+    t.uuid "dma_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -335,6 +364,22 @@ ActiveRecord::Schema.define(version: 2020_02_21_092233) do
     t.index ["subzone_id"], name: "index_walkroutes_on_subzone_id"
   end
 
+  create_table "zone_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "zone_id"
+    t.uuid "task_id"
+    t.uuid "user_id"
+    t.uuid "staff_id"
+    t.uuid "stage_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "desc"
+    t.index ["staff_id"], name: "index_zone_assignments_on_staff_id"
+    t.index ["stage_id"], name: "index_zone_assignments_on_stage_id"
+    t.index ["task_id"], name: "index_zone_assignments_on_task_id"
+    t.index ["user_id"], name: "index_zone_assignments_on_user_id"
+    t.index ["zone_id"], name: "index_zone_assignments_on_zone_id"
+  end
+
   create_table "zones", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -351,6 +396,11 @@ ActiveRecord::Schema.define(version: 2020_02_21_092233) do
   add_foreign_key "assignments", "tasks"
   add_foreign_key "building_details", "building_type_cartegories"
   add_foreign_key "building_type_cartegories", "building_types"
+  add_foreign_key "dma_assignments", "dmas"
+  add_foreign_key "dma_assignments", "staffs"
+  add_foreign_key "dma_assignments", "stages"
+  add_foreign_key "dma_assignments", "tasks"
+  add_foreign_key "dma_assignments", "users"
   add_foreign_key "meter_readings", "accounts"
   add_foreign_key "other_remarks", "remarks"
   add_foreign_key "others", "further_actions"
@@ -362,4 +412,9 @@ ActiveRecord::Schema.define(version: 2020_02_21_092233) do
   add_foreign_key "subdepartments", "departments"
   add_foreign_key "subzones", "zones"
   add_foreign_key "walkroutes", "subzones"
+  add_foreign_key "zone_assignments", "staffs"
+  add_foreign_key "zone_assignments", "stages"
+  add_foreign_key "zone_assignments", "tasks"
+  add_foreign_key "zone_assignments", "users"
+  add_foreign_key "zone_assignments", "zones"
 end
