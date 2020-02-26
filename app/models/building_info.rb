@@ -1,4 +1,4 @@
 class BuildingInfo < ApplicationRecord
-  belongs_to :floors
-  has_many :connection_infos
+  belongs_to :floor
+  belongs_to :connection_info
 end

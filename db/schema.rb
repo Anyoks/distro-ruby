@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_152850) do
+ActiveRecord::Schema.define(version: 2020_02_26_101455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -110,10 +110,12 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
     t.integer "one_bedrooms"
     t.integer "two_bedrooms"
     t.integer "three_bedrooms"
-    t.uuid "floors_id"
+    t.uuid "floor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["floors_id"], name: "index_building_infos_on_floors_id"
+    t.uuid "connection_info_id"
+    t.index ["connection_info_id"], name: "index_building_infos_on_connection_info_id"
+    t.index ["floor_id"], name: "index_building_infos_on_floor_id"
   end
 
   create_table "building_type_cartegories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -164,14 +166,12 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
     t.uuid "zone_report_id"
     t.uuid "dma_report_id"
     t.uuid "building_type_cartegory_id"
-    t.uuid "building_info_id"
     t.boolean "labelled"
     t.string "connection_number"
     t.uuid "account_status_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_status_id"], name: "index_connection_infos_on_account_status_id"
-    t.index ["building_info_id"], name: "index_connection_infos_on_building_info_id"
     t.index ["building_type_cartegory_id"], name: "index_connection_infos_on_building_type_cartegory_id"
     t.index ["dma_report_id"], name: "index_connection_infos_on_dma_report_id"
     t.index ["zone_report_id"], name: "index_connection_infos_on_zone_report_id"
@@ -255,11 +255,11 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
   end
 
   create_table "land_mark_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "burst_and_lealages_id"
+    t.uuid "burst_and_lealage_id"
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["burst_and_lealages_id"], name: "index_land_mark_pictures_on_burst_and_lealages_id"
+    t.index ["burst_and_lealage_id"], name: "index_land_mark_pictures_on_burst_and_lealage_id"
   end
 
   create_table "meter_info_pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -601,7 +601,8 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
   add_foreign_key "assignments", "stages"
   add_foreign_key "assignments", "tasks"
   add_foreign_key "building_details", "building_type_cartegories"
-  add_foreign_key "building_infos", "floors", column: "floors_id"
+  add_foreign_key "building_infos", "connection_infos"
+  add_foreign_key "building_infos", "floors"
   add_foreign_key "building_type_cartegories", "building_types"
   add_foreign_key "burst_and_lealages", "dma_reports"
   add_foreign_key "burst_and_lealages", "pipematerials"
@@ -609,7 +610,6 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
   add_foreign_key "burst_and_lealages", "zone_reports"
   add_foreign_key "burst_pictures", "burst_and_lealages"
   add_foreign_key "connection_infos", "account_statuses"
-  add_foreign_key "connection_infos", "building_infos"
   add_foreign_key "connection_infos", "building_type_cartegories"
   add_foreign_key "connection_infos", "dma_reports"
   add_foreign_key "connection_infos", "zone_reports"
@@ -623,7 +623,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_152850) do
   add_foreign_key "dma_reports", "dmas"
   add_foreign_key "dma_reports", "schemes"
   add_foreign_key "dmapictures", "dma_reports"
-  add_foreign_key "land_mark_pictures", "burst_and_lealages", column: "burst_and_lealages_id"
+  add_foreign_key "land_mark_pictures", "burst_and_lealages"
   add_foreign_key "meter_info_pictures", "meter_infos"
   add_foreign_key "meter_infos", "dma_reports"
   add_foreign_key "meter_infos", "meter_statuses"

@@ -1,5 +1,16 @@
 module Types
   class MutationType < Types::BaseObject
+    field :createBuildingInfo, mutation: Mutations::CreateBuildingInfo
+    field :createConnectionInfo, mutation: Mutations::CreateConnectionInfo
+    field :createAnomally, mutation: Mutations::CreateAnomally
+    field :uploadAnomallyPicture, mutation: Mutations::UploadAnomallyPicture
+    field :uploadLandmarkImage, mutation: Mutations::UploadLandmarkImage
+    field :uploadBurstImage, mutation: Mutations::UploadBurstImage
+    field :createBurstAndLeaks, mutation: Mutations::CreateBurstAndLeaks
+    field :uploadMeterInfoImage, mutation: Mutations::UploadMeterInfoImage
+    field :createMeterInfo, mutation: Mutations::CreateMeterInfo
+    field :createZoneReport, mutation: Mutations::CreateZoneReport
+    field :createDmaReport, mutation: Mutations::CreateDmaReport
     field :createDmaAssignment, mutation: Mutations::CreateDmaAssignment
     field :createZoneAssignment, mutation: Mutations::CreateZoneAssignment
     field :updateStaff, mutation: Mutations::UpdateStaff

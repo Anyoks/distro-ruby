@@ -1,6 +1,6 @@
 class BurstAndLealage < ApplicationRecord
-  belongs_to :zone_report
-  belongs_to :dma_report
+  belongs_to :zone_report, optional: true
+  belongs_to :dma_report, optional: true
   belongs_to :pipematerial
   belongs_to :pipesize
 

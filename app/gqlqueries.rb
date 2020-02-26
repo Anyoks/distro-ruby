@@ -552,3 +552,224 @@ mutation{
     }
   }
 }
+# DMA REPORT CREATE
+mutation{
+  createDmaReport(
+  input:{
+   schemeId: "0a6f2a54-eaa3-4c20-babd-02a156befe90" ,
+    dmaId: "00b3cf10-1077-4134-90c5-87fde510a517"  ,
+    bulkMeterId: "1496eeba-f7f1-4557-9d12-8543dfc7c5b2" ,
+    furtherActionId: "1b02c16e-76dd-43f4-b8ed-5627dbd1efb3",
+    dmaAssignmentId:"36aebf0b-6eb9-42c0-9dea-f289a6b215f9",
+  }
+  ){
+    dmaReport{
+      id
+    },
+    success,
+    errors
+  }
+}
+# create report response
+# {
+#   "data": {
+#     "createDmaReport": {
+#       "dmaReport": {
+#         "id": "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66"
+#       }
+#     }
+#   }
+# }
+
+# ZONE REPORT CREATE
+mutation{
+  createZoneReport(
+  input:{
+   schemeId: "0a6f2a54-eaa3-4c20-babd-02a156befe90" ,
+    zoneId: "00f7c06d-a7ea-4c60-95fa-8bcae5aa863e"  ,
+    bulkMeterId: "1496eeba-f7f1-4557-9d12-8543dfc7c5b2" ,
+    furtherActionId: "1b02c16e-76dd-43f4-b8ed-5627dbd1efb3",
+    zoneAssignmentId:"06256302-0f87-4368-b324-ba84baa1f95d" ,
+  }
+  ){
+    zoneReport{
+      id
+    },
+    success,
+    errors
+  }
+}
+# RESPONSE
+# {
+#   "data": {
+#     "createZoneReport": {
+#       "zoneReport": {
+#         "id": "694b6213-a1e3-482b-90ed-9e0914bbd33b"
+#       },
+#       "success": true,
+#       "errors": []
+#     }
+#   }
+# }
+
+# create meter info
+mutation{
+  createMeterInfo(
+  input:{
+   zoneReportId: "694b6213-a1e3-482b-90ed-9e0914bbd33b",
+    dmaReportId: "",
+    meterStatusId:"317d14eb-b276-473c-9468-5e7eb7ff27bd",
+    meterSerial: "1233" ,
+    meterAccessible: true,
+    meterPresent: true ,
+    meterStandLocation:"WITHIN PREMISES"
+  }
+  ){
+    meterInfo{
+      id
+    },
+    success,
+    errors
+  }
+}
+# response
+{
+  "data": {
+    "createMeterInfo": {
+      "meterInfo": {
+        "id": "55dff87f-4860-4424-81c9-37521b6ecde2"
+      },
+      "success": true,
+      "errors": []
+    }
+  }
+}
+# create Burst and lealage
+mutation{
+  createBurstAndLeaks(
+  input:{
+   zoneReportId: "",
+    dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66" ,
+    pipematerialId:"408dc1dd-fab1-4849-9335-d1a7cff9ecd3",
+    pipesizeId: "0ef1e442-6407-4137-828d-846e6475b8c3"  ,
+    surroundingArea: "true",
+  	remarks: "true" ,
+    
+  }
+  ){
+    burstAndLealage{
+      id
+    },
+    success,
+    errors
+  }
+}
+# response
+{
+  "data": {
+    "createBurstAndLeaks": {
+      "burstAndLealage": {
+        "id": "6b139596-7abb-41a5-aad5-8c26a4e43625"
+      },
+      "success": true,
+      "errors": []
+    }
+  }
+}
+# CREATE ANOMALLY
+mutation{
+  createAnomally(
+  input:{
+   zoneReportId: "",
+    dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66"  ,
+    meterStandProblemId:"03128863-ff8b-4c95-9780-f29f15efd97d",
+    illegaluseId:  "382453c7-8cea-448a-aedb-af141d50be1c"  ,
+    labelled: "true",
+  	otherProblem: "none at all" ,
+    
+  }
+  ){
+    anomally{
+      id
+    },
+    success,
+    errors
+  }
+}
+# RESPONSE
+{
+  "data": {
+    "createAnomally": {
+      "anomally": {
+        "id": "0728234d-ad8d-4baf-b2d6-e8508e4c12f8"
+      },
+      "success": true,
+      "errors": []
+    }
+  }
+}
+# CREATE CONNECTION INFO
+mutation{
+  createConnectionInfo(
+  input:{
+   zoneReportId: "",
+    dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66"  ,
+    buildingTypeCartegoryId:"3fb9fbd4-6ea3-44c9-96db-7622298e84a0",
+    labelled: true,
+  	connectionNumber: "none at all",
+    accountStatusId:"0672c88a-6c15-4f38-9001-2fb805b3b5d6"
+    
+  }
+  ){
+    connectionInfo{
+      id
+    },
+    success,
+    errors
+  }
+}
+# response
+{
+  "data": {
+    "createConnectionInfo": {
+      "connectionInfo": {
+        "id": "59c74ffa-212f-427d-a1be-38701584bd6e"
+      },
+      "success": true,
+      "errors": []
+    }
+  }
+}
+
+# CREATE BUILDING INFO
+mutation{
+  createBuildingInfo(
+  input:{
+   connectionInfoId: "1d9b407c-fd35-4032-9950-31a3a83891cc",
+    singleRooms: "1"  ,
+    bedsitters:"7",
+    oneBedrooms: "5",
+  	 twoBedrooms: "2",
+    threeBedrooms:"3",
+    floorId: "5f765d5c-4434-4f73-a412-193674cb82f1" ,
+  }
+  ){
+    buildingInfo{
+      id
+    },
+    success,
+    errors
+  }
+}
+# RESPONSE
+{
+  "data": {
+    "createBuildingInfo": {
+      "buildingInfo": {
+        "id": "e10a0cef-6814-4f44-8a4e-066bd0815bbb"
+      },
+      "success": true,
+      "errors": []
+    }
+  }
+}
