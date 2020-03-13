@@ -24,6 +24,57 @@ query {
  }
 }
 
+# my undone assignments
+ query {
+    
+      staff(phoneNumber: "0706519917" ){
+        id
+        lastName
+        firstName
+        undoneAssignments{
+            id
+            task{
+              name
+            }
+          account{
+            name
+            number
+            latitude
+            longitude
+            walkroute {
+              name
+            }
+          }
+        }
+        undoneZoneAssignments{
+          id
+          desc
+          task{
+            name
+            id
+          }
+          zone{
+            name
+            id
+          }
+        }
+        undoneDmaAssignments{
+          id
+          desc
+          task{
+            id
+            name
+          }
+          dma{
+            id
+            name
+          }
+        }
+        totalAssignments
+        totalUnDoneAssignments
+      }
+    }
+
 query($userId: String!) {
     myassignments(userId: $userId) {
       id
@@ -557,10 +608,13 @@ mutation{
   createDmaReport(
   input:{
    schemeId: "0a6f2a54-eaa3-4c20-babd-02a156befe90" ,
-    dmaId: "00b3cf10-1077-4134-90c5-87fde510a517"  ,
     bulkMeterId: "1496eeba-f7f1-4557-9d12-8543dfc7c5b2" ,
-    furtherActionId: "1b02c16e-76dd-43f4-b8ed-5627dbd1efb3",
     dmaAssignmentId:"36aebf0b-6eb9-42c0-9dea-f289a6b215f9",
+    section: "c",
+    latitude: 0.1,
+    longitude: 100000.2,
+    accuracy: 4.3
+    altitude: 3.2
   }
   ){
     dmaReport{
@@ -586,10 +640,12 @@ mutation{
   createZoneReport(
   input:{
    schemeId: "0a6f2a54-eaa3-4c20-babd-02a156befe90" ,
-    zoneId: "00f7c06d-a7ea-4c60-95fa-8bcae5aa863e"  ,
     bulkMeterId: "1496eeba-f7f1-4557-9d12-8543dfc7c5b2" ,
-    furtherActionId: "1b02c16e-76dd-43f4-b8ed-5627dbd1efb3",
-    zoneAssignmentId:"06256302-0f87-4368-b324-ba84baa1f95d" ,
+    zoneAssignmentId:"06256302-0f87-4368-b324-ba84baa1f95d",
+    latitude: 0.1,
+    longitude: 100000.2,
+    accuracy: 4.3
+    altitude: 3.2
   }
   ){
     zoneReport{
@@ -611,6 +667,34 @@ mutation{
 #     }
 #   }
 # }
+# create Account report
+mutation{
+  createAccountReport(
+    input:{
+    assignmentId: "15b51be2-0566-49c4-a5e1-c402d8717c35",
+      latitude: 0.1,
+    longitude: 100000.2,
+    accuracy: 4.3
+    altitude: 3.2
+  }
+  ){
+    accountReport{
+      id
+    },
+    success,
+    errors
+  }
+}
+# reposnse
+{
+  "data": {
+    "createAccountReport": {
+      "accountReport": {
+        "id": "07da05ae-a4a5-40f3-bc74-7b8572ab54bf"
+      }
+    }
+  }
+}
 
 # create meter info
 mutation{
@@ -650,6 +734,7 @@ mutation{
   input:{
    zoneReportId: "",
     dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66" ,
+    accountReportId: ""
     pipematerialId:"408dc1dd-fab1-4849-9335-d1a7cff9ecd3",
     pipesizeId: "0ef1e442-6407-4137-828d-846e6475b8c3"  ,
     surroundingArea: "true",
@@ -682,10 +767,12 @@ mutation{
   input:{
    zoneReportId: "",
     dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66"  ,
+    accountReportId:"",
     meterStandProblemId:"03128863-ff8b-4c95-9780-f29f15efd97d",
     illegaluseId:  "382453c7-8cea-448a-aedb-af141d50be1c"  ,
     labelled: "true",
   	otherProblem: "none at all" ,
+    otherIllegalUse: ""
     
   }
   ){
@@ -773,3 +860,91 @@ mutation{
     }
   }
 }
+
+# cerate Report Further Action
+mutation{
+  createReportFurtherAction(
+  input:{
+   zoneReportId: "",
+    dmaReportId: "3e4a4d42-9f63-4ae8-bafa-ac19c3b9cc66" ,
+    accountReportId: ""
+    relocateMeter: true,
+    raiseMeter: false,
+    replaceMeter:true,
+    disconnectionType: "int"
+    remark: "test"
+    actionTaken: false
+    other: "none"
+    
+  }
+  ){
+    reportFurtherAction{
+      id
+    },
+    success,
+    errors
+  }
+}
+
+
+
+
+# upload land mark image
+  mutation($byteData: Upload!) {
+     uploadLandmarkImage(
+        input:{
+          burstAndLealageId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }
+
+
+# upload land mark image
+  mutation($byteData: Upload!) {
+     uploadImage(
+        input:{
+          reportId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }
+# upload illegal use image
+
+  mutation($byteData: Upload!) {
+     uploadIllegalUseImage(
+        input:{
+          anomallyId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }
+# upload Burst and leak image
+
+  mutation($byteData: Upload!) {
+     uploadBurstImage(
+        input:{
+          burstAndLealageId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }
+# Upload Anomaly picture
+ mutation($byteData: Upload!) {
+     uploadAnomallyPicture(
+        input:{
+          anomallyId:"07622539-41ff-4f1f-8b7c-ace5bc6550ed"
+          image: $byteData
+        }
+        ){
+          id
+        }
+      }

@@ -13,8 +13,8 @@ module Types
     field :total_assignments, Integer, null: false
     field :total_un_done_assignments, Integer, null: false
     field :authentication_token, String, null: false
-
-
+    field :undoneZoneAssignments, [Types::ZoneAssignmentType], null: true
+    field :undoneDmaAssignments, [Types::DmaAssignmentType], null: true
 
 
 

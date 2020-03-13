@@ -1,5 +1,5 @@
 class BurstPicture < ApplicationRecord
-  belongs_to :burst_and_lealages
+  belongs_to :burst_and_lealage
 
     mount_uploader :picture, PictureUploader # using carrier wave
  

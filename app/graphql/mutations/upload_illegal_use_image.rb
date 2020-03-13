@@ -1,8 +1,10 @@
 module Mutations
-  class UploadLandmarkImage < GraphQL::Schema::RelayClassicMutation
-    
+  class UploadIllegalUseImage < GraphQL::Schema::RelayClassicMutation
+    # TODO: define return fields
+    # field :post, Types::PostType, null: false
+
     argument :image, ApolloUploadServer::Upload, required: true
-    argument :burst_and_lealage_id, String, required: true
+    argument :anomally_id, String, required: true
   
     
     field :errors, String, null: false
@@ -10,11 +12,11 @@ module Mutations
     field :id, String, null: false
 
     # TODO: define resolve method
-    def resolve(image:, burst_and_lealage_id:)
-     
-      burst = BurstAndLealage.find(burst_and_lealage_id)
-      #  byebug
-      pic =   burst.land_mark_pictures.create!(picture: image )
+    def resolve(image:, anomally_id:)
+      # byebug
+      anomally = Anomally.find(anomally_id)
+
+      pic = anomally.illegal_use_pictures.create!(picture: image )
         if pic
           {
               id: pic.id,
@@ -27,5 +29,6 @@ module Mutations
           }
         end
     end
+
   end
 end

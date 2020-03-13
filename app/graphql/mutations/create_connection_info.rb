@@ -6,9 +6,9 @@ module Mutations
     
     argument :zone_report_id, String, required: false
     argument :dma_report_id, String, required: false
+    argument :account_report_id, String, required: false
     argument :building_type_cartegory_id, String, required: true
-    # argument :building_info_id, String, required: true
-    argument :labelled, Boolean, required: true
+    argument :name, String, required: true
     argument :connection_number, String, required: true
     argument :account_status_id, String, required: true
 
@@ -17,11 +17,12 @@ module Mutations
     field :success, Boolean, null: true
 
 
-    def resolve(zone_report_id:,dma_report_id:,building_type_cartegory_id:,labelled:,connection_number:,account_status_id:)
+    def resolve(zone_report_id:,dma_report_id:,building_type_cartegory_id:,connection_number:,account_status_id:,account_report_id:,name:)
        connection_info = ConnectionInfo.new({zone_report_id: zone_report_id,
         dma_report_id: dma_report_id,
+        account_report_id: account_report_id,
         building_type_cartegory_id: building_type_cartegory_id,
-        labelled: labelled,
+        name: name,
         connection_number: connection_number,
         account_status_id: account_status_id}.reject{ |k,v| v.blank?}
          )
@@ -39,7 +40,7 @@ module Mutations
         { 
           connection_info: nil ,
           success: false,
-          errors:  connection_info.errors.messages
+          errors:  connection_info.errors.full_messages
         }
         
       end

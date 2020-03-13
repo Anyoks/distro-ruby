@@ -4,7 +4,7 @@ module Types
     field :task   ,Types::TaskType, null: false 
     field :staff  ,Types::StaffType, null: false 
     field :stage  ,Types::StageType, null: false 
-    field :zone, Types::ZoneType, null: false 
+    field :dma, Types::DmaType, null: false 
     field :desc, String, null: false 
     field :stageName  ,String, null: false 
     

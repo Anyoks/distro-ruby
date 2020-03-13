@@ -120,6 +120,32 @@ module Types
       description: "An account's assignment history" do
         argument :id, String, required: true
     end
+# from here
+    field :pipesize,[Types::PipesizeType], null: false,
+      description: "A list of all Pipe Sizes Types"
+
+    field :pipematerial,[Types::PipematerialType], null: false,
+      description: "A list of all Pipe Sizes Types"
+
+    field :illegaluse,[Types::IllegaluseType], null: false,
+      description: "A list of all Illegal use Types"
+
+    field :meter_stand_problem,[Types::MeterStandProblemType], null: false,
+      description: "A list of all Meter stand problem Types"
+    
+    field :bulk_meters,[Types::BulkMeterType], null: false,
+      description: "A list of all Bulk meter Types"
+
+    field :floors,[Types::FloorType], null: false,
+      description: "A list of all Floor Types"
+
+    field :meter_status,[Types::MeterStatusType], null: false,
+      description: "A list of all Meter Status Types"
+
+    field :building_type_cartegories,[Types::BuildingTypeCartegoryType], null: false,
+      description: "A list of all Building Types"
+
+    
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -264,6 +290,41 @@ module Types
 
     def dmas
       Dma.all.order("name ASC")
+    end
+
+    def pipesize
+      Pipesize.all.order("name ASC")
+    end
+
+    def pipematerial
+      Pipematerial.all.order("name ASC")
+    end
+
+    def illegaluse
+      Illegaluse.all.order("name ASC")
+    end
+
+    def meter_stand_problem
+      MeterStandProblem.all.order("name ASC")
+    end
+
+
+    def bulk_meters
+      BulkMeter.all.order("name ASC")
+    end
+
+
+    def floors
+      Floor.all.order("name ASC")
+    end
+
+
+    def meter_status
+      MeterStatus.all.order("name ASC")
+    end
+
+    def building_type_cartegories
+      BuildingTypeCartegory.all.order("name ASC")
     end
 
   end

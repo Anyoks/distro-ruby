@@ -5,10 +5,11 @@ module Mutations
 
     argument :zone_report_id, String, required: false
     argument :dma_report_id, String, required: false
+    argument :account_report_id, String, required: false
     argument :meter_status_id, String, required: true
     argument :meter_serial, String, required: true
     argument :meter_accessible, Boolean, required: true
-    argument :meter_present, Boolean, required: true
+    argument :meter_present, String, required: true
     argument :meter_stand_location, String, required: true
 
     field :meter_info, Types::MeterInfoType, null: true
@@ -16,9 +17,10 @@ module Mutations
     field :success, Boolean, null: true
 
 
-    def resolve(zone_report_id:,dma_report_id:,meter_status_id:,meter_serial:,meter_accessible:,meter_present:,meter_stand_location:)
+    def resolve(zone_report_id:,dma_report_id:,meter_status_id:,meter_serial:,meter_accessible:,meter_present:,meter_stand_location:,account_report_id:)
       meter_info = MeterInfo.new({zone_report_id: zone_report_id,
         dma_report_id: dma_report_id,
+        account_report_id: account_report_id,
         meter_status_id: meter_status_id,
         meter_serial: meter_serial,
         meter_accessible: meter_accessible,

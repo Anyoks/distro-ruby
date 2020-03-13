@@ -1,5 +1,9 @@
 module Types
   class MutationType < Types::BaseObject
+    field :uploadReportFurtherActionImage, mutation: Mutations::UploadReportFurtherActionImage
+    field :uploadIllegalUseImage, mutation: Mutations::UploadIllegalUseImage
+    field :createReportFurtherAction, mutation: Mutations::CreateReportFurtherAction
+    field :createAccountReport, mutation: Mutations::CreateAccountReport
     field :createBuildingInfo, mutation: Mutations::CreateBuildingInfo
     field :createConnectionInfo, mutation: Mutations::CreateConnectionInfo
     field :createAnomally, mutation: Mutations::CreateAnomally

@@ -5,6 +5,7 @@ class ZoneAssignment < ApplicationRecord
   belongs_to :user
   belongs_to :staff
   belongs_to :stage
+  has_one :zone_report
 
   def date
         self.created_at.strftime("%d/%m/%Y")

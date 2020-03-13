@@ -5,6 +5,7 @@ class DmaAssignment < ApplicationRecord
   belongs_to :user
   belongs_to :staff
   belongs_to :stage
+  has_one :dma_report
 
   def date
     self.created_at.strftime("%d/%m/%Y")

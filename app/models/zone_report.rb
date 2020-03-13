@@ -1,12 +1,13 @@
 class ZoneReport < ApplicationRecord
   belongs_to :scheme
-  belongs_to :zone
   belongs_to :bulk_meter
   belongs_to :zone_assignment
-  has_one :connection_info
-  has_one :anomally
-  has_one :meter_info
-  has_one :burst_and_leaks
-  belongs_to :further_action
-  has_many :zonepictures
+  has_one :connection_info, dependent: :destroy
+  has_one :anomally, dependent: :destroy
+  has_one :meter_info, dependent: :destroy
+  has_one :burst_and_leaks, dependent: :destroy
+  has_one :report_further_action, dependent: :destroy
+  has_many :zonepictures, dependent: :destroy
+
+  validates_uniqueness_of :zone_assignment_id
 end

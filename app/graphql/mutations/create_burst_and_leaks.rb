@@ -5,6 +5,7 @@ module Mutations
 
     argument :zone_report_id, String, required: false
     argument :dma_report_id, String, required: false
+    
     argument :pipematerial_id, String, required: true
     argument :pipesize_id, String, required: true
     argument :surrounding_area, String, required: false
@@ -19,6 +20,7 @@ module Mutations
       burst_and_lealage = BurstAndLealage.new({
        zone_report_id: zone_report_id,
        dma_report_id: dma_report_id,
+       
        pipematerial_id: pipematerial_id,
        pipesize_id: pipesize_id,
        surrounding_area: surrounding_area,

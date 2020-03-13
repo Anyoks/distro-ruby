@@ -47,6 +47,8 @@ class Staff < ApplicationRecord
     has_many :assignments, dependent: :destroy
     has_many :reports, through: :assignments
     before_create :set_uid, :skip_confirmation
+    has_many :zone_assignments
+    has_many :dma_assignments
 
     def set_uid
        self.uid = self.email
@@ -61,9 +63,23 @@ class Staff < ApplicationRecord
     self.skip_confirmation!
   end
 
+  def undone_dma_assignments
+    self.dma_assignments.where("id NOT IN (SELECT  dma_assignment_id FROM dma_reports)")
+  end
+
+  def undone_zone_assignments
+    self.zone_assignments.where("id NOT IN (SELECT  zone_assignment_id FROM zone_reports)")
+  end
+
+  def undone_account_assignments
+    self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
+  end
+
   def undone_assignments
     self.assignments.where("id NOT IN (SELECT  assignment_id FROM Reports)")
   end
+
+
 
   def done_assignments
     self.assignments.where("id IN (SELECT  assignment_id FROM Reports)")

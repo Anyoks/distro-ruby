@@ -1,5 +1,5 @@
-class LandMarkPicture < ApplicationRecord
-  belongs_to :burst_and_lealage
+class IllegalUsePicture < ApplicationRecord
+  belongs_to :anomally
 
    mount_uploader :picture, PictureUploader # using carrier wave
  
