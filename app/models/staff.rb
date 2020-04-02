@@ -86,10 +86,10 @@ class Staff < ApplicationRecord
   end
 
   def total_assignments
-    self.assignments.count
+    self.assignments.count + self.dma_assignments.count + self.zone_assignments.count
   end
   def total_un_done_assignments
-    self.undone_assignments.count
+    self.undone_account_assignments.count + self.undone_dma_assignments.count + self.undone_zone_assignments.count
   end
 
   def full_names
