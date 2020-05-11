@@ -40,6 +40,44 @@ module Types
         argument :phone_number, String, required: true
     end
 
+    # Get connection details for a particular zone report
+    field :zone_connection_info, Types::ConnectionInfoType, null: true,
+     description: "Get connection details for a particular zone report" do
+        argument :zoneReportId, String, required: true
+    end
+
+    field :dma_connection_info, Types::ConnectionInfoType, null: true,
+     description: "Get connection details for a particular dma report" do
+        argument :dmaReportId, String, required: true
+    end
+
+    field :dma_report_anomaly, Types::AnomallyType, null: true,
+     description: "get anomalies for dma report" do
+        argument :dmaReportId, String, required: true
+    end
+    field :zone_report_anomaly, Types::AnomallyType, null: true,
+     description: "get anomalies for zone report" do
+        argument :zoneReportId, String, required: true
+    end
+
+    field :dma_report_bursts_and_leaks, Types::BurstAndLealageType, null: true,
+     description: "get bursts and leaks for dma report" do
+        argument :dmaReportId, String, required: true
+    end
+    field :zone_report_bursts_and_leaks, Types::BurstAndLealageType, null: true,
+     description: "get bursts and leaks for zone report" do
+        argument :zoneReportId, String, required: true
+    end
+
+    field :dma_report_further_action, Types::ReportFurtherActionType, null: true, 
+     description: "get dma report further action details" do
+      argument :dmaReportId, String, required: true
+    end
+    field :zone_report_further_action, Types::ReportFurtherActionType, null: true, 
+    description: "get zone report further action details" do
+      argument :zoneReportId, String, required: true
+    end
+
     field :stages, [Types::StageType], null: false,
       description: "A list of all stages"
 
@@ -77,6 +115,16 @@ module Types
     
     field :myreports, [Types::ReportType], null: false,
       description: "A list of all reports specific to a user" do
+        argument :userId, String, required: true
+    end
+
+    field :myzonereports, [Types::ZoneReportType], null: false,
+      description: "A list of all zone reports specific to a user" do
+        argument :userId, String, required: true
+    end
+
+    field :mydmareports, [Types::DmaReportType], null: false,
+      description: "A list of all dma reports specific to a user" do
         argument :userId, String, required: true
     end
 
@@ -220,6 +268,41 @@ module Types
        Staff.find_by(phone_number)
     end
 
+    def zone_connection_info(id)
+      
+      ConnectionInfo.find_by(id)
+      # byebug
+    end
+
+    def dma_connection_info(id)
+      ConnectionInfo.find_by(id)
+      # byebug
+    end
+
+    def dma_report_anomaly(id)
+      Anomally.find_by(id)      
+    end   
+
+    def zone_report_anomaly(id)
+      Anomally.find_by(id)      
+    end 
+
+    def dma_report_bursts_and_leaks(id)
+      BurstAndLealage.find_by(id)
+    end
+
+    def zone_report_bursts_and_leaks(id)
+      BurstAndLealage.find_by(id)
+    end
+
+    def dma_report_further_action(id)
+      ReportFurtherAction.find_by(id)
+    end
+
+    def zone_report_further_action(id)
+      ReportFurtherAction.find_by(id)
+    end
+
     def stages      
       Stage.all
     end
@@ -259,6 +342,14 @@ module Types
 
     def myreports(userId)
       Report.myreports(userId[:user_id]).order("created_at DESC")
+    end
+  
+    def myzonereports(userId)
+      ZoneReport.myreports(userId[:user_id]).order("created_at DESC")
+    end
+
+    def mydmareports(userId)
+      DmaReport.myreports(userId[:user_id]).order("created_at DESC")
     end
 
     def accountstatus

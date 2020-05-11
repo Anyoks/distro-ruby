@@ -162,6 +162,26 @@ query($userId: String!) {
     
     }
   }
+# My  zone reports
+  query($userId: String!) {
+    myzonereports(userId: $userId) {
+    id
+    date
+    stageName
+  	zone{
+      id
+      name
+    }
+    furtherActionImage
+    reportedBy
+    zoneAssignment{
+      stageName,
+      staff{
+        fullNames
+      }
+    }
+    }
+  }
 # All reports
 query {
   	reports {
@@ -284,6 +304,82 @@ query{
     id
   }
 }
+
+# building details
+
+# connection info for zone/dma report
+query($zoneReportId: String!) {
+    zoneConnectionInfo(zoneReportId: $zoneReportId) {
+    	id
+    	buildingInfo{
+        bedsitters
+        oneBedrooms,
+        singleRooms,
+        threeBedrooms,
+        twoBedrooms,
+      },
+    labelled,
+    connectionNumber,
+    accountStatus{
+      name
+    },
+    buildingTypeCartegory{
+      name
+    }
+    }
+  }
+
+  query($dmaReportId: String!) {
+    dmaConnectionInfo(dmaReportId: $dmaReportId) {
+    	id
+    	buildingInfo{
+        bedsitters
+        oneBedrooms,
+        singleRooms,
+        threeBedrooms,
+        twoBedrooms,
+      },
+    labelled,
+    connectionNumber,
+    accountStatus{
+      name
+    },
+    buildingTypeCartegory{
+      name
+    }
+    }
+  }
+
+# Anomaly for Zone/Dma Report
+query($zoneReportId: String!) {
+    zoneReportAnomaly(zoneReportId: $zoneReportId) {
+    	id
+    labelled,
+    illegaluse{
+      name
+    },
+    meterStandProblem{
+      name
+    }
+    illegalUseImage,
+    anomallyImage
+    }
+  }
+# Anomaly for Zone/Dma Report
+query($dmaReportId: String!) {
+    dmaeportAnomaly(dmaReportId: $dmaReportId) {
+    	id
+    labelled,
+    illegaluse{
+      name
+    },
+    meterStandProblem{
+      name
+    }
+    illegalUseImage,
+    anomallyImage
+    }
+  }
 
 #########################################################################
 #####################   MUTATIONS  ######################################

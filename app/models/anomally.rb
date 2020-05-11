@@ -10,5 +10,44 @@ class Anomally < ApplicationRecord
   validates_uniqueness_of :dma_report_id, scope: [:zone_report_id, :account_report_id]
   # :zone_report_id , :account_report_id
 
+  def anomally_image 
 
+		if Rails.env == "development" 
+			root_url = "http://localhost:3000"
+		else
+			root_url = "https://distroapp.io"
+		end
+
+    urls = []
+    full_url = ""
+    if self.anomally_pictures.first.present?
+      # byebug
+      url = self.anomally_pictures.first.url.present? ? self.anomally_pictures.first.url : nil
+      full_url =  url !=nil ? root_url + url : ""
+    end
+    
+			# urls << root_url + pic.image.url(:medium)
+		
+		return full_url
+  end
+
+  def illegal_use_image
+    if Rails.env == "development" 
+			root_url = "http://localhost:3000"
+		else
+			root_url = "https://distroapp.io"
+		end
+
+    urls = []
+    full_url = ""
+    if self.illegal_use_pictures.first.present?
+      # byebug
+      url = self.illegal_use_pictures.first.url.present? ? self.illegal_use_pictures.first.url : nil
+      full_url =  url !=nil ? root_url + url : ""
+    end
+    
+			# urls << root_url + pic.image.url(:medium)
+		
+		return full_url
+  end
 end

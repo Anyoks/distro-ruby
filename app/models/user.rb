@@ -57,7 +57,11 @@ class User < ActiveRecord::Base
   before_create :set_default_role, :set_uid, :skip_confirmation
   before_validation :set_default_role
   has_many :assignments
+  has_many :zone_assignments
+  has_many :dma_assignments
   has_many :reports, through: :assignments
+  has_many :zone_reports, through: :zone_assignments
+  has_many :dma_reports, through: :dma_assignments
 
   def downcase_fields
     self.first_name.downcase!
