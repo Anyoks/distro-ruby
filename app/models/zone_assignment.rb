@@ -14,4 +14,13 @@ class ZoneAssignment < ApplicationRecord
   def add_default_stage
       self.stage_id = Stage.find_by(name: "Assign").id
   end
+    def self.undone_assingments
+        ZoneAssignment.where("id NOT IN (SELECT  zone_assignment_id FROM Zone_Reports)")
+    end
+
+    def self.myassignments(userId)
+      # byebug
+      user = User.find_by(uid: userId)
+      user.zone_assignments.includes(:task, :staff, :stage, :zone, :zone_report)
+    end
 end

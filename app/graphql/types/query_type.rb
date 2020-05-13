@@ -24,6 +24,16 @@ module Types
         argument :userId, String, required: true
     end
 
+    field :myDmaAssignments, [Types::DmaAssignmentType], null: false,
+      description: "A list of all dma assignmets specific to a user." do
+        argument :userId, String, required: true
+    end
+    
+    field :myZoneAssignments, [Types::ZoneAssignmentType], null: false,
+      description: "A list of all Zone assignmets specific to a user." do
+        argument :userId, String, required: true
+    end
+
     field :departments, [Types::DepartmentType], null: false,
       description: "A list of all departments"
     
@@ -233,6 +243,17 @@ module Types
       # byebug
       # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
       Assignment.myassignments(userId[:user_id]).order("created_at DESC")
+    end
+
+    def my_dma_assignments(userId)
+      # byebug
+      # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+      DmaAssignment.myassignments(userId[:user_id]).order("created_at DESC")
+    end
+    def my_zone_assignments(userId)
+      # byebug
+      # Assignment.where(user_id: userId[:user_id]).order("created_at DESC")
+      ZoneAssignment.myassignments(userId[:user_id]).order("created_at DESC")
     end
 
 

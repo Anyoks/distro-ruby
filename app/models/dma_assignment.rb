@@ -14,4 +14,13 @@ class DmaAssignment < ApplicationRecord
   def add_default_stage
     self.stage_id = Stage.find_by(name: "Assign").id
   end
+    def self.undone_assingments
+        DmaAssignment.where("id NOT IN (SELECT  dma_assignment_id FROM Dma_Reports)")
+    end
+
+    def self.myassignments(userId)
+      # byebug
+      user = User.find_by(uid: userId)
+      user.dma_assignments.includes(:task, :staff, :stage, :dma, :dma_report)
+    end
 end
