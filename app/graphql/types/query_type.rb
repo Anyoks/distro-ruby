@@ -89,8 +89,8 @@ module Types
     end
 
     field :stages, [Types::StageType], null: false,
-      description: "A list of all stages"
-
+      description: "A list of all stages, has option for stage details for particular user"
+    
     # field :mystages, [Types::StageType], null: false,
     #   description: "A list of all stages with totals"
     #   do

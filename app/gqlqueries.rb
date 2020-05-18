@@ -299,11 +299,17 @@ query{
 # my positions
 query{
   myPositions(email: "dennorina@gmail.com"){
-    
     name
     id
   }
 }
+query($userId: String!) {
+    myPositions(email: $userId) {
+      id
+      name
+      description
+    }
+  }
 
 # building details
 
@@ -384,6 +390,25 @@ query($dmaReportId: String!) {
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################
+
+# Create Staff
+mutation{
+  registerStaff( 
+  	 input: {
+      firstName: "Black"
+     lastName: "Jack"
+      email: "black@jack.com"
+      password: "1234567"
+      phoneNumber: "0711430817" 
+      positionId: "10771cff-8541-495d-803d-9f03d0d38fad"
+    }
+  ){
+    staff{
+      fullNames
+      id
+    }
+  }
+}
 
 # create report
 mutation{
@@ -594,8 +619,34 @@ mutation{
     }
   }
 }
+
+################################
+## new staff
+mutation{
+  registerStaff( 
+  	 input: {
+      firstName: "Black"
+     lastName: "Jack"
+      email: "black@jack.com"
+      password: "1234567"
+      phoneNumber: "0711430817" 
+      positionId: "10771cff-8541-495d-803d-9f03d0d38fad"
+    }
+  ){
+    staff{
+      fullNames
+      id
+      position{
+        id
+        name
+      }
+    }
+  }
+}
 # ####################################################
 ### UPDATE STAFF POSITION
+
+
 mutation{
   updateStaffPosition(input:
   	{
