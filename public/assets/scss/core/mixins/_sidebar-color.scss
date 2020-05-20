@@ -52,7 +52,7 @@
 @mixin set-background-color-button($color){
 
     li.active > a{
-        background-color:#9d9aa2; // #7659b5;//$purple-distro;
+        background-color:#9d9aa2; // #33ACFF;//$purple-distro;
         @include shadow-big-color($purple-distro);
     }
 }
