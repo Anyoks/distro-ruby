@@ -25,7 +25,7 @@ class Assignment < ApplicationRecord
     has_one :account_report
 
     def add_default_stage
-        self.stage_id = Stage.find_by(name: "Assign").id
+        self.stage_id = Stage.find_by(name: "assign").id
     end
 
     def self.undone_assingments
