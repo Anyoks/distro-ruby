@@ -205,7 +205,7 @@ require 'csv'
 
 # stages
 # KEY FOR DEMO ACCOUNTS
-# ['Assign', 'Further Action', 'Pending', 'Complete'].each do |stage|
+# ['assign', 'further action', 'pending', 'complete'].each do |stage|
 #     if Stage.find_by_name("#{stage}").present?
 #         puts "STAGE EXISTS #{stage}----------Skipping"        
 #     else

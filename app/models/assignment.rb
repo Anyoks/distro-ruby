@@ -50,5 +50,5 @@ class Assignment < ApplicationRecord
 end
 
 # Assignment.where(updated_at: Date.today-30..Date.today).group_by_week(:updated_at).count
-# Assignment.where(stage_id: Stage.where(name: 'Complete').first.id).group_by_week(:updated_at).count
+# Assignment.where(stage_id: Stage.where(name: 'complete').first.id).group_by_week(:updated_at).count
 # Assignment.group_by_day(:updated_at).count

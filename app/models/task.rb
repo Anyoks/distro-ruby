@@ -100,7 +100,7 @@ class Task < ApplicationRecord
 
     def total_complete_assign_group_by_week
       # total assignments for this taks this 
-        stage = Stage.where(name: 'Complete')
+        stage = Stage.where(name: 'complete')
         self.assignments.where(stage_id: stage.id ).group_by_week(:updated_at).count
     end
 
@@ -111,7 +111,7 @@ class Task < ApplicationRecord
 
     def total_complete_assign_group_by_month
       # total assignments for this taks this 
-        stage = Stage.where(name: 'Complete')
+        stage = Stage.where(name: 'complete')
         self.assignments.where(stage_id: stage.id ).group_by_month(:updated_at).count
     end
 end

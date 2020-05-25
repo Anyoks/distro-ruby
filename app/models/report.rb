@@ -29,10 +29,10 @@ class Report < ApplicationRecord
   # mount_uploader :picture, PictureUploader # using carrier wave
 
 
-  # "Assign"
-  # "Further Action"
-  # "Pending"
-  # "Complete"
+  # "assign"
+  # "further action"
+  # "pending"
+  # "complete"
 
   def account
     self.assignment.account
@@ -72,18 +72,18 @@ class Report < ApplicationRecord
     if (self.completed && self.further_action.name == 'none') 
       logger.debug "complete"	
       # completed
-      self.assignment.update_attributes(stage_id: Stage.where(name:  "Complete").first.id )
+      self.assignment.update_attributes(stage_id: Stage.where(name:  "complete").first.id )
     elsif (self.completed && self.further_action.name != 'none')
       logger.debug "F action"	
       # further action
-      self.assignment.update_attributes(stage_id: Stage.where(name: "Further Action").first.id )
+      self.assignment.update_attributes(stage_id: Stage.where(name: "further action").first.id )
     elsif (self.completed == false )
-      logger.debug "Pending"	
+      logger.debug "pending"	
       # if complete is false and no further action
       # pending 
       # == complete == false
-      id =  Stage.where(name: "Pending").first.id 
-      logger.debug "Pending id is #{id}"	
+      id =  Stage.where(name: "pending").first.id 
+      logger.debug "pending id is #{id}"	
       self.assignment.update_attributes(stage_id: id)
     end
   end

@@ -12,7 +12,7 @@ class DmaAssignment < ApplicationRecord
   end
 
   def add_default_stage
-    self.stage_id = Stage.find_by(name: "Assign").id
+    self.stage_id = Stage.find_by(name: "assign").id
   end
     def self.undone_assingments
         DmaAssignment.where("id NOT IN (SELECT  dma_assignment_id FROM Dma_Reports)")

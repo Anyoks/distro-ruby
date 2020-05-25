@@ -12,7 +12,7 @@ class ZoneAssignment < ApplicationRecord
   end
 
   def add_default_stage
-      self.stage_id = Stage.find_by(name: "Assign").id
+      self.stage_id = Stage.find_by(name: "assign").id
   end
     def self.undone_assingments
         ZoneAssignment.where("id NOT IN (SELECT  zone_assignment_id FROM Zone_Reports)")
