@@ -203,7 +203,8 @@ module Types
     field :building_type_cartegories,[Types::BuildingTypeCartegoryType], null: false,
       description: "A list of all Building Types"
 
-    
+    field :tenants,[String], null: false,
+      description: "A list of all availble subdomains/tenants"
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -437,6 +438,10 @@ module Types
 
     def building_type_cartegories
       BuildingTypeCartegory.all.order("name ASC")
+    end
+
+    def tenants
+      Apartment.tenant_names
     end
 
   end
