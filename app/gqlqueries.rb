@@ -713,6 +713,11 @@ query{
     }
   }
 }
+
+# LIst Tenants
+ query {
+  tenants 
+}
 # ########################################
 # create zone assignment
 mutation{
