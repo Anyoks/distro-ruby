@@ -606,15 +606,16 @@ mutation{
       id: "cb934cdb-41ec-4edd-a25f-cc5e0a03b40a",
       name: "testing",
 			description: "tested very well too!" 
-      subdepartmentIds:["3962ee69-eadd-4ebf-b7b1-f82b6bf6f714","c0255136-9405-4eb9-8e61-47caafd56ff1"]
+      positionIds:["3962ee69-eadd-4ebf-b7b1-f82b6bf6f714","c0255136-9405-4eb9-8e61-47caafd56ff1"]
+    	
     }
   ){
     task{
       name
       id
-      subdepartments{
-        name
+      positions{
         id
+        name
       }
     }
   }
