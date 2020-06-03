@@ -76,7 +76,7 @@ class Task < ApplicationRecord
       # byebug
       user_id = User.find_by(uid: userId)
       # User.find(user_id).subdepartment.tasks
-      user_id.subdepartment.tasks
+      user_id.subdepartment.tasks.distinct
     end
 
     def total_assign_group_by_week

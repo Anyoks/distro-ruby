@@ -8,7 +8,7 @@ module Mutations
     argument :desc, String, required: true
     argument :task_id, String, required: true
     argument :zone_ids, [String], required: true
-    argument :number_of_assignments, Integer , required: true  # number of assignemts per zone
+    argument :number_of_assignments, String , required: true  # number of assignemts per zone
 
     field :zoneAssignments, [Types::ZoneAssignmentType], null: true
 
@@ -18,7 +18,7 @@ module Mutations
       assignments = []
       failed_assignments = []
 
-      number_of_assignments.times do
+      number_of_assignments.to_i.times do
         zone_ids.each do |zone|
           # TODO change user_id from id to email?
           assignment = ZoneAssignment.create!(user_id: user_id, task_id: task_id, staff_id: staff_id, zone_id: zone, desc: desc)
