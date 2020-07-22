@@ -23,7 +23,6 @@ module Mutations
       zone_report = ZoneReport.new({scheme_id: scheme_id, bulk_meter_id: bulk_meter_id,
           zone_assignment_id: zone_assignment_id,
          longitude: longitude, latitude:latitude, accuracy: accuracy, altitude:altitude}.reject{ |k,v| v.blank?} )
-
       if zone_report.save
        
         {

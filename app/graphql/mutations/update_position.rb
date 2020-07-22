@@ -29,6 +29,7 @@ module Mutations
               end
             end
             # add all subdepartments to the HABTM join table
+            #  byebug
             position.subdepartments = subdepartments
           else
             # remove all subdepartments
@@ -43,6 +44,7 @@ module Mutations
             end
             position.staffs = staffs
           else
+            staffs = []
             # remove all sfatt
             position.staffs = staffs
          end

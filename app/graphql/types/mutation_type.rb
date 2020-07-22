@@ -1,6 +1,5 @@
 module Types
   class MutationType < Types::BaseObject
-    field :deleteTask, mutation: Mutations::DeleteTask
     field :uploadReportFurtherActionImage, mutation: Mutations::UploadReportFurtherActionImage
     field :uploadIllegalUseImage, mutation: Mutations::UploadIllegalUseImage
     field :createReportFurtherAction, mutation: Mutations::CreateReportFurtherAction
