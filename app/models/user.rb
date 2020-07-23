@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
   has_many :reports, through: :assignments
   has_many :zone_reports, through: :zone_assignments
   has_many :dma_reports, through: :dma_assignments
+  has_many :account_reports, through: :assignments
 
   def downcase_fields
     self.first_name.downcase!

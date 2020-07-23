@@ -50,7 +50,18 @@ module Types
         argument :phone_number, String, required: true
     end
 
-    # Get connection details for a particular zone report
+    # Meter infor
+    field :acc_meter_info, Types::MeterInfoType, null: true,
+     description: "Get connection details for a particular acc report" do
+        argument :accountReportId, String, required: true
+    end
+
+    # Get account details/info for a particular zone report
+    field :acc_connection_info, Types::ConnectionInfoType, null: true,
+     description: "Get account report info for a particular acc report" do
+        argument :accountReportId, String, required: true
+    end
+
     field :zone_connection_info, Types::ConnectionInfoType, null: true,
      description: "Get connection details for a particular zone report" do
         argument :zoneReportId, String, required: true
@@ -61,10 +72,16 @@ module Types
         argument :dmaReportId, String, required: true
     end
 
+    field :acc_report_anomaly, Types::AnomallyType, null: true,
+     description: "get anomalies for acc report" do
+        argument :accountReportId, String, required: true
+    end
+
     field :dma_report_anomaly, Types::AnomallyType, null: true,
      description: "get anomalies for dma report" do
         argument :dmaReportId, String, required: true
     end
+
     field :zone_report_anomaly, Types::AnomallyType, null: true,
      description: "get anomalies for zone report" do
         argument :zoneReportId, String, required: true
@@ -79,10 +96,16 @@ module Types
         argument :zoneReportId, String, required: true
     end
 
+    field :acc_report_further_action, Types::ReportFurtherActionType, null: true, 
+     description: "get acc report further action details" do
+      argument :accountReportId, String, required: true
+    end
+
     field :dma_report_further_action, Types::ReportFurtherActionType, null: true, 
      description: "get dma report further action details" do
       argument :dmaReportId, String, required: true
     end
+
     field :zone_report_further_action, Types::ReportFurtherActionType, null: true, 
     description: "get zone report further action details" do
       argument :zoneReportId, String, required: true
@@ -120,10 +143,10 @@ module Types
     field :remarks, [Types::RemarkType], null: false,
       description: "A list of all Remarks"
 
-    field :reports, [Types::ReportType],null: true,
+    field :reports, [Types::AccountReportType],null: true,
       description: "A list of all Reports"
     
-    field :myreports, [Types::ReportType], null: false,
+    field :myreports, [Types::AccountReportType], null: true,
       description: "A list of all reports specific to a user" do
         argument :userId, String, required: true
     end
@@ -290,8 +313,18 @@ module Types
        Staff.find_by(phone_number)
     end
 
+    def acc_connection_info(id)
+      # id is the acc report id
+      ConnectionInfo.find_by(id)
+      # byebug
+    end
+
+    def acc_meter_info(id)
+      # id is the acc report id
+      MeterInfo.find_by(id)
+    end
+
     def zone_connection_info(id)
-      
       ConnectionInfo.find_by(id)
       # byebug
     end
@@ -299,6 +332,10 @@ module Types
     def dma_connection_info(id)
       ConnectionInfo.find_by(id)
       # byebug
+    end
+
+    def acc_report_anomaly(id)
+      Anomally.find_by(id)
     end
 
     def dma_report_anomaly(id)
@@ -315,6 +352,10 @@ module Types
 
     def zone_report_bursts_and_leaks(id)
       BurstAndLealage.find_by(id)
+    end
+
+    def acc_report_further_action(id)
+      ReportFurtherAction.find_by(id)
     end
 
     def dma_report_further_action(id)
@@ -359,11 +400,11 @@ module Types
     end
 
     def reports
-      Report.order("created_at DESC")
+      AccountReport.order("created_at DESC")
     end
 
     def myreports(userId)
-      Report.myreports(userId[:user_id]).order("created_at DESC")
+      AccountReport.myreports(userId[:user_id]).order("created_at DESC")
     end
   
     def myzonereports(userId)

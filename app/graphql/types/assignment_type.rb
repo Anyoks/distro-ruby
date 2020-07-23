@@ -7,7 +7,7 @@ module Types
     field :account, Types::AccountType, null: false 
     field :comment ,String, null: false   
     field :stageName  ,String, null: false 
-    field :report, Types::ReportType, null: true
+    # field :report, Types::AccountReportType, null: true
     field :date, String, null: false
     
     def stage_name
