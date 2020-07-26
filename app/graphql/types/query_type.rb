@@ -56,6 +56,16 @@ module Types
         argument :accountReportId, String, required: true
     end
 
+    field :dma_meter_info, Types::MeterInfoType, null: true,
+     description: "Get connection details for a particular acc report" do
+        argument :dmaReportId, String, required: true
+    end
+
+    field :zone_meter_info, Types::MeterInfoType, null: true,
+     description: "Get connection details for a particular zone report" do
+        argument :zoneReportId, String, required: true
+    end
+
     # Get account details/info for a particular zone report
     field :acc_connection_info, Types::ConnectionInfoType, null: true,
      description: "Get account report info for a particular acc report" do
@@ -130,6 +140,14 @@ module Types
       description: "A list of all tasks specific to a user" do
         argument :userId, String, required: true
     end
+
+    field :my_tasks_for_graph, [Types::TaskType], null: false,
+      description: "A list of tasks that belong to a user with assignment count > 0 for graph plotting" do
+        argument :userId, String, required: true
+    end
+
+    field :tasks_for_graph, [Types::TaskType], null: false,
+      description: "A list of tasks with assignment count > 0 for graph plotting" 
 
     field :users, [Types::UserType], null: false,
       description: "A list of all users"
@@ -323,6 +341,16 @@ module Types
       # id is the acc report id
       MeterInfo.find_by(id)
     end
+    
+    def dma_meter_info(id)
+      # id is the acc report id
+      MeterInfo.find_by(id)
+    end
+
+    def zone_meter_info(id)
+      # id is the acc report id
+      MeterInfo.find_by(id)
+    end
 
     def zone_connection_info(id)
       ConnectionInfo.find_by(id)
@@ -376,6 +404,14 @@ module Types
 
     def tasks
       Task.all.order("created_at DESC")
+    end
+
+    def my_tasks_for_graph(userId)
+       Task.my_tasks_for_graph(userId[:user_id])
+    end
+
+    def tasks_for_graph
+       Task.tasks_for_graph
     end
 
     def mytasks(userId)

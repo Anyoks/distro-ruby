@@ -71,6 +71,14 @@ class Task < ApplicationRecord
       self.assignments.where(user_id: user_id).count
     end
 
+    def self.tasks_for_graph
+      Task.all.reject{|k| k.total_assignments == 0 }
+    end
+
+    def self.my_tasks_for_graph(userId)
+      self.mytasks(userId).reject{|k| k.total_assignments == 0 }
+    end
+
     # get tasks for a user's subdepartment
     def self.mytasks(userId)
       # byebug

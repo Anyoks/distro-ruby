@@ -8,6 +8,7 @@ module Types
     field :staffs, [Types::StaffType], null: true
     field :total_assignments, Integer, null: false
     field :total_assign_group_by_week, [Types::GroupDateType] , null: true
+    # tasks_for_graph
 
     # get totals for a particular user.
     field :my_total_assignments, Integer, null: true do
