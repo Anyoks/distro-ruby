@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: account_reports
+#
+#  id            :uuid             not null, primary key
+#  assignment_id :uuid
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  latitude      :float
+#  longitude     :float
+#  accuracy      :float
+#  altitude      :float
+#
+
 class AccountReport < ApplicationRecord
   belongs_to :assignment
 

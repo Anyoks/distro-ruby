@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: anomally_pictures
+#
+#  id          :uuid             not null, primary key
+#  anomally_id :uuid
+#  picture     :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class AnomallyPicture < ApplicationRecord
   belongs_to :anomally
 

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: dma_assignments
+#
+#  id         :uuid             not null, primary key
+#  dma_id     :uuid
+#  task_id    :uuid
+#  user_id    :uuid
+#  staff_id   :uuid
+#  stage_id   :uuid
+#  desc       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class DmaAssignment < ApplicationRecord
   before_validation :add_default_stage, on: :create
   belongs_to :dma
