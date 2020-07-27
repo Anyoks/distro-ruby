@@ -76,13 +76,13 @@ class Staff < ApplicationRecord
   end
 
   def undone_assignments
-    self.assignments.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+    self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
   end
 
 
 
   def done_assignments
-    self.assignments.where("id IN (SELECT  assignment_id FROM Reports)")
+    self.assignments.where("id IN (SELECT  assignment_id FROM account_reports)")
   end
 
   def total_assignments
