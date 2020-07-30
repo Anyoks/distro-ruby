@@ -387,6 +387,52 @@ query($dmaReportId: String!) {
     }
   }
 
+
+# Meter accINfo query  # 
+query($accountReportId: String!) {
+    accMeterInfo(accountReportId: $accountReportId ) {
+      id
+			meterAccessible
+    	meterPresent
+    meterSerial
+    meterStandLocation
+    meterReading
+    meterStatus{
+      name
+    }
+  }
+}
+
+# Dma Meter info
+query($dmaReportId: String!) {
+   dmaMeterInfo(dmaReportId: $dmaReportId ) {
+      id
+			meterAccessible
+    	meterPresent
+    meterSerial
+    meterStandLocation
+    meterReading
+    meterStatus{
+      name
+    }
+  }
+}
+
+# zone meter info
+query($zoneReportId: String!) {
+   zoneMeterInfo(zoneReportId: $zoneReportId ) {
+      id
+			meterAccessible
+    	meterPresent
+    meterSerial
+    meterStandLocation
+    meterReading
+    meterStatus{
+      name
+    }
+  }
+}
+  
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################

@@ -10,5 +10,6 @@ module Types
     field :meter_accessible, String, null: false
     field :meter_present, String, null: false
     field :meter_stand_location, String, null: false
+    field :meter_reading, String, null: true
   end
 end

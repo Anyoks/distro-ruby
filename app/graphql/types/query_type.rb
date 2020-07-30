@@ -246,6 +246,11 @@ module Types
 
     field :tenants,[String], null: false,
       description: "A list of all availble subdomains/tenants"
+
+    field :my_task_totals, [Types::AssignmentTotalsType], null: false,
+      description: "Total tasks"  do
+        argument :userId, String, required: true
+    end
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -521,5 +526,17 @@ module Types
       Apartment.tenant_names
     end
 
+    def my_task_totals(userId)
+      dma_ass = my_dma_assignments(userId).count
+      zone_ass = my_zone_assignments(userId).count
+      field = dma_ass + zone_ass
+      account_ass = myassignments(userId).count
+      # arr = []
+      dmaObj = {name: 'dma' , total: dma_ass }
+      zoneObj = { name: 'zone' , total: zone_ass }
+      accObj = {name: 'acc', total: account_ass }
+      # return obj
+      arr = [dmaObj, zoneObj, accObj]
+    end
   end
 end
