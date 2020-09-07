@@ -29,7 +29,7 @@ class DmaReport < ApplicationRecord
 
 
   validates_uniqueness_of :dma_assignment_id
-
+   after_commit :update_assignment_stage, on: :create
 
    def self.myreports(userId)
     # byebug
@@ -76,6 +76,18 @@ class DmaReport < ApplicationRecord
 
   def report_type
     "dma"
+  end
+
+  def update_assignment_stage
+    if (self.report_further_action.present?) 
+      logger.debug "further action"	
+  
+      self.assignment.update_attributes(stage_id: Stage.where(name: "further action").first.id )
+    else 
+      logger.debug "complete"	
+   
+      self.dma_assignment.update_attributes(stage_id: Stage.where(name: "complete").first.id )
+    end
   end
   
 end

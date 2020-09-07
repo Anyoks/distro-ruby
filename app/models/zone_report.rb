@@ -26,6 +26,7 @@ class ZoneReport < ApplicationRecord
   has_many :zonepictures, dependent: :destroy
 
   validates_uniqueness_of :zone_assignment_id
+  after_commit :update_assignment_stage, on: :create
 
 
 
@@ -74,6 +75,18 @@ class ZoneReport < ApplicationRecord
 
   def report_type
     "zone"
+  end
+
+  def update_assignment_stage
+    if (self.report_further_action.present?) 
+      logger.debug "further action"	
+  
+      self.assignment.update_attributes(stage_id: Stage.where(name: "further action").first.id )
+    else 
+      logger.debug "complete"	
+   
+      self.zone_assignment.update_attributes(stage_id: Stage.where(name: "complete").first.id )
+    end
   end
   
 end

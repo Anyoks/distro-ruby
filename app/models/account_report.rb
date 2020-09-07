@@ -21,7 +21,7 @@ class AccountReport < ApplicationRecord
   has_one :report_further_action, dependent: :destroy
 
   validates_uniqueness_of :assignment_id
-
+   after_commit :update_assignment_stage, on: :create
 
    def account
     self.assignment.account
@@ -60,23 +60,24 @@ class AccountReport < ApplicationRecord
   end
 
   def update_assignment_stage
-    if (self.completed && self.further_action.name == 'none') 
-      logger.debug "complete"	
+    if (self.report_further_action.present?) 
+      logger.debug "further action"	
       # completed
-      self.assignment.update_attributes(stage_id: Stage.where(name:  "complete").first.id )
-    elsif (self.completed && self.further_action.name != 'none')
-      logger.debug "F action"	
-      # further action
       self.assignment.update_attributes(stage_id: Stage.where(name: "further action").first.id )
-    elsif (self.completed == false )
-      logger.debug "pending"	
-      # if complete is false and no further action
-      # pending 
-      # == complete == false
-      id =  Stage.where(name: "pending").first.id 
-      logger.debug "pending id is #{id}"	
-      self.assignment.update_attributes(stage_id: id)
+    else 
+      logger.debug "complete"	
+      # further action
+      self.assignment.update_attributes(stage_id: Stage.where(name: "complete").first.id )
     end
+    # elsif (self.completed == false )
+    #   logger.debug "pending"	
+    #   # if complete is false and no further action
+    #   # pending 
+    #   # == complete == false
+    #   id =  Stage.where(name: "pending").first.id 
+    #   logger.debug "pending id is #{id}"	
+    #   self.assignment.update_attributes(stage_id: id)
+    # end
   end
 
   def stage_name
