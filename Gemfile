@@ -32,6 +32,13 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.8'
+    # deploy
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-passenger'
 end
 
 group :test do 
@@ -69,3 +76,15 @@ gem 'omniauth'
 #graphQl 
 # gem 'graphql', '1.8.3'
 gem 'graphql', '1.9.3'
+# for grouping data by data
+gem 'groupdate'
+# static routing
+gem 'rails-static-router'
+# Uploading pictures
+gem 'carrierwave', '~> 2.0'
+# file apload on graphql
+gem 'apollo_upload_server', '2.0.0.beta.3'
+# multitenancy
+gem 'apartment', '~> 2.2', '>= 2.2.1'
+# using rubocop for code formating
+gem 'rubocop'

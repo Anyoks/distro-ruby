@@ -4,11 +4,12 @@
 #
 #  id         :uuid             not null, primary key
 #  task_id    :uuid             not null
-#  staff_id   :uuid             not null
 #  stage_id   :uuid             not null
 #  account_id :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  staff_id   :uuid             not null
+#  user_id    :uuid             default("06471470-813f-40d6-8896-5acccd13f841"), not null
 #
 
 class Assignment < ApplicationRecord
@@ -19,10 +20,35 @@ class Assignment < ApplicationRecord
     belongs_to :task
     belongs_to :account
     belongs_to :staff
-    has_one :report
+    belongs_to :user
+    has_one :report , dependent: :destroy
+    has_one :account_report
 
     def add_default_stage
-        self.stage_id = Stage.find_by(name: "Assign").id
+        self.stage_id = Stage.find_by(name: "assign").id
+    end
+
+    def self.undone_assingments
+        Assignment.where("id NOT IN (SELECT  assignment_id FROM Reports)")
+    end
+
+    def self.myassignments(userId)
+      # byebug
+      user = User.find_by(uid: userId)
+      user.assignments.includes(:task, :staff, :stage, :account, :report)
+    end
+
+    def self.account_assignments(accId)
+        acc = Account.find(accId)
+        acc.assignments.includes(:task, :staff, :stage, :report)
+    end
+
+    def date
+        self.created_at.strftime("%d/%m/%Y")
     end
     
 end
+
+# Assignment.where(updated_at: Date.today-30..Date.today).group_by_week(:updated_at).count
+# Assignment.where(stage_id: Stage.where(name: 'complete').first.id).group_by_week(:updated_at).count
+# Assignment.group_by_day(:updated_at).count

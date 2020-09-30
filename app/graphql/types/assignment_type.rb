@@ -1,14 +1,17 @@
 module Types
   class AssignmentType < Types::BaseObject
-    field :id       , ID, null: false
+    field :id       , String, null: false
     field :task   ,Types::TaskType, null: false 
     field :staff  ,Types::StaffType, null: false 
     field :stage  ,Types::StageType, null: false 
     field :account, Types::AccountType, null: false 
     field :comment ,String, null: false   
+    field :stageName  ,String, null: false 
+    # field :report, Types::AccountReportType, null: true
+    field :date, String, null: false
     
-    # def stage
-    #   object.stage.name
-    # end
+    def stage_name
+      object.stage.name
+    end
   end
 end

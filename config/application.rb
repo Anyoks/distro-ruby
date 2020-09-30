@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require "rails"
+require 'apartment/elevators/subdomain'
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
@@ -20,6 +21,7 @@ Bundler.require(*Rails.groups)
 module Distro
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.middleware.use Apartment::Elevators::Subdomain
     config.load_defaults 5.2
 
     config.generators do |g|

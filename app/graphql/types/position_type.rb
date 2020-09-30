@@ -1,9 +1,9 @@
 module Types
   class PositionType < Types::BaseObject
-    field :id, ID, null: true
+    field :id, String, null: true
     field :name, String, null: true
-    field :desctription, String, null: true
-    field :subdepartment, Types::SubdepartmentType, null: true
+    field :description, String, null: true
+    field :subdepartments,[ Types::SubdepartmentType], null: true
     field :staffs, [Types::StaffType], null: true
   end
 end

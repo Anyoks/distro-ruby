@@ -2,17 +2,17 @@ module Mutations
     class StaffSignIn < Mutations::BaseMutation
       graphql_name "StaffSignIn"
   
-      argument :email, String, required: true
+      argument :phoneNumber, String, required: true
       argument :password, String, required: true
   
       field :staff, Types::StaffType, null: false
   
       def resolve(args)
-        staff = Staff.find_for_database_authentication(email: args[:email])
-  
+        staff = Staff.find_for_database_authentication(phone_number: args[:phone_number])
         if staff.present?
           if staff.valid_password?(args[:password])
             context[:current_staff] = staff
+            context[:session][:token] = staff.authentication_token
             # byebug
             MutationResult.call(obj: { staff: staff }, success: true)
           else

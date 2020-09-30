@@ -6,6 +6,8 @@ module Mutations
       argument :last_name, String, required: true
       argument :email, String, required: true
       argument :password, String, required: true
+      argument :phone_number, String, required: true
+      argument :position_id, String, required: true
   
       field :staff, Types::StaffType, null: false
   

@@ -12,4 +12,9 @@
 class Scheme < ApplicationRecord
     has_many :schZoneDetails, dependent: :destroy
     has_many :zones, through: :schZoneDetails
+     before_save :downcase_fields
+
+    def downcase_fields
+      self.name.downcase!
+    end
 end
