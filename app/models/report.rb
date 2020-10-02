@@ -107,7 +107,7 @@ class Report < ApplicationRecord
 		if Rails.env == "development" 
 			root_url = "http://localhost:3000"
 		else
-			root_url = "https://distroapp.io"
+			root_url = "https://wayspoint.com"
 		end
 
     urls = []
