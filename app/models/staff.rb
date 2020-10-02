@@ -64,19 +64,31 @@ class Staff < ApplicationRecord
   end
 
   def undone_dma_assignments
-    self.dma_assignments.where("id NOT IN (SELECT  dma_assignment_id FROM dma_reports)")
+    assignments = self.dma_assignments.where("id NOT IN (SELECT  dma_assignment_id FROM dma_reports)")
+    # TODO make this a job that runs later in the background
+    self.update_assignment_stage(assignments)
+    return assignments
   end
 
   def undone_zone_assignments
-    self.zone_assignments.where("id NOT IN (SELECT  zone_assignment_id FROM zone_reports)")
+    assignments = self.zone_assignments.where("id NOT IN (SELECT  zone_assignment_id FROM zone_reports)")
+    # TODO make this a job that runs later in the background
+    self.update_assignment_stage(assignments)
+    return assignments
   end
 
   def undone_account_assignments
-    self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
+    assignments = self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
+    # TODO make this a job that runs later in the background
+    self.update_assignment_stage(assignments)
+    return assignments
   end
 
   def undone_assignments
-    self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
+    assignments = self.assignments.where("id NOT IN (SELECT  assignment_id FROM account_reports)")
+    # TODO make this a job that runs later in the background
+    self.update_assignment_stage(assignments)
+    return assignments
   end
 
 
@@ -106,6 +118,17 @@ class Staff < ApplicationRecord
     self.position.subdepartments.first.tasks.each do |task|
       p task.name
     end
+  end
+
+  def update_assignment_stage(assignments)
+    p "IN THE UPDATE ASS"
+    # assignments.each do |ass|
+    #   if ass.stage.name == 'assign'
+    #     logger.debug "Pending"	
+    
+    #     ass.update_attributes(stage_id: Stage.where(name: "pending").first.id )
+    #   end
+    # end
   end
 
 end
