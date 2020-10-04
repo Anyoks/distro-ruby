@@ -15,6 +15,8 @@ class Task < ApplicationRecord
     # has_and_belongs_to_many :subdepartments   # <== rmove this. change it to has_and_belongs_to_many :positions
     has_and_belongs_to_many :positions
     has_many :assignments
+    has_many :dma_assignments
+    has_many :zone_assignments
     has_many :staffs, through: :positions
 
     # task should have and belong to many positions
@@ -64,12 +66,42 @@ class Task < ApplicationRecord
       self.assignments.count
     end
     
+    # account tasks
     def my_total_assignments(userId)
+      
+      account_assignments = self.my_total_account_assignments(userId)
+      dma_assignments = self.my_total_dma_assignments(userId)
+      zone_assignments = self.my_total_zone_assignments(userId)
+      # user_id = User.find_by(uid: userId[:user_id]).id
+      # # byebug
+      # self.assignments.where(user_id: user_id).count
+      total = account_assignments + dma_assignments + zone_assignments
+    end
+
+    # account tasks/assignments
+    def my_total_account_assignments(userId)
       
       user_id = User.find_by(uid: userId[:user_id]).id
       # byebug
       self.assignments.where(user_id: user_id).count
     end
+
+    # dma tasks
+    def my_total_dma_assignments(userId)
+      
+      user_id = User.find_by(uid: userId[:user_id]).id
+      # byebug
+      self.dma_assignments.where(user_id: user_id).count
+    end
+
+    # zone tasks
+     def my_total_zone_assignments(userId)
+      
+      user_id = User.find_by(uid: userId[:user_id]).id
+      # byebug
+      self.zone_assignments.where(user_id: user_id).count
+    end
+
 
     def self.tasks_for_graph
       Task.all.reject{|k| k.total_assignments == 0 }
@@ -86,6 +118,8 @@ class Task < ApplicationRecord
       # User.find(user_id).subdepartment.tasks
       user_id.subdepartment.tasks.distinct
     end
+
+
 
     def total_assign_group_by_week
       # total assignments for this taks by week since ever
