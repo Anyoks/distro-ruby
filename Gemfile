@@ -75,7 +75,7 @@ gem 'omniauth'
 
 #graphQl 
 # gem 'graphql', '1.8.3'
-gem 'graphql', '1.9.3'
+gem 'graphql', '1.9.10'
 # for grouping data by data
 gem 'groupdate'
 # static routing

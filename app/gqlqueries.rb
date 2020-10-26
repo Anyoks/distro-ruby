@@ -432,6 +432,23 @@ query($zoneReportId: String!) {
     }
   }
 }
+
+# ####new queries
+# query task with questins and answers
+query ($taskId: String!) {
+  forms(taskId: $taskId) {
+    name
+    description
+    formQuestions {
+      query
+      responseType
+      options
+      formQuestionDatum{
+        data
+      }
+    }
+  }
+}
   
 #########################################################################
 #####################   MUTATIONS  ######################################

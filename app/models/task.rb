@@ -18,6 +18,8 @@ class Task < ApplicationRecord
     has_many :dma_assignments
     has_many :zone_assignments
     has_many :staffs, through: :positions
+    has_many :forms, dependent: :destroy
+    has_many :form_questions, through: :forms
 
     # task should have and belong to many positions
     # this will remove the current state where all staff in a department will be in 

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :form_question_options
+  resources :form_question_data
+  resources :form_questions
+  resources :forms
   resources :dma_assignments
   resources :dmas
   resources :zone_assignments

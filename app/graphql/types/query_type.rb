@@ -251,6 +251,21 @@ module Types
       description: "Total tasks"  do
         argument :userId, String, required: true
     end
+
+    field :forms, [Types::FormType], null: false,
+      description: "Form For task x"  do
+        argument :taskId, String, required: true
+    end
+
+    field :form_questions, [Types::FormQuestionType], null: false,
+      description: "Questions For a Form x"  do
+        argument :formId, String, required: true
+    end
+
+    field :form_question_datum, [Types::FormQuestionDatumType], null: false,
+      description: "Response to Question x"  do
+        argument :questionId, String, required: true
+    end
     
     def accounts_connection(**_args)
       Account.all.includes(walkroute:[subzone:[:zone]])
@@ -537,6 +552,18 @@ module Types
       accObj = {name: 'acc', total: account_ass }
       # return obj
       arr = [dmaObj, zoneObj, accObj]
+    end
+
+    def forms(taskId)
+      Form.all
+    end
+
+    def form_questions(formId)
+
+    end
+
+    def form_question_datum(questionId)
+
     end
   end
 end

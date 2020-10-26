@@ -1,5 +1,8 @@
 module Types
   class MutationType < Types::BaseObject
+    field :createFormQuestionDatum, mutation: Mutations::CreateFormQuestionDatum
+    field :createFormQuestion, mutation: Mutations::CreateFormQuestion
+    field :createForm, mutation: Mutations::CreateForm
     field :uploadReportFurtherActionImage, mutation: Mutations::UploadReportFurtherActionImage
     field :uploadIllegalUseImage, mutation: Mutations::UploadIllegalUseImage
     field :createReportFurtherAction, mutation: Mutations::CreateReportFurtherAction

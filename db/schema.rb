@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_082507) do
+ActiveRecord::Schema.define(version: 2020_10_26_060820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -268,6 +268,46 @@ ActiveRecord::Schema.define(version: 2020_03_12_082507) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "form_question_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "data", default: "{}", null: false
+    t.uuid "form_question_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "index_form_question_data_on_data", using: :gin
+    t.index ["form_question_id"], name: "index_form_question_data_on_form_question_id"
+  end
+
+  create_table "form_question_options", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "data", default: "{}", null: false
+    t.uuid "form_question_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "index_form_question_options_on_data", using: :gin
+    t.index ["form_question_id"], name: "index_form_question_options_on_form_question_id"
+  end
+
+  create_table "form_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "query"
+    t.string "response_type"
+    t.uuid "form_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "options", default: "{}", null: false
+    t.index ["form_id"], name: "index_form_questions_on_form_id"
+  end
+
+  create_table "forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.uuid "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_forms_on_task_id"
   end
 
   create_table "further_actions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -692,6 +732,10 @@ ActiveRecord::Schema.define(version: 2020_03_12_082507) do
   add_foreign_key "dma_reports", "dma_assignments"
   add_foreign_key "dma_reports", "schemes"
   add_foreign_key "dmapictures", "dma_reports"
+  add_foreign_key "form_question_data", "form_questions"
+  add_foreign_key "form_question_options", "form_questions"
+  add_foreign_key "form_questions", "forms"
+  add_foreign_key "forms", "tasks"
   add_foreign_key "illegal_use_pictures", "anomallies"
   add_foreign_key "land_mark_pictures", "burst_and_lealages"
   add_foreign_key "meter_info_pictures", "meter_infos"
