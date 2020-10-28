@@ -1,5 +1,7 @@
 module Types
   class MutationType < Types::BaseObject
+    field :updateForm, mutation: Mutations::UpdateForm
+    field :updateFormQuestion, mutation: Mutations::UpdateFormQuestion
     field :createFormQuestionDatum, mutation: Mutations::CreateFormQuestionDatum
     field :createFormQuestion, mutation: Mutations::CreateFormQuestion
     field :createForm, mutation: Mutations::CreateForm

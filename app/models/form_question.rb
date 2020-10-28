@@ -16,16 +16,17 @@ class FormQuestion < ApplicationRecord
   belongs_to :form
   has_one :form_question_datum, dependent: :destroy
   before_save :default_position
+  acts_as_list scope: :form
 
   def default_position
+    max_position = self.form.form_questions.maximum(:position)
     if self.position == nil
-       max_position = self.form.form_questions.maximum(:position)
       if max_position == nil
         self.position = 1
       else
         self.position = max_position + 1
       end
-        self.save!
+      self.save!
     end
    
   end

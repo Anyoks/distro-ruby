@@ -12,5 +12,5 @@
 
 class Form < ApplicationRecord
   belongs_to :task
-  has_many :form_questions, dependent: :destroy
+  has_many :form_questions, -> {order(position: :asc)} ,dependent: :destroy
 end

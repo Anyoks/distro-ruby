@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_26_060820) do
+ActiveRecord::Schema.define(version: 2020_10_28_115900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -278,6 +278,7 @@ ActiveRecord::Schema.define(version: 2020_10_26_060820) do
     t.datetime "updated_at", null: false
     t.index ["data"], name: "index_form_question_data_on_data", using: :gin
     t.index ["form_question_id"], name: "index_form_question_data_on_form_question_id"
+    t.index ["form_question_id"], name: "my_unique_index", unique: true
   end
 
   create_table "form_question_options", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

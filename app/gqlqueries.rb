@@ -1164,3 +1164,187 @@ mutation{
           id
         }
       }
+
+## create form with questions
+mutation ($taskId: String!, $name: String!, $formQuestions: JSON) {
+  createForm(input:{
+    name: $name,
+    taskId: $taskId,
+    description: "This is a test form",
+    formQuestions: $formQuestions
+  
+  }){
+	form{
+      id
+      name
+  	}
+  }
+}
+#sample varibles
+{
+  "userId": "dennorina@gmail.com",
+  "name": "Form 1",
+  "taskId":"fce61f05-923d-4cb7-80ae-3053747173d2",
+  "formId" :"a6417975-308f-454a-8f20-2a724faeafea",
+  "questionId": "4f831ad8-5baf-4424-95ec-086ce36b4495",
+  "formQuestions":{
+   "queries":[
+      {
+         "query":"sample query",
+         "position":"2",
+         "response_type":"text",
+         "options":{
+            "type":"select",
+            "value":[
+               "able",
+               "unable"
+            ]
+         }
+      },
+      {
+         "query":"sample query 2",
+         "position":"1",
+         "response_type":"text",
+         "options":{
+            "type":"select",
+            "value":[
+               "able1",
+               "unable2"
+            ]
+         }
+      }
+   ]
+  }
+}
+# creating form question.
+mutation ($formId: String!, $responseType: String!, $position: Int!, $options: JSON, $query: String!) {
+  createFormQuestion(input:{
+    query: $query,
+    formId: $formId,
+    position: $position,
+    options: $options
+    responseType: $responseType
+  
+  }){
+	question{
+      id
+      query
+    	position
+    	options
+  	}
+  }
+}
+
+# sample variables
+{
+  "formQuestionsData":{
+    "data":[
+      {
+        "form_question_id":"031a5a7e-88bf-4e57-b82e-63ea2aae42c0",
+        "data":{
+          "type":"select",
+          "value":"option 3"
+        }
+      },
+      {
+        "form_question_id":"031a5a7e-88bf-4e57-b82e-63ea2aae42c0",
+        "data":{
+          "type":"text",
+          "value":"gate closed"
+        }
+      }
+    ]
+  },
+}
+# create form question data
+mutation ($formQuestionsData: JSON!,) {
+  createFormQuestionDatum(input:{
+    formQuestionsData: $formQuestionsData
+  
+  }){
+	datum{
+      id
+			data
+  	}
+  success
+  errors
+  }
+}
+# sample payload
+{
+   "formQuestionsData":{
+    "data":[
+      {
+        "form_question_id":"0fe48084-95d1-4e12-83b3-25ccba85244c",
+        "data":{
+          "type":"list",
+          "value":["a","b","c"]
+        }
+      },
+      {
+        "form_question_id":"ce31e6bd-aa1e-4eec-b287-ecc5a83593a5",
+        "data":{
+          "type":"text",
+          "value":"dog in premises"
+        }
+      }
+    ]
+  }
+}
+# update form and questions
+mutation ($formQuestions: JSON!, $taskId: String, $formId: String!) {
+ updateForm(input:{
+  taskId:$taskId
+    formQuestions: $formQuestions
+  	formId: $formId,
+  	name: "Used to be form 1",
+    description:"Used to have a desc",
+  	questionsToRemove: []
+  
+  }){
+	form{
+      id
+			formQuestions{
+        id
+        position
+        query
+        options
+      }
+  	}
+  success
+  errors
+  }
+}
+# sample form payload
+{
+  "formQuestions":{
+   "queries":[
+      {		
+        	"id":"031a5a7e-88bf-4e57-b82e-63ea2aae42c0",
+         "query":"used to be sample query3",
+         "position":"2",
+         "response_type":"text",
+         "options":{
+            "type":"select",
+            "value":[
+               "able",
+               "unable"
+            ]
+         }
+      },
+      {
+         "id":"bfb55c88-893d-4318-9700-62959de5d962",
+         "query":"used to be sample query",
+         "position":"1",
+         "response_type":"text",
+         "options":{
+            "type":"select",
+            "value":[
+               "able1",
+               "unable2"
+            ]
+         }
+      }
+   ]
+  }
+}

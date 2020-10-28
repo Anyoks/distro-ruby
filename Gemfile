@@ -88,3 +88,5 @@ gem 'apollo_upload_server', '2.0.0.beta.3'
 gem 'apartment', '~> 2.2', '>= 2.2.1'
 # using rubocop for code formating
 gem 'rubocop'
+# manage list
+gem 'acts_as_list', '~> 1.0', '>= 1.0.2'
