@@ -14,7 +14,7 @@
 
 class FormQuestion < ApplicationRecord
   belongs_to :form
-  has_one :form_question_datum, dependent: :destroy
+  has_many :form_question_datum, dependent: :destroy
   before_save :default_position
   acts_as_list scope: :form
 

@@ -90,3 +90,5 @@ gem 'apartment', '~> 2.2', '>= 2.2.1'
 gem 'rubocop'
 # manage list
 gem 'acts_as_list', '~> 1.0', '>= 1.0.2'
+# manage background tasks
+gem 'sidekiq'

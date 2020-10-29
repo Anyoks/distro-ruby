@@ -12,5 +12,6 @@
 
 class FormQuestionDatum < ApplicationRecord
   belongs_to :form_question
-  validates_uniqueness_of :form_question_id
+  # validates_uniqueness_of :form_question_id
+  has_one :form_question_datum_file
 end

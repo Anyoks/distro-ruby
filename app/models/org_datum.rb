@@ -1,0 +1,2 @@
+class OrgDatum < ApplicationRecord
+end

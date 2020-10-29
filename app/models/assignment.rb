@@ -21,7 +21,7 @@ class Assignment < ApplicationRecord
     belongs_to :account
     belongs_to :staff
     belongs_to :user
-    has_one :report , dependent: :destroy
+    # has_one :report , dependent: :destroy
     has_one :account_report
 
     def add_default_stage
