@@ -5,6 +5,6 @@ module Types
     field :response_type, String, null: false
     field :position, Integer, null: false
     field :options, GraphQL::Types::JSON, null: false
-    field :form_question_datum, Types::FormQuestionDatumType, null: true
+    field :form_question_datum, [Types::FormQuestionDatumType], null: true
   end
 end

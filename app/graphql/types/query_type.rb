@@ -559,7 +559,8 @@ module Types
     end
 
     def form_questions(formId)
-
+      form = Form.find(formId[:form_id])
+      form.form_questions
     end
 
     def form_question_datum(questionId)
