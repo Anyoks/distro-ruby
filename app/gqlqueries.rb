@@ -449,7 +449,22 @@ query ($taskId: String!) {
     }
   }
 }
-  
+
+# query
+  query ($formId: String!) {
+  formQuestions(formId: $formId) {
+    	id
+      query
+      responseType
+    	position
+      options
+    	formQuestionDatum{
+        id
+        data
+      }
+  }
+}
+
 #########################################################################
 #####################   MUTATIONS  ######################################
 #########################################################################

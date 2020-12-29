@@ -19,15 +19,23 @@ class FormQuestion < ApplicationRecord
   acts_as_list scope: :form
 
   def default_position
-    max_position = self.form.form_questions.maximum(:position)
-    if self.position == nil
-      if max_position == nil
-        self.position = 1
-      else
-        self.position = max_position + 1
+
+    
+    # if self.form != nil
+    # byebug
+      max_position = self.form.form_questions.maximum(:position)
+      if self.position == nil
+        if max_position == nil
+          self.position = 1
+        else
+          self.position = max_position + 1
+        end
+        self.save!
       end
-      self.save!
-    end
+    # else
+      
+    # end
+    
    
   end
 end
