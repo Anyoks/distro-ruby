@@ -81,7 +81,7 @@ gem 'groupdate'
 # static routing
 gem 'rails-static-router'
 # Uploading pictures
-gem 'carrierwave', '~> 2.0'
+gem 'carrierwave', '~> 2.1'
 # file apload on graphql
 gem 'apollo_upload_server', '2.0.0.beta.3'
 # multitenancy
